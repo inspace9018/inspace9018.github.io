@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lookout · Deadlock 오버레이</title>
+    <meta name="description" content="Deadlock 경기 중 정글 리스폰, 라인 동선, 적 궁극기, 시간 알림을 화면 옆에 띄워 주는 Windows 오버레이." />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="site.css" />
+  </head>
+  <body>
+    <header class="top">
+      <a class="brand" href="./"><img src="favicon.svg" alt="" width="28" height="28" />Lookout</a>
+      <nav><a href="#features">기능</a><a href="privacy.html">개인정보 처리방침</a></nav>
+    </header>
+    <main>
+      <section class="hero">
+        <h1>Deadlock을 하면서 옆에 두는 작은 메모장</h1>
+        <p>
+          게임 화면을 읽어서 지금 챙길 것만 왼쪽에 조용히 띄웁니다. 정글이 언제 다시 생기는지, 웨이브를 민 뒤 어디를 돌고 올지, 상대 궁극기가 열렸는지.
+        </p>
+        <p class="actions">
+          <a class="button" href="https://github.com/inspace9018/lookout-releases/releases/latest">Windows용 받기</a>
+          <span>무료 · Windows · 게임은 창 모드 또는 테두리 없는 창 모드</span>
+        </p>
+      </section>
+      <section id="features" class="features">
+        <figure>
+          <img src="img/folded-list.png" alt="왼쪽 접힌 목록: 라인 궁극기, 동선, 다음 생성, 오브젝트 시간" width="325" height="368" loading="lazy" />
+          <figcaption>
+            <b>접힌 목록</b>
+            내 라인 상대의 궁극기, 웨이브를 민 뒤 갈 동선, 다음에 생기는 캠프와 상자, 보스 · 균열 · 영혼 단지 시간.
+          </figcaption>
+        </figure>
+        <figure>
+          <img src="img/route-tab.png" alt="Alt+Q 패널의 동선 탭: 지도 위 가는 길과 오는 길" width="443" height="548" loading="lazy" />
+          <figcaption>
+            <b>라인 동선</b>
+            내 전선과 팀에 맞춘 한 바퀴. 가는 길(A)과 오는 길(B)에 챙길 상자, 걸리는 시간까지.
+          </figcaption>
+        </figure>
+      </section>
+      <section class="list">
+        <h2>그 밖에</h2>
+        <ul>
+          <li>미니맵 위 정글 캠프 리스폰 타이머와 층 표시</li>
+          <li>Tab을 누르면 적마다 궁극기 해금 여부, 팀 상성</li>
+          <li>상점을 열면 이번 적 팀을 상대로 살 만한 아이템</li>
+          <li>영웅 선택 화면에서 초상화마다 승률 · 픽률</li>
+          <li>2:00 소형 캠프처럼 생성 30초 전 시간 알림</li>
+        </ul>
+        <p class="note">
+          게임 파일을 고치거나 게임 메모리를 읽지 않습니다. 화면에 보이는 것만 이 PC 안에서 읽고, 게임 화면은 밖으로 보내지 않습니다.
+          Valve와 관계없는 팬 제작 도구입니다.
+        </p>
+      </section>
+    </main>
+    <footer>
+      <span>© 2026 넥서스랩 (Nexus lab)</span>
+      <a href="https://github.com/inspace9018/lookout-releases/issues/new/choose">버그 · 제안</a>
+      <a href="privacy.html">개인정보 처리방침</a>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=300" />
+    <meta name="robots" content="noindex" />
+    <title>Lookout 광고</title>
+    <!-- The 300x250 slot the Lookout dashboard shows on the right (an iframe). RevIQ fills #ad; until it
+         does, the house card underneath shows. The ad unit tag RevIQ gives at onboarding goes in #ad. -->
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 300px;
+        height: 250px;
+        overflow: hidden;
+        background: transparent;
+        color: #eef1f4;
+        font: 12.5px/1.5 'Malgun Gothic', system-ui, sans-serif;
+      }
+      #slot {
+        position: relative;
+        width: 300px;
+        height: 250px;
+      }
+      .house {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 10px 12px;
+        box-sizing: border-box;
+        border: 1px dashed #5b616b;
+        border-radius: 6px;
+        background: #1a1d22;
+      }
+      .house small {
+        color: #9aa3ad;
+        font-size: 10.5px;
+      }
+      .house p {
+        margin: 2px 0;
+        color: #cfd5db;
+      }
+      #ad {
+        position: relative;
+        z-index: 1;
+        width: 300px;
+        height: 250px;
+      }
+    </style>
+    <script async src="https://js.rev.iq/inspace9018.github.io"></script>
+  </head>
+  <body>
+    <div id="slot">
+      <div class="house">
+        <small>광고</small>
+        <b>Alt+Q로 패널 펼치기</b>
+        <p>경기 중 Alt+Q를 누르면 라인전 · 동선 · 적 빌드 · 타이머 탭이 열립니다.</p>
+      </div>
+      <div id="ad"></div>
+    </div>
+    <script>
+      // Tells the dashboard the page loaded (offline it keeps its own card instead).
+      if (parent !== window) parent.postMessage({ lookoutAd: 'ready' }, '*');
+    </script>
+  </body>
+</html>

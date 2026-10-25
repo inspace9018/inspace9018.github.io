@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex" />
     <title>Lookout 광고</title>
     <!-- The 300x250 slot the Lookout dashboard shows on the right (an iframe). RevIQ fills #ad; until it
-         does, the house card underneath shows. The ad unit tag RevIQ gives at onboarding goes in #ad. -->
+         does, the house card underneath shows. -->
     <style>
       html,
       body {
@@ -50,7 +50,7 @@
         height: 250px;
       }
     </style>
-    <script async src="https://js.rev.iq/inspace9018.github.io"></script>
+    <script src="https://js.rev.iq/inspace9018.github.io" defer></script>
   </head>
   <body>
     <div id="slot">
@@ -59,7 +59,7 @@
         <b>Alt+Q로 패널 펼치기</b>
         <p>경기 중 Alt+Q를 누르면 라인전 · 동선 · 적 빌드 · 타이머 탭이 열립니다.</p>
       </div>
-      <div id="ad"></div>
+      <div id="ad" data-ad="right-rail-1"></div>
     </div>
     <script>
       // Tells the dashboard the page loaded (offline it keeps its own card instead).

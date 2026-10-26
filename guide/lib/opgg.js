@@ -139,7 +139,7 @@
       return `<section class="op-box op-route">${head}<p class="op-empty">${
         r?.missing === 'clock'
           ? '경기 시계를 읽으면 동선을 계산합니다.'
-          : '내 전선과 팀(미니맵 방향)을 확인하면, 웨이브를 정리한 뒤 들를 캠프·상자·황금 동상을 보여줍니다.'
+          : '내 전선과 팀(미니맵 방향)을 확인하면, 웨이브를 정리한 뒤 들를 캠프·상자·황금 조각상을 보여줍니다.'
       }</p></section>`;
     const clock = window.IntelUI.clock;
     // Seconds after leaving the lane when each step starts.
@@ -167,7 +167,7 @@
     const onWay = [
       r.cratesUp && r.crates.length ? `<span><i class="k-crate"></i>상자 ${r.crates.length}</span>` : '',
       r.cratesUp && r.tough.length ? `<span><i class="k-tough"></i>튼튼한 상자 ${r.tough.length} (강한 근거리 공격으로)</span>` : '',
-      r.statues.length ? `<span><i class="k-statue"></i>황금 동상 자리 ${r.statues.length} (50% 확률)</span>` : ''
+      r.statues.length ? `<span><i class="k-statue"></i>황금 조각상 자리 ${r.statues.length} (50% 확률)</span>` : ''
     ].join('');
     const alt = r.enemy
       ? `<div class="op-route-alt"><b>상대 정글은 안전할 때만</b><p>${r.enemy.stops

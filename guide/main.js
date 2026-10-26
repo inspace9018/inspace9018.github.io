@@ -85,15 +85,17 @@
     index: () => StrategyUI.guidePage(data),
     heroes: () => OpggUI.heroes(guideId, guideQuery, heroSort, guideView),
     comp: compPage,
+    map: () => MapAtlas.page(),
     routes: () => RouteGuide.page(data, routePick, heading)
   };
   function render() {
     app.innerHTML = draw[page]();
+    if (page === 'map') MapAtlas.mount();
     if (page === 'index') app.querySelector('.page-heading h1').textContent = '데드락 공략';
     // Buttons that open another app page become links to the matching web page, or to the download.
     for (const b of app.querySelectorAll('button[data-page]')) {
       const a = document.createElement('a'),
-        web = { guide: 'heroes.html', comp: 'comp.html', routes: 'routes.html', strategy: './' }[b.dataset.page];
+        web = { guide: 'heroes.html', comp: 'comp.html', atlas: 'map.html', routes: 'routes.html', strategy: './' }[b.dataset.page];
       a.href = web || DOWNLOAD;
       a.textContent = web ? b.textContent : `Lookout ${b.textContent}`;
       b.replaceWith(a);

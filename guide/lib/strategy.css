@@ -64,7 +64,11 @@
   scroll-margin-top: 68px;
   padding: 24px 28px;
   font-size: 15px;
-  line-height: 1.8;
+  /* namu-wiki rhythm: 1.6 line height, normal letter spacing, Korean words kept whole at line ends. */
+  line-height: 1.6;
+  letter-spacing: normal;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 /* Running text stays at a readable line length; figures and tables keep the full width. */
 .sg-sec > p,
@@ -74,8 +78,17 @@
   max-width: 820px;
 }
 .sg-sec h2 {
-  margin: 0 0 14px;
+  margin: 0 0 16px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
   font-size: 24px;
+  line-height: 1.35;
+}
+.sg-sec h2 em,
+.sg-sec h4 em {
+  margin-right: 4px;
+  color: var(--blue-300);
+  font-style: normal;
 }
 .sg-step {
   margin: 0 0 2px !important;
@@ -83,11 +96,12 @@
   font-size: 12.5px;
 }
 .sg-sec h4 {
-  margin: 32px 0 8px;
-  padding-top: 18px;
-  border-top: 1px solid var(--line);
-  font-size: 17px;
-  color: var(--accent);
+  margin: 34px 0 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--line);
+  font-size: 19px;
+  line-height: 1.35;
+  color: var(--text);
 }
 /* 핵심: the section in three lines, before the details. */
 .sg-key {
@@ -110,11 +124,14 @@
 }
 .sg-pager {
   display: flex;
+  /* desktop.css stacks every <nav> for the app sidebar. */
+  flex-direction: row;
   justify-content: space-between;
   gap: 12px;
   margin-top: 32px;
-  padding-top: 18px;
+  padding: 18px 0 0;
   border-top: 1px solid var(--line);
+  border-right: 0;
 }
 .sg-pager button {
   min-height: 0;
@@ -142,8 +159,44 @@
   font-weight: 400;
 }
 .sg-sec p {
-  margin: 8px 0;
+  margin: 0 0 12px;
   color: var(--text);
+}
+/* Footnotes: [n] marks in the text, the list under the section. */
+.sg-sec sup.fn {
+  font-size: 11px;
+  line-height: 0;
+  margin-left: 1px;
+}
+.sg-sec sup.fn a {
+  text-decoration: none;
+}
+.sg-fns {
+  margin-top: 36px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.sg-fns > b {
+  color: var(--muted);
+  font-size: 12.5px;
+}
+.sg-fns ol {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
+}
+.sg-fns li {
+  margin: 3px 0;
+  scroll-margin-top: 80px;
+}
+.sg-fns li span {
+  color: var(--blue-300);
+  margin-right: 2px;
+}
+.sg-fns li:target {
+  background: var(--n-200);
 }
 .sg-sec p.note,
 .sg-yt .meta,
@@ -200,6 +253,9 @@
   gap: 12px;
   margin: 10px 0;
 }
+.sg-two {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
 .sg-two > div,
 .sg-checks > div,
 .sg-cards > article {
@@ -208,7 +264,8 @@
   padding: 12px 14px;
   background: var(--n-100);
 }
-.sg-checks .fix {
+.sg-checks .fix,
+.sg-two .fix {
   color: var(--accent);
   font-size: 13.5px;
 }
@@ -235,8 +292,81 @@
   display: block;
   margin: 0 auto;
 }
-.sg-fig svg.sg-map {
-  max-width: 460px;
+/* 전선 구조물: portraits in the order they fall. */
+.sg-structs {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  margin: 14px 0;
+  overflow-x: auto;
+}
+.sg-structs article {
+  flex: 1 1 0;
+  min-width: 150px;
+  padding: 10px 12px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--n-100);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.sg-structs .pic {
+  position: relative;
+  width: 84px;
+  height: 84px;
+  margin: 0 auto 6px;
+  border-radius: 50%;
+  background: var(--n-50);
+  border: 2px solid var(--n-400);
+}
+.sg-structs .pic img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.sg-structs .pic img.icon {
+  padding: 18px;
+  object-fit: contain;
+  filter: grayscale(0.2);
+}
+.sg-structs .no {
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #000;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 22px;
+  text-align: center;
+}
+.sg-structs h5 {
+  margin: 0;
+  font-size: 15px;
+  text-align: center;
+}
+.sg-structs p {
+  margin: 4px 0 0;
+  font-size: 13px;
+}
+.sg-structs p.where {
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+}
+.sg-structs p.souls {
+  margin-top: 6px;
+  color: var(--amber-500);
+  text-align: center;
+}
+.sg-structs .sg-next {
+  align-self: center;
+  color: var(--n-700);
+  font-style: normal;
 }
 .sg-fig figcaption {
   margin-top: 6px;
@@ -369,14 +499,15 @@
 }
 .sg-table th,
 .sg-table td {
-  border-bottom: 1px solid var(--line);
-  padding: 6px 8px;
+  border: 1px solid var(--line);
+  padding: 6px 10px;
   text-align: left;
   vertical-align: top;
 }
 .sg-table th {
-  color: var(--muted);
-  font-weight: 600;
+  background: var(--n-200);
+  color: var(--text);
+  font-weight: 700;
 }
 .sg-table tr.warn td {
   color: var(--warning);
@@ -660,6 +791,14 @@
   }
   .sg-toc small {
     display: none;
+  }
+  .sg-structs {
+    flex-wrap: nowrap;
+    scroll-snap-type: x mandatory;
+  }
+  .sg-structs article {
+    min-width: 62%;
+    scroll-snap-align: start;
   }
   .sg-sec {
     padding: 18px 16px;

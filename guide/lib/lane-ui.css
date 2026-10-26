@@ -1,0 +1,638 @@
+/* Lookout dashboard design layer, loaded last: one look for every page on top of the older page
+   stylesheets (desktop.css, intel-ui.css, opgg.css, strategy.css). Colours, type and spacing come
+   from tokens.css. Our team is blue, theirs red; the brand mint marks where you are and the main
+   action, so blue never doubles as "selected". */
+
+/* ---------- Base ---------- */
+:root {
+  font-family: var(--font);
+  font-size: var(--fs-md);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  font-family: var(--font);
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--n-400) transparent;
+}
+::selection {
+  background: color-mix(in srgb, var(--brand) 35%, transparent);
+}
+h1 {
+  font-size: var(--fs-2xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+h2 {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+}
+h3 {
+  font-size: 15px;
+  font-weight: 700;
+}
+a {
+  color: var(--blue-300);
+}
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+a:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+/* ---------- Buttons and fields ---------- */
+button {
+  min-height: 34px;
+  padding: 6px 12px;
+  border: 1px solid var(--n-300);
+  border-radius: var(--r-sm);
+  background: var(--n-200);
+  color: var(--text);
+  font-weight: 600;
+  transition: background 0.12s, border-color 0.12s;
+}
+button:hover {
+  background: var(--n-300);
+  border-color: var(--n-400);
+}
+button.primary {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: var(--brand-ink);
+  font-weight: 700;
+}
+button.primary:hover {
+  background: var(--green-100);
+  border-color: var(--green-100);
+}
+button.ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--muted);
+}
+input,
+select {
+  border: 1px solid var(--n-300) !important;
+  border-radius: var(--r-sm);
+  background: var(--n-150) !important;
+  color: var(--text);
+}
+input::placeholder {
+  color: var(--n-600);
+}
+kbd {
+  padding: 1px 6px;
+  border: 1px solid var(--n-400);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--n-150);
+  color: var(--n-900);
+  font-family: var(--font);
+  font-size: var(--fs-xs);
+}
+
+/* ---------- Header ---------- */
+header {
+  height: 56px;
+  padding: 0 20px;
+  background: var(--n-50);
+  border-bottom: 1px solid var(--n-200);
+}
+.brand b {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+.brand span {
+  border-left-color: var(--n-300);
+}
+header nav button {
+  padding: 0 12px;
+  color: var(--n-700);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+header nav button:hover {
+  color: var(--text);
+}
+header nav button[aria-current='page'] {
+  color: var(--text);
+  border-bottom: 2px solid var(--brand);
+}
+.status {
+  max-width: 260px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.status-dot.live {
+  background: var(--brand);
+  box-shadow: none;
+}
+
+/* ---------- Layout: the page never runs under the ad column ---------- */
+.layout {
+  min-width: 0;
+}
+main {
+  container-type: inline-size;
+  min-width: 0;
+  max-width: 1240px;
+  padding: var(--sp-5) var(--sp-5) 48px;
+}
+.page-heading {
+  margin-bottom: var(--sp-4);
+}
+.page-heading p {
+  color: var(--muted);
+}
+
+/* ---------- Surfaces ---------- */
+.card,
+.op-box,
+.op-strip {
+  background: var(--panel);
+  border: 1px solid var(--n-200);
+  border-radius: var(--r-md);
+}
+.card,
+.op-box {
+  padding: var(--sp-4);
+}
+.op-box h3,
+.card h2 {
+  margin-bottom: var(--sp-3);
+}
+.op-box h3 small,
+.card-head .label {
+  color: var(--n-600);
+  font-weight: 500;
+}
+.op-box-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-3);
+}
+.op-box-head h3 {
+  margin: 0;
+}
+/* The lane as the game shows it: its colour as a square, then its name. */
+.op-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--n-800);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.op-tag::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  background: var(--n-600);
+}
+.op-tag.lane-yellow::before {
+  background: var(--lane-yellow);
+}
+.op-tag.lane-green::before {
+  background: var(--lane-green);
+}
+.op-tag.lane-blue::before {
+  background: var(--lane-blue);
+}
+.note,
+p.note {
+  color: var(--n-600);
+  font-size: var(--fs-sm);
+}
+.badge,
+.label {
+  font-size: var(--fs-sm);
+}
+
+/* ---------- Live game ---------- */
+.op-strip {
+  padding: 10px var(--sp-4);
+}
+.op-strip b {
+  font-size: 22px;
+  font-weight: 800;
+}
+.op-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--n-600);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.op-live::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--n-500);
+}
+.op-live.on {
+  background: none;
+  color: var(--red-300);
+}
+.op-live.on::before {
+  background: var(--enemy);
+}
+.op-teams {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.op-team {
+  border-color: var(--n-200);
+}
+.op-team-head {
+  padding: 10px var(--sp-4);
+  font-weight: 700;
+}
+.op-team.ally .op-team-head,
+.op-team.enemy .op-team-head {
+  background: none;
+  border-left: 0;
+  border-bottom: 1px solid var(--n-200);
+}
+.op-team.ally {
+  border-top: 2px solid var(--ally);
+}
+.op-team.enemy {
+  border-top: 2px solid var(--enemy);
+}
+.op-team.ally .op-team-head b {
+  color: var(--blue-300);
+}
+.op-team.enemy .op-team-head b {
+  color: var(--red-300);
+}
+.op-team table {
+  table-layout: fixed;
+}
+.op-team th:nth-child(1) {
+  width: auto;
+}
+.op-team th:nth-child(2) {
+  width: 64px;
+}
+.op-team th:nth-child(3) {
+  width: 58px;
+}
+.op-team th:nth-child(4) {
+  width: 34%;
+}
+.op-team th,
+.op-list th {
+  background: var(--n-150);
+  color: var(--n-600);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.op-team td,
+.op-list td {
+  border-top-color: var(--n-200);
+}
+.op-team tbody tr:hover td,
+.op-list tbody tr:hover td {
+  background: var(--n-150);
+}
+.op-team tr.me td {
+  background: color-mix(in srgb, var(--ally) 12%, transparent);
+}
+.op-hero > div {
+  min-width: 0;
+}
+.op-hero b,
+.op-hero small {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.op-hero b i {
+  padding: 0 4px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  background: none;
+  color: var(--blue-300);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+}
+.op-hero b i.lane {
+  background: none;
+  color: var(--amber-300);
+}
+.op-items {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Tiers read as numbers in a table, not as coloured pills. */
+.op-tier {
+  min-width: 0;
+  padding: 0;
+  border-radius: 0;
+  background: none !important;
+  font-size: var(--fs-md);
+  font-weight: 700;
+  text-align: left;
+}
+.op-tier.t1 {
+  color: var(--blue-300);
+}
+.op-tier.t2 {
+  color: var(--teal-300);
+}
+.op-tier.t3 {
+  color: var(--amber-300);
+}
+.op-tier.t4,
+.op-tier.t5 {
+  color: var(--n-600);
+}
+table {
+  font-variant-numeric: tabular-nums;
+}
+.op-portrait.lg {
+  border-radius: var(--r-md);
+}
+.op-grid3 {
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr);
+}
+
+/* ---------- After the wave: route card ---------- */
+.op-route {
+  margin-bottom: 12px;
+}
+.op-route-body {
+  display: grid;
+  grid-template-columns: minmax(0, 460px) minmax(0, 1fr);
+  gap: var(--sp-5);
+  align-items: start;
+}
+.op-route-fig {
+  position: relative;
+  margin: 0;
+}
+.op-route-map {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--n-0);
+}
+.op-route-fig figcaption {
+  margin-top: 6px;
+  color: var(--n-600);
+  font-size: var(--fs-xs);
+}
+/* The whole map in the corner, with the part shown above boxed. */
+.op-route-where {
+  position: absolute;
+  right: 8px;
+  bottom: 30px;
+  width: 84px;
+  height: 84px;
+  border: 1px solid var(--n-500);
+  background: var(--n-0);
+}
+.op-route-where image {
+  opacity: 0.7;
+}
+.op-route-where rect {
+  fill: none;
+  stroke: var(--n-white);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+.op-route-map polyline {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.op-route-map .r-path-halo {
+  stroke: var(--n-0);
+  stroke-width: 8;
+  opacity: 0.75;
+}
+.op-route-map .r-path {
+  stroke: var(--n-white);
+  stroke-width: 3.5;
+}
+.op-route-map .r-path-a {
+  fill: var(--n-white);
+  stroke: var(--n-0);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.op-route-map .r-enemy {
+  stroke: var(--red-300);
+  stroke-width: 2.5;
+  stroke-dasharray: 7 6;
+}
+.op-route-map .r-enemy-a {
+  fill: var(--red-300);
+}
+.op-route-map .r-crate {
+  fill: var(--amber-300);
+  stroke: var(--n-0);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+.op-route-map .r-tough {
+  fill: var(--amber-700);
+  stroke: var(--amber-100);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+.op-route-map .r-statue {
+  fill: var(--gold-500);
+  stroke: var(--n-0);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+.op-route-map .r-lane {
+  fill: var(--n-white);
+  stroke: var(--n-0);
+  stroke-width: 3;
+  vector-effect: non-scaling-stroke;
+}
+.op-route-map .r-num {
+  fill: var(--n-white);
+  stroke: var(--n-0);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+.op-route-map text {
+  font-family: var(--font);
+  font-weight: 700;
+  dominant-baseline: middle;
+  paint-order: stroke;
+  stroke: var(--n-0);
+  stroke-width: 3.5px;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.op-route-map .r-num-t {
+  fill: var(--n-0);
+  stroke: none;
+  text-anchor: middle;
+  font-weight: 800;
+}
+.op-route-map .r-name {
+  fill: var(--n-950);
+}
+.op-route-map .r-lane-t {
+  fill: var(--n-white);
+  text-anchor: middle;
+}
+
+/* Steps: when, then what. */
+.op-steps {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+  border-top: 1px solid var(--n-200);
+}
+.op-steps li {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--n-200);
+}
+.op-steps time {
+  color: var(--n-600);
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums;
+  line-height: 22px;
+}
+.op-steps b {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  line-height: 22px;
+}
+.op-steps b i {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--n-white);
+  color: var(--n-0);
+  font-size: var(--fs-sm);
+  font-style: normal;
+  font-weight: 800;
+}
+.op-steps small {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+}
+.op-steps .rs-lane b,
+.op-steps .rs-back b,
+.op-steps .rs-wait b {
+  color: var(--n-800);
+  font-weight: 600;
+}
+.op-onway {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 16px;
+  margin: 0 0 14px;
+  font-size: 13px;
+  color: var(--n-800);
+}
+.op-onway > small {
+  color: var(--n-600);
+}
+.op-onway i {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 6px;
+  border-radius: 50%;
+  vertical-align: 0;
+}
+.op-onway .k-crate {
+  background: var(--amber-300);
+}
+.op-onway .k-tough {
+  background: var(--amber-700);
+  box-shadow: inset 0 0 0 1px var(--amber-100);
+}
+.op-onway .k-statue {
+  background: var(--gold-500);
+}
+.op-route-alt {
+  margin-bottom: 12px;
+}
+.op-route-alt b {
+  color: var(--red-300);
+  font-size: 13px;
+}
+.op-route-alt p {
+  margin-top: 2px;
+  color: var(--n-800);
+  font-size: 13px;
+}
+
+/* ---------- Narrow windows (the side menu takes 184 px, the ad column 324 px) ---------- */
+@container (max-width: 940px) {
+  .op-teams,
+  .op-grid3,
+  .op-heroes,
+  .op-cols,
+  .grid,
+  .map-layout {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .op-heroes .op-list {
+    /* stacked above the hero page: a sticky list would slide over the hero header while scrolling */
+    position: static;
+    max-height: 420px;
+    overflow: auto;
+  }
+}
+@container (max-width: 640px) {
+  .op-route-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .op-route-fig {
+    max-width: 460px;
+  }
+}
+.op-team {
+  padding: 0;
+}
+
+/* ---------- Plain blocks instead of tinted boxes with a coloured left bar ---------- */
+.connection {
+  border-left: 0;
+  border: 1px solid var(--n-200);
+  border-radius: var(--r-md);
+  background: var(--panel);
+}
+.sg-example {
+  border-left: 0;
+  border-top: 1px solid var(--n-300);
+  border-radius: 0;
+  background: none;
+  padding: 10px 0 0;
+}

@@ -1,0 +1,1419 @@
+'use strict';
+// Shared HTML for lane matchup, hero guides, objective timers and "now" cards.
+// `base` is the path prefix to ui/ from the page that renders it ('ui/' for the overlay, '' for the dashboard).
+(function () {
+  const esc = v =>
+    String(v ?? '').replace(
+      /[&<>"']/g,
+      c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]
+    );
+  const guide = id => (window.HERO_GUIDE || []).find(g => g.id === id) || null;
+  const clock = s => {
+    if (!Number.isFinite(s)) return '—';
+    const v = Math.max(0, Math.round(s));
+    return `${Math.floor(v / 60)}:${String(v % 60).padStart(2, '0')}`;
+  };
+  const STRENGTH = { strong: ['전선 강함', 'strong'], even: ['전선 보통', 'even'], weak: ['전선 약함', 'weak'] };
+  const ROLE = { marksman: '사격', brawler: '근접', assassin: '암살', mystic: '능력' };
+
+  const heroType = id => (window.HERO_TYPES || []).find(t => t.id === id) || null;
+  const CURVE = {
+    early: ['스노우볼형', '초반에 강하고 길어질수록 승률이 떨어집니다'],
+    late: ['후반형', '시간이 지날수록 강해집니다'],
+    even: ['균형형', '경기 시간에 따른 차이가 작습니다']
+  };
+  const FIGHT = { gun: '무기 중심', spirit: '능력 중심', hybrid: '무기·마법 혼합' };
+  const PATTERN = { farm: '파밍형', fight: '교전형', balanced: '' };
+  const pct = v => (v === null || v === undefined ? '—' : Math.round(v * 1000) / 10 + '%');
+  // Type chips: power curve, fight style, play pattern (public match statistics).
+  function typeChips(id, { detail = false } = {}) {
+    const t = heroType(id);
+    if (!t) return '';
+    const c = CURVE[t.curve];
+    const chips = [
+      c ? `<span class="iu-chip curve ${t.curve}" title="${esc(c[1])}">${c[0]}</span>` : '',
+      `<span class="iu-chip">${FIGHT[t.fight]}</span>`,
+      ...t.pattern.filter(p => PATTERN[p]).map(p => `<span class="iu-chip">${PATTERN[p]}</span>`)
+    ].join('');
+    const note =
+      detail && t.winRate?.short !== null
+        ? `<p class="iu-note">28분 이전 승률 ${pct(t.winRate.short)} → 40분 이후 ${pct(t.winRate.long)} · 아이템 ${t.share.weapon}% 무기 / ${t.share.spirit}% 능력 / ${t.share.vitality}% 생존${t.winRate.matches < 30000 ? ' · 표본 적음' : ''}</p>`
+        : '';
+    return `<div class="iu-types">${chips}</div>${note}`;
+  }
+  const itemKo = id => (window.ITEM_KO || []).find(i => i.id === id);
+  // Seen items when available, otherwise the hero's usual core items; plus how to answer them.
+  function buildBlock(id, seen, { detail = false } = {}) {
+    if (!window.ItemIntel) return '';
+    const catalog = window.ITEM_CATALOG || [],
+      ko = window.ITEM_KO || [];
+    const b = seen?.length
+      ? window.ItemIntel.inferBuild(seen, catalog, ko)
+      : window.ItemIntel.expectedBuild(id, window.HERO_TYPES, catalog, ko);
+    if (!b) return '';
+    const items = b.key
+      .slice(0, detail ? 4 : 3)
+      .map(k => `<li><b>${esc(k.ko)}</b>${detail && k.desc ? ' · ' + esc(k.desc) : ''}</li>`)
+      .join('');
+    return `<div class="iu-build"><p class="iu-line"><i>${b.expected ? '예상 빌드' : '보유 아이템'}</i>${esc(b.label)}</p>${items ? `<ul class="iu-tips">${items}</ul>` : ''}${b.threats.length ? `<p class="iu-line"><i>주의</i>${b.threats.map(t => esc(t.ko)).join(' · ')}</p>` : ''}${detail ? b.threats.map(t => `<p class="iu-note">${esc(t.ko)}: ${esc(t.tip)}</p>`).join('') : ''}${b.counters.length ? `<p class="iu-line"><i>대응</i>${b.counters.map(c => esc(c.ko)).join(', ')}</p>` : ''}</div>`;
+  }
+  // Growth from the souls under a hero's top-bar portrait: is the ultimate in, and how far to it.
+  const kSouls = v => (v >= 1000 ? (v / 1000).toFixed(v >= 10000 ? 0 : 1) + 'k' : String(v));
+  function growth(id, souls) {
+    const p = window.SoulLevels?.progress(souls);
+    if (!p) return null;
+    const ult = window.SoulLevels.ultOf(id),
+      approx = p.approx ? '≈' : '';
+    return p.ult.unlocked
+      ? { cls: 'ok', text: '궁 해금', title: `${ult?.name || '궁극기'} · 포인트 ${p.points}개 · 영혼 ${approx}${kSouls(souls)}` }
+      : { cls: p.ult.need <= 600 ? 'soon' : '', text: `궁까지 ${approx}${p.ult.need.toLocaleString('en-US')}`, title: `영혼 ${approx}${kSouls(souls)} · 3,200에 궁극기` };
+  }
+  // Ultimates matter until every hero in a group has one; three minutes of game time after that the
+  // ultimate rows and tags go. `key` names the group (the lane, the whole board), `ids` its heroes.
+  const ultAllAt = new Map(),
+    ULT_KEEP = 180;
+  function ultShown(key, ids, soulsOf, secs) {
+    if (!Number.isFinite(secs)) return true;
+    const all = ids.length > 0 && ids.every(id => window.SoulLevels?.progress(soulsOf(id))?.ult.unlocked),
+      at = ultAllAt.get(key);
+    if (!all || (at !== undefined && at > secs)) {
+      ultAllAt.delete(key);
+      return true;
+    }
+    if (at === undefined) ultAllAt.set(key, secs);
+    return secs - (at ?? secs) < ULT_KEEP;
+  }
+  // Every hero's souls from the top bar: mine, my team's and theirs.
+  const soulsMap = s =>
+    new Map([...(s.live?.opponents || []), ...(s.live?.allies || []), s.live?.local].filter(Boolean).map(h => [h.heroId, h.souls]));
+  const growthTag = (id, souls, cls) => {
+    const g = growth(id, souls);
+    return g ? `<small class="${cls} ${g.cls}" title="${esc(g.title)}">${esc(g.text)}</small>` : '';
+  };
+  // One line per hero for the overlay (no scrolling): portrait, name, type, and for an enemy its key
+  // items read from the scoreboard or the threat its usual build brings.
+  function heroRow(id, base, s, as) {
+    const g = guide(id),
+      t = heroType(id);
+    if (!g) return '';
+    const seen = s.live?.enemyItems?.[id],
+      keys = as === 'enemy' ? keyItems(seen).slice(0, 2) : [],
+      watch =
+        as === 'enemy' && !keys.length
+          ? window.ItemIntel?.expectedBuild(id, window.HERO_TYPES, window.ITEM_CATALOG || [], window.ITEM_KO || [])?.threats?.[0]?.ko
+          : '',
+      lane = (s.intel?.lane?.opponents || []).includes(id);
+    const all = soulsMap(s),
+      souls = as === 'enemy' && ultShown('all', [...all.keys()], h => all.get(h), s.live?.seconds) ? all.get(id) : null;
+    return `<div class="ov-row ${as}">${portrait(id, base)}<div><b>${esc(g.ko)}${lane ? ' <i>전선</i>' : ''}${growthTag(id, souls, 'ov-ult')}</b><small>${esc(
+      [CURVE_SHORT[t?.curve], FIGHT_SHORT[t?.fight], (g.tags || []).slice(0, 2).join('·')].filter(Boolean).join(' · ')
+    )}</small></div><span class="ov-k">${
+      keys.length
+        ? `<i>보유</i>${keys.map(k => `<em class="${k.urgent ? 'urgent' : ''}">${esc(k.ko)}</em>`).join('')}`
+        : watch
+          ? `<i>예상 위협</i><em class="warn">${esc(watch)}</em>`
+          : ''
+    }</span></div>`;
+  }
+  function enemyBuilds(s, base, { compact = false } = {}) {
+    if (compact) {
+      const enemies = s.live?.opponents || [],
+        lane = new Set(s.intel?.lane?.opponents || []);
+      if (!enemies.length) return '<p class="iu-empty">적 팀 확인 전</p>';
+      return [...enemies]
+        .sort((a, b) => lane.has(b.heroId) - lane.has(a.heroId))
+        .map(e => heroRow(e.heroId, base, s, 'enemy'))
+        .join('');
+    }
+    const enemies = s.live?.opponents || [];
+    if (!enemies.length) return '<p class="iu-empty">적 팀 확인 전</p>';
+    const seen = s.live?.enemyItems || {},
+      lane = new Set(s.intel?.lane?.opponents || []);
+    const ordered = [...enemies].sort((a, b) => lane.has(b.heroId) - lane.has(a.heroId));
+    return `${ordered
+      .map(
+        e =>
+          `<article class="iu-hero enemy"><div class="iu-hero-head">${portrait(e.heroId, base)}<div><b>${esc(guide(e.heroId)?.ko || e.heroName)}</b>${lane.has(e.heroId) ? '<span class="iu-badge strong">전선 상대</span>' : ''}${typeChips(e.heroId)}</div></div>${buildBlock(e.heroId, seen[e.heroId])}</article>`
+      )
+      .join('')}`;
+  }
+  // Hero select helper: every hero with its type at a glance; recognised heroes first.
+  function heroPicker(s, base) {
+    const list = window.HERO_GUIDE || [],
+      seen = new Set(
+        [
+          s.live?.hover?.heroId,
+          s.live?.local?.heroId,
+          ...(s.live?.allies || []).map(a => a.heroId),
+          ...(s.live?.opponents || []).map(o => o.heroId)
+        ].filter(Boolean)
+      );
+    const order = { early: 0, even: 1, late: 2 };
+    const rows = [...list].sort(
+      (a, b) =>
+        (b.id === s.live?.hover?.heroId) - (a.id === s.live?.hover?.heroId) ||
+        seen.has(b.id) - seen.has(a.id) ||
+        (order[heroType(a.id)?.curve] ?? 1) - (order[heroType(b.id)?.curve] ?? 1)
+    );
+    return `${rows
+      .map(
+        g =>
+          `<div class="iu-pick-row">${portrait(g.id, base)}<div><b>${esc(g.ko)}</b> <small>${esc(ROLE[g.role] || '')}</small>${typeChips(g.id)}<p class="iu-note">${esc(g.style || '')}${g.strengths?.[0] ? ' · 장점: ' + esc(g.strengths[0]) : ''}${g.weaknesses?.[0] ? ' · 약점: ' + esc(g.weaknesses[0]) : ''}</p></div></div>`
+      )
+      .join('')}`;
+  }
+  function portrait(id, base) {
+    return `<img class="iu-portrait" src="${base}assets/portraits/${id}-small.png" alt="">`;
+  }
+  function badge(g) {
+    const s = STRENGTH[g?.laneStrength];
+    return s ? `<span class="iu-badge ${s[1]}">${s[0]}</span>` : '';
+  }
+  // One hero, summarised for the role it plays this match: opponent or partner.
+  function heroCard(id, base, { as = 'enemy', detail = false } = {}) {
+    const g = guide(id);
+    if (!g) return '';
+    const tips = as === 'enemy' ? g.vsTips : g.withTips;
+    return `<article class="iu-hero ${as}"><div class="iu-hero-head">${portrait(id, base)}<div><b>${esc(g.ko)}</b>${badge(g)}<small>${esc(ROLE[g.role] || '')}${g.style ? ' · ' + esc(g.style) : ''}</small>${typeChips(id, { detail })}</div></div>${
+      detail
+        ? `<div class="iu-pros"><p><i>장점</i>${g.strengths.map(esc).join(' · ')}</p><p><i>약점</i>${g.weaknesses.map(esc).join(' · ')}</p></div>`
+        : `<p class="iu-line"><i>약점</i>${esc(g.weaknesses[0] || '')}</p>`
+    }${
+      tips?.length
+        ? `<ul class="iu-tips">${tips
+            .slice(0, detail ? 3 : 1)
+            .map(t => `<li>${esc(t)}</li>`)
+            .join('')}</ul>`
+        : ''
+    }${
+      detail && g.spikes ? `<p class="iu-note">파워 스파이크 · ${esc(g.spikes)}</p>` : ''
+    }${detail && as === 'enemy' ? buildBlock(id, null, { detail: true }) : ''}</article>`;
+  }
+  function skills(id, base, selected = 1) {
+    const g = guide(id);
+    if (!g) return '';
+    const a = g.abilities[selected] || g.abilities[0];
+    return `<div class="iu-skills">${g.abilities
+      .map(
+        (x, i) =>
+          `<button data-skill="${i}" class="${i === selected ? 'active' : ''}" aria-label="${x.slot}번 ${esc(x.ko || x.en)}" aria-pressed="${i === selected}"><img src="${base}assets/abilities/${id}-${x.slot}.png" alt=""><span>${x.slot}</span></button>`
+      )
+      .join(
+        ''
+      )}</div><p class="iu-skill"><b>${esc(a.ko || a.en)}</b>${a.ko && a.en ? ` <small>${esc(a.en)}</small>` : ''}<br>${esc(
+      a.desc || ''
+    )}${a.tip ? `<br><i>대응</i> ${esc(a.tip)}` : ''}</p>`;
+  }
+  // Lane matchup: the two lane opponents, the lane partner and pick chips when unknown.
+  // `all` (the preparation panel) shows every lane opponent at once, without the tabs and the picker.
+  function lane(s, base, { focus = 0, skill = 1, detail = false, compact = false, all = false } = {}) {
+    const info = s.intel?.lane || {},
+      opp = info.opponents || [],
+      enemies = (s.live?.opponents || []).map(o => o.heroId),
+      allies = (s.live?.allies || []).map(o => o.heroId);
+    const where = info.lane ? `<span class="iu-chip lane">${esc(info.lane.name)}</span>` : '';
+    const basis =
+      { manual: '직접 고름', pregame: '준비 시간 전선 배정', 'seen-on-screen': '라인전 중 화면에 보인 이름' }[
+        info.opponentsBasis
+      ] || '';
+    const pick = enemies.length
+      ? `<div class="iu-pick"><small>전선 상대 고르기 (최대 2)</small>${enemies
+          .map(
+            id =>
+              `<button data-lane-opp="${id}" class="${opp.includes(id) ? 'selected' : ''}">${esc(guide(id)?.ko || id)}</button>`
+          )
+          .join(
+            ''
+          )}${allies.length ? `<small>아군 전선 파트너</small>${allies.map(id => `<button data-lane-partner="${id}" class="${info.partner === id ? 'selected' : ''}">${esc(guide(id)?.ko || id)}</button>`).join('')}` : ''}</div>`
+      : '<p class="iu-empty">적 팀 확인 전</p>';
+    if (!opp.length)
+      return `<div class="iu-lane-head">${where}<b>전선 상대 확인 중</b></div>${all ? '' : pick}`;
+    const shown = opp[Math.min(focus, opp.length - 1)];
+    const st = s.intel?.online?.lane;
+    const stat = st
+      ? `<p class="iu-note">2:2 통계 · 우리 조합 승률 ${Math.round(st.winRate * 100)}% (${st.matches}판) · 15분 영혼 ${st.soulsAt15 >= 0 ? '+' : ''}${st.soulsAt15}</p>`
+      : '';
+    const partner = info.partner
+      ? compact
+        ? `<p class="iu-line"><i>파트너</i>${esc(guide(info.partner)?.ko || '')} · ${esc(guide(info.partner)?.withTips?.[0] || '')}</p>`
+        : heroCard(info.partner, base, { as: 'ally' })
+      : '';
+    if (all) return lanePrep(s, base, { where, basis, opp, st });
+    return `<div class="iu-lane-head">${where}<b>전선 상대</b><small>${esc(basis)}</small></div>${compact ? '' : stat}<div class="iu-tabs small">${opp
+      .map(
+        (id, i) =>
+          `<button data-lane-focus="${i}" class="${id === shown ? 'active' : ''}">${esc(guide(id)?.ko || id)}</button>`
+      )
+      .join('')}</div>${heroCard(shown, base, { as: 'enemy', detail })}${skills(shown, base, skill)}${partner}${detail ? pick : `<details class="iu-more"><summary>전선 상대 바꾸기</summary>${pick}</details>`}`;
+  }
+  // The preparation panel's lane strip: how to play the lane (the matchup, my hero's early plan, my
+  // partner). The lane opponents themselves are the first cards of the enemy column.
+  function lanePrep(s, base, { where, basis, st }) {
+    const card = (s.coach || []).find(c => c.id === 'lane'),
+      mine = guide(s.live?.local?.heroId),
+      partner = guide(s.intel?.lane?.partner);
+    const plan = [
+      card?.plan || '',
+      mine?.plan?.early ? `${mine.ko}: ${mine.plan.early}` : '',
+      partner?.withTips?.[0] ? `파트너: ${partner.withTips[0]}` : '',
+      st ? `이 2:2 조합 승률 ${Math.round(st.winRate * 100)}% (${st.matches}판)` : ''
+    ].filter(Boolean);
+    return `<div class="lp-plan">${where}${card ? `<b>${esc(card.title)}</b>` : '<b>라인전</b>'}<small>${esc(basis)}</small>${
+      plan.length ? `<ul>${plan.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''
+    }</div>`;
+  }
+  const STATE_KO = { visible: '보임', dead: '사망', missing: '미싱', unknown: '—' };
+  function mia(s) {
+    const enemies = s.intel?.mia?.enemies || [];
+    if (!enemies.length) return '';
+    return `<div class="iu-mia">${enemies
+      .map(
+        e =>
+          `<span class="iu-chip ${e.state}">${esc(e.heroId ? guide(e.heroId)?.ko || e.heroId : '적 ' + (e.slot + 1))} ${STATE_KO[e.state]}${e.missingFor ? ' ' + e.missingFor + '초' : ''}</span>`
+      )
+      .join('')}</div>`;
+  }
+  function timers(s, { buttons = true } = {}) {
+    const o = s.intel?.objectives;
+    if (!o?.known) return '<p class="iu-empty">경기 시계 확인 전</p>';
+    const m = o.midboss,
+      r = o.rift,
+      u = o.urn;
+    const row = (name, value, sub, actions = '') =>
+      `<div class="iu-timer"><div><b>${name}</b><small>${esc(sub)}</small></div><strong>${value}</strong>${actions}</div>`;
+    const mb =
+      m.state === 'respawn'
+        ? row('중앙 보스', clock(m.remaining), `재생성 ${clock(m.respawnAt)} · ${m.deaths}회 처치`)
+        : row('중앙 보스', '생존', m.deaths ? `${clock(m.respawnAt)}에 재생성됨 (추정)` : '처치되면 Alt+B');
+    const rift =
+      r.state === 'waiting'
+        ? row('불안정한 균열', clock(r.remaining), `${clock(r.from)}~${clock(r.to)} · ${r.basis}`)
+        : r.state === 'window'
+          ? row(
+              '불안정한 균열',
+              r.remaining > 0 ? clock(r.remaining) : '예고 주시',
+              `${clock(r.from)}~${clock(r.to)} 사이드 전선 다리`
+            )
+          : row('불안정한 균열', '확인 필요', '열렸다면 끝난 뒤 Alt+R로 기록');
+    const urn = row('영혼 단지', clock(u.remaining), `${clock(u.at)} · ${u.laneName} · 들고 있는 동안은 다음 단지 늦어짐`);
+    const rejuv = m.rejuvRemaining
+      ? row('소생의 보석', clock(m.rejuvRemaining), '크리스탈 획득 팀 3분간 1회 부활')
+      : '';
+    const actions = buttons
+      ? `<div class="iu-actions"><button data-objective="midboss">보스 처치 기록 <kbd>Alt B</kbd></button><button data-objective="rift">균열 기록 <kbd>Alt R</kbd></button><button data-objective-undo="midboss" class="ghost">보스 기록 취소</button><button data-objective-undo="rift" class="ghost">균열 기록 취소</button></div>`
+      : '';
+    return `${mb}${rejuv}${rift}${urn}${actions}`;
+  }
+  function now(s, limit = 3, { compact = false } = {}) {
+    // Status notes ("enemy team read", "reading the clock") are not things to do.
+    const cards = (s.coach || [])
+        .filter(c => !['plan', 'comp', 'items', 'team', 'clock-wait'].includes(c.id))
+        .slice(0, limit),
+      plan = compact ? null : (s.coach || []).find(c => c.id === 'plan'),
+      comp = compact ? null : (s.coach || []).find(c => c.id === 'comp'),
+      shop = compact ? null : (s.coach || []).find(c => c.id === 'items');
+    return `${cards
+      .map(
+        (c, i) =>
+          `<div class="iu-card ${i === 0 ? 'top' : ''} ${['mia', 'mia-team', 'low', 'status'].includes(c.id) ? 'alert' : ''}"><b>${esc(c.title)}</b><p>${esc(c.body)}</p></div>`
+      )
+      .join(
+        ''
+      )}${plan ? `<div class="iu-card plan"><b>${esc(plan.title)}</b><p>${esc(plan.body)}</p></div>` : ''}${comp ? `<div class="iu-card plan"><b>${esc(comp.title)}</b><p>${esc(comp.body)}</p></div>` : ''}${shop ? `<div class="iu-card plan"><b>추천 아이템</b><ul class="iu-tips">${shop.items.map(i => `<li><b>${esc(i.name)}</b> · ${esc(i.why)}</li>`).join('')}</ul></div>` : ''}`;
+  }
+  // The most urgent timer for the one-line chip.
+  function urgent(s) {
+    const o = s.intel?.objectives;
+    if (!o?.known) return null;
+    const list = [];
+    if (o.rift.state === 'window' && o.rift.remaining > 0) list.push(['균열', o.rift.remaining]);
+    if (o.midboss.state === 'respawn') list.push(['보스', o.midboss.remaining]);
+    list.push(['영혼 단지', o.urn.remaining]);
+    const [name, t] = list.filter(([, v]) => v <= 120).sort((a, b) => a[1] - b[1])[0] || [];
+    return name ? `${name} ${clock(t)}` : null;
+  }
+  // Shop strip: each recommended item, who it answers, and how it works against them (the item's own
+  // summary where there is no such line). Answers to items the enemies were seen holding come first,
+  // then the hero-guide / match-stat answers to the enemy team.
+  function shopList(s, base) {
+    const catalog = window.ITEM_CATALOG || [],
+      intel = window.ItemIntel,
+      byName = new Map(catalog.map(i => [i.name, i])),
+      byId = new Map(catalog.map(i => [i.id, i])),
+      koById = new Map((window.ITEM_KO || []).map(k => [k.id, k])),
+      brief = window.ITEM_BRIEF || {},
+      owned = new Set(s.live?.context?.items || []),
+      koName = it => koById.get(it.id)?.ko || it.name;
+    const what = it => {
+      if (brief[it.id]) return brief[it.id];
+      const d = (koById.get(it.id)?.desc || '').split('.')[0];
+      return d.length > 30 ? d.slice(0, 29) + '…' : d;
+    };
+    const row = (it, why, how) =>
+      `<div class="sh-item"><img src="${base}${esc(it.file)}" alt=""><b>${esc(koName(it))}</b>${why ? `<small class="sh-why">${esc(why)}</small>` : ''}${how || what(it) ? `<small class="sh-how">${esc(how || what(it))}</small>` : ''}</div>`;
+    const picks = new Map(),
+      add = (it, why, weight, threat) => {
+        if (!it || owned.has(it.id)) return;
+        const p = picks.get(it.id) || { it, weight: 0, why: [], how: '' };
+        p.weight += weight;
+        if (why && !p.why.includes(why)) p.why.push(why);
+        p.how ||= intel?.HOW_VS?.[threat]?.[it.name] || intel?.HOW?.[it.name] || '';
+        picks.set(it.id, p);
+      };
+    // Items read from the scoreboard: an immunity, control or heal item calls for its answer.
+    for (const [hid, ids] of Object.entries(s.live?.enemyItems || {}))
+      for (const [key, t] of Object.entries(intel?.THREATS || {})) {
+        const hit = ids.map(id => byId.get(id)).find(it => it && t.items.includes(it.name));
+        if (hit)
+          for (const c of t.counters) add(byName.get(c), `${guide(+hid)?.ko || '적'}의 ${koName(hit)}(${t.ko}) 대응`, 3, key);
+      }
+    ((s.coach || []).find(c => c.id === 'items')?.items || []).forEach((i, n) =>
+      add(
+        byName.get(i.name),
+        i.source === 'online'
+          ? String(i.why || '')
+              .replace('이 상대들과의 경기 승률', '이 적 조합 상대 승률')
+              .replace('평균 대비 ', '')
+          : String(i.why || '')
+              .replace(/^대응: /, '')
+              .split(', ')
+              .map(x => (/조합$/.test(x) ? x : x + ' 상대'))
+              .join(' · '),
+        2 - n * 0.1
+      )
+    );
+    // The strip holds answers to the enemy only; the build sits on the other side of the screen.
+    const counters = [...picks.values()].sort((a, b) => b.weight - a.weight).slice(0, 5);
+    return `<h4>상대 대응</h4>${
+      counters.length ? counters.map(x => row(x.it, x.why.slice(0, 2).join(' · '), x.how)).join('') : '<p class="sh-empty">적 팀 확인 전</p>'
+    }`;
+  }
+  // Korean shop name of an item given by its English one.
+  function itemByName(name) {
+    const it = (window.ITEM_CATALOG || []).find(i => i.name === name);
+    return it ? (window.ITEM_KO || []).find(k => k.id === it.id)?.ko || it.name : '';
+  }
+  // Items that change how a fight goes (immunity, control, sustain, burst...), most urgent first.
+  const KEY_ORDER = ['immune', 'control', 'heal', 'spiritBurst', 'gunBurst', 'dive', 'spiritDefense', 'gunDefense'];
+  function keyItems(itemIds) {
+    const intel = window.ItemIntel,
+      catalog = window.ITEM_CATALOG || [];
+    if (!intel || !itemIds?.length) return [];
+    const byId = new Map(catalog.map(i => [i.id, i])),
+      koById = new Map((window.ITEM_KO || []).map(k => [k.id, k])),
+      out = [];
+    for (const key of KEY_ORDER)
+      for (const id of itemIds) {
+        const it = byId.get(id);
+        if (it && intel.THREATS[key]?.items.includes(it.name) && !out.some(o => o.id === id))
+          out.push({
+            id,
+            ko: koById.get(id)?.ko || it.name,
+            key,
+            group: intel.THREATS[key].ko,
+            urgent: key === 'immune' || key === 'control'
+          });
+      }
+    return out;
+  }
+  // Holding Tab: the game's scoreboard and HUD stay clear. Under each scoreboard column, as wide as
+  // it, that hero's description (heroTag): what the scoreboard does not say (it already shows souls,
+  // K/D/A and item icons), its concept, core play and abilities, my lane tinted. Each team has one
+  // plain plate behind its columns. What only matters summed over a team is one line along the
+  // plate's bottom, in two labelled parts: the team (damage kinds, late-game heroes, a
+  // threat two or more of them bring), and for the enemy 우리 대응: the defence to buy first and the
+  // item that answers that threat. Everything else is one panel on the free left edge: what to do
+  // now, my plan, the route picture while laning, the team matchup and the objectives. The folded
+  // list hides while Tab is held.
+  function board(s, base) {
+    const enemies = s.live?.opponents || [],
+      enemyIds = new Set(enemies.map(e => e.heroId)),
+      soulsOf = new Map([...enemies, ...(s.live?.allies || []), s.live?.local].filter(Boolean).map(h => [h.heroId, h.souls])),
+      lane = s.intel?.lane,
+      laneOpp = new Set(lane?.opponents || []),
+      seen = s.live?.enemyItems || {},
+      local = s.live?.local,
+      secs = s.live?.seconds;
+    const expected = id =>
+      window.ItemIntel?.expectedBuild(id, window.HERO_TYPES, window.ITEM_CATALOG || [], window.ITEM_KO || []);
+    const slots = (s.live?.slots || []).filter(x => Number.isInteger(x.heroId));
+    // The ultimate in a column's width: unlocked, or the souls still missing.
+    const ult = id => {
+      const gr = growth(id, soulsOf.get(id));
+      return gr ? `<small class="tv-ult ${gr.cls}" title="${esc(gr.title)}">${esc(gr.cls === 'ok' ? '궁 해금' : gr.text)}</small>` : '';
+    };
+    // Each enemy's build: the items seen on the scoreboard, or the hero's usual one.
+    const builds = new Map(
+      [...enemyIds].map(id => [
+        id,
+        seen[id]?.length && window.ItemIntel
+          ? window.ItemIntel.inferBuild(seen[id], window.ITEM_CATALOG || [], window.ITEM_KO || [])
+          : expected(id)
+      ])
+    );
+    // Damage kind per hero: the seen build's direction, else the hero's usual one.
+    const kind = id => {
+      const b = enemyIds.has(id) && seen[id]?.length ? builds.get(id)?.build : null;
+      return b ? (b.startsWith('spirit') ? 'spirit' : b.startsWith('weapon') ? 'gun' : 'hybrid') : heroType(id)?.fight;
+    };
+    // The ultimate matters until everyone has it, and for three minutes after; then the row goes.
+    const early = ultShown(
+      'board',
+      slots.map(x => x.heroId),
+      id => soulsOf.get(id),
+      secs
+    );
+    // My lane: me and my partner, and the two opponents.
+    const near = id => (enemyIds.has(id) ? laneOpp.has(id) : id === local?.heroId || id === lane?.partner);
+    // One hero's description under its own scoreboard column, as wide as the column. Every column has
+    // the same rows, lined up across the board after rendering (overlay-live.js):
+    //   my lane mark · ultimate · for an enemy the key items seen (or the threat its usual build
+    //   brings) and our answer under a grey 대응, so it never reads as the enemy's · concept (tags) ·
+    //   core play (its first line) · the four abilities, each in a few words (ability-short.json)
+    // My lane's columns are tinted.
+    const heroTag = x => {
+      const id = x.heroId,
+        g = guide(id),
+        enemy = enemyIds.has(id),
+        keys = enemy ? keyItems(seen[id]) : [],
+        build = enemy ? builds.get(id) : null,
+        threat = keys.length ? keys[0].key : build?.threats?.[0]?.key,
+        watch = enemy && !keys.length ? build?.threats?.[0]?.ko : null,
+        answer = enemy && threat ? itemByName(window.ItemIntel?.THREATS[threat]?.counters[0]) : null,
+        mark = enemy ? (laneOpp.has(id) ? '내 전선' : '') : id === local?.heroId ? '나' : id === lane?.partner ? '파트너' : '',
+        items = keys.length
+          ? keys
+              .slice(0, 2)
+              .map(k => `<em class="${k.urgent ? 'urgent' : ''}">${esc(k.ko)}</em>`)
+              .join('')
+          : watch
+            ? `<small class="tv-watch">${esc(watch)} 예상</small>`
+            : '';
+      const row = (cls, html) => `<div class="tv-r" data-row="${cls}">${html}</div>`;
+      const skills = (g?.abilities || [])
+        .slice(0, 4)
+        .map((a, i) =>
+          row(
+            'sk' + i,
+            `<p class="tv-skill${a.slot === 4 ? ' ult' : ''}"><img src="${base}assets/abilities/${id}-${a.slot}.png" alt=""><b>${esc(
+              a.ko || a.en
+            )}</b><span>${esc(a.short || a.brief || '')}</span></p>`
+          )
+        )
+        .join('');
+      return `<div class="tv-tag ${enemy ? 'enemy' : 'ally'}${near(id) ? ' near' : ''}" data-pv="boardTags" style="left:${(x.cx * 100).toFixed(2)}%">${row(
+        'mark',
+        mark ? `<i class="tv-mark">${mark}</i>` : ''
+      )}${early ? row('ult', ult(id)) : ''}${
+        // (Ours keep the two rows empty, so every row stays level across the board.)
+        row('items', items) + row('answer', answer ? `<small class="tv-answer"><i>대응</i>${esc(answer)}</small>` : '')
+      }${row('concept', `<p class="tv-concept">${esc((g?.tags || []).slice(0, 2).join('·'))}</p>`)}${row(
+        'core',
+        g?.core?.[0] ? `<p class="tv-core">${esc(g.core[0])}</p>` : ''
+      )}${skills}</div>`;
+    };
+    // One plain plate per team behind its columns (placed to fit them after rendering), with the
+    // team's summary line along its bottom.
+    const strips = ['ally', 'enemy']
+      .map(team => {
+        const ids = slots.filter(x => enemyIds.has(x.heroId) === (team === 'enemy')).map(x => x.heroId),
+          cx = slots.filter(x => enemyIds.has(x.heroId) === (team === 'enemy')).map(x => x.cx);
+        if (!cx.length) return '';
+        const a = Math.min(...cx),
+          b = Math.max(...cx);
+        const mix = { spirit: 0, hybrid: 0, gun: 0 };
+        for (const id of ids) if (kind(id) in mix) mix[kind(id)]++;
+        const damage = [
+          ['spirit', '마법딜'],
+          ['gun', '무기딜'],
+          ['hybrid', '혼합']
+        ]
+          .filter(([k]) => mix[k])
+          .map(([k, ko]) => `<span class="tv-d ${k}">${ko} ${mix[k]}</span>`);
+        const types = ids.map(heroType),
+          late = types.filter(t => t?.curve === 'late').length,
+          soon = types.filter(t => t?.curve === 'early').length,
+          curve = [late ? `후반형 ${late}명` : '', soon ? `초반형 ${soon}명` : ''].filter(Boolean).join(', ');
+        const facts = [...damage, curve ? `<span>${esc(curve)}</span>` : ''];
+        let call = '';
+        if (team === 'enemy') {
+          // What to buy against this team: the defence its damage calls for, and the threat that
+          // two or more of them bring with the item that answers it.
+          const sp = mix.spirit + mix.hybrid / 2,
+            gn = mix.gun + mix.hybrid / 2,
+            defence = sp - gn >= 1.5 ? '마법 저항부터' : gn - sp >= 1.5 ? '총탄 방어부터' : '마법·총탄 방어 반반';
+          const votes = new Map();
+          for (const id of ids)
+            for (const t of builds.get(id)?.threats || []) {
+              const v = votes.get(t.key) || { ko: t.ko, n: 0, counter: t.counters[0] };
+              v.n++;
+              votes.set(t.key, v);
+            }
+          const top = [...votes.values()].filter(v => v.n >= 2).sort((x, y) => y.n - x.n)[0];
+          const answer = top && itemByName(top.counter);
+          if (top) facts.push(`<span>${esc(top.ko)} ${top.n}명</span>`);
+          call = `<span class="tv-sk ok">우리 대응</span><b>${defence}</b>${answer ? `<b>${esc(answer)}</b>` : ''}`;
+        }
+        const label = team === 'enemy' ? '<span class="tv-sk enemy">적 팀</span>' : '<span class="tv-sk ally">우리 팀</span>';
+        const sum = shown(s, 'boardTeams')
+          ? `<p class="tv-sum" data-pv="boardTeams"><span class="tv-sg">${label}${facts.filter(Boolean).join('')}</span>${
+              call ? `<span class="tv-sg">${call}</span>` : ''
+            }</p>`
+          : '';
+        return `<div class="tv-team ${team}" style="left:calc(${(a * 100).toFixed(2)}% - 4.1vh);width:calc(${((b - a) * 100).toFixed(2)}% + 8.2vh)">${sum}</div>`;
+      })
+      .join('');
+    const tags = shown(s, 'boardTags') ? slots.map(heroTag).join('') : '';
+    // The left panel.
+    const o = s.intel?.objectives;
+    const obj = o?.known
+      ? [
+          ['보스', o.midboss.state === 'respawn' ? clock(o.midboss.remaining) : '생존'],
+          [
+            '균열',
+            o.rift.state === 'waiting'
+              ? clock(o.rift.remaining)
+              : o.rift.state === 'window'
+                ? o.rift.remaining > 0
+                  ? clock(o.rift.remaining) + ' 안'
+                  : '곧'
+                : '—'
+          ],
+          ['영혼 단지', urnText(o.urn)]
+        ]
+      : [
+          ['보스', '—'],
+          ['균열', '—'],
+          ['영혼 단지', '—']
+        ];
+    const g = local ? guide(local.heroId) : null,
+      phase = !Number.isFinite(secs) || secs < 600 ? 'early' : secs < 1500 ? 'mid' : 'late';
+    const mine =
+      phase === 'early'
+        ? `<h4>라인전${lane?.lane?.name ? ' · ' + esc(lane.lane.name) : ''}</h4>${g?.plan?.early ? `<p class="tv-p">${esc(g.plan.early)}</p>` : ''}`
+        : `<h4>운영 · ${phase === 'mid' ? '중반' : '후반'}</h4>${g?.plan?.[phase] ? `<p class="tv-p">${esc(g.plan[phase])}</p>` : ''}`;
+    // What to do now, in full (the advice, why, what it is based on).
+    const now = (s.coach || [])
+      .filter(c => !['plan', 'comp', 'items', 'mia', 'mia-team', 'rift', 'midboss', 'urn', 'team', 'clock-wait'].includes(c.id))
+      .slice(0, 1)
+      .map(
+        c =>
+          `<div class="bd-now-card ${['low', 'status'].includes(c.id) ? 'alert' : ''}"><b>${esc(c.title)}</b>${c.body ? `<p>${esc(c.body)}</p>` : ''}${
+            c.basis ? `<small>근거 · ${esc(c.basis)}</small>` : ''
+          }</div>`
+      )
+      .join('');
+    // Until the lanes break up (15:00): the farming loop after pushing the wave, as a picture (route-guide.js).
+    // It takes the room of the team matchup's tips (the enemy plate's summary has the item to buy).
+    const route =
+      Number.isFinite(secs) && secs < 900 && shown(s, 'route') && window.RouteGuide ? window.RouteGuide.picture(s, base) : '';
+    // Team against team, once two or more of each side are known.
+    const tm = teamMatch(
+        slots.filter(x => !enemyIds.has(x.heroId)).map(x => x.heroId),
+        slots.filter(x => enemyIds.has(x.heroId)).map(x => x.heroId)
+      ),
+      edge = tm?.edge,
+      verdict = !Number.isFinite(edge) ? '' : edge >= 0.01 ? 'good' : edge <= -0.01 ? 'bad' : 'even',
+      versus = tm
+        ? `<h4>팀 상성</h4><p class="tv-vs"><span class="ally">우리 ${esc(tm.us)}</span><i>vs</i><span class="enemy">상대 ${esc(tm.them)}</span></p>${
+            verdict
+              ? `<p class="tv-vs-edge ${verdict}"><b>${{ good: '우리 유리', bad: '우리 불리', even: '비슷' }[verdict]}</b>승률 상성 ${edge >= 0 ? '+' : '−'}${Math.abs(edge * 100).toFixed(1)}%p<small>최근 30일 · 영웅 ${tm.pairs}쌍</small></p>`
+              : ''
+          }${(route ? [] : tm.tips).map(t => `<p class="tv-p tv-vs-tip">${esc(t)}</p>`).join('')}`
+        : '';
+    const left = `<aside class="bd-panel tv-left" data-pv="boardPanel"><div class="tv-head"><b>Lookout</b><span>${Number.isFinite(secs) ? clock(secs) : '시계 확인 중'}</span>${
+      local ? `<span>${esc(local.heroName)}</span>` : ''
+    }</div>${now}${mine}${route}${versus}<div class="bd-obj">${obj.map(([k, v]) => `<div><small>${k}</small><b>${esc(v)}</b></div>`).join('')}</div></aside>`;
+    // With the panel kept open on the left (preparation, Alt Q), the board's own panel would cover it.
+    return `<div class="tv-tags">${strips}${tags}</div>${
+      s.compactAt?.kind === 'detail' || !shown(s, 'boardPanel') ? '' : left
+    }`;
+  }
+  // Hero select: what the hovered hero is, in a few short rows (the strip under the hero grid).
+  // Gun range class from the weapon's damage falloff (deadlock-api weapon data); snipers by hand.
+  const LONG = [3, 17];
+  const RANGE_KO = { close: '근거리', closeMid: '근·중거리', mid: '중거리', long: '원거리' };
+  // Gun range as a type: close and close-mid fight up close, mid is balanced, long pokes from afar.
+  const RANGE_TYPE = { close: ['근접', 'close'], closeMid: ['근접', 'close'], mid: ['밸런스', 'mid'], long: ['원거리', 'long'] };
+  function gunRange(id) {
+    const g = window.HERO_RANGES?.[id]?.gun;
+    if (LONG.includes(id)) return 'long';
+    if (!g) return 'mid';
+    return g.falloffEnd <= 35 || g.bullets >= 4 ? 'close' : g.falloffEnd <= 48 ? 'closeMid' : g.falloffEnd <= 58 ? 'mid' : 'long';
+  }
+  // The game's own hero complexity (heroes.json `complexity`, 1-4).
+  const LEVEL = ['', '쉬움', '보통', '어려움', '매우 어려움'];
+  const LEVEL_SHORT = ['', '쉬움', '보통', '어려움', '최상'];
+  const levelOf = (id, g) => window.SoulLevels?.complexity(id) ?? g?.complexity;
+  const ROLE_FULL = { marksman: '사수', brawler: '근접 싸움꾼', assassin: '암살자', mystic: '마법사' };
+  const PHASE_KO = [
+    ['early', '초반'],
+    ['mid', '중반'],
+    ['late', '후반']
+  ];
+  // Hero select: a wide, low card in the free strip under the hero grid, four columns:
+  // who it is and its gun / its four abilities / strengths and weaknesses / what the popular build
+  // focuses on (ability maxed first, item mix) and the popular items by phase.
+  // What a skill does, in up to ~140 characters: whole sentences, skipping a lead-in that only sets
+  // the mood ("야마토의 그림자 영혼이 스며듭니다") and says nothing about the effect.
+  const EFFECT = /피해|효과|증가|감소|기절|둔화|회복|치유|이동|면역|저항|속도|쿨다운|처치|소환|표식|무적|침묵|밀쳐|끌어|보호막|투사체|탄|시야|은신|도약|돌진|날아|던져|설치|충전|발사|공격/;
+  function skillSummary(t) {
+    const parts = String(t || '')
+      .replace(/\.(?=[^\s\d])/g, '. ')
+      .split(/(?<=[.다])\s+/)
+      .map(x => x.trim())
+      .filter(Boolean);
+    if (parts.length > 1 && !EFFECT.test(parts[0])) parts.shift();
+    let out = '';
+    for (const p of parts) {
+      if (out && (out + ' ' + p).length > 140) break;
+      out = out ? out + ' ' + p : p;
+    }
+    return out.replace(/\.$/, '');
+  }
+  function gunText(gun) {
+    if (!gun) return '';
+    const kind = gun.bullets > 1 ? `산탄 ${gun.bullets}발` : gun.burst ? `${gun.burst}연발` : '단발';
+    return `${kind} · 탄창 ${gun.clip} · 초당 ${gun.rate}발 · DPS ${gun.dps}`;
+  }
+  // The same facts as chips: a dim label and a bold value, each kept on one line.
+  const stat = (label, value, unit = '') => `<span class="hv-stat">${label ? `<i>${esc(label)}</i>` : ''}<b>${esc(value)}</b>${unit ? `<u>${esc(unit)}</u>` : ''}</span>`;
+  function gunStats(gun) {
+    if (!gun) return '';
+    return `${stat('', gun.bullets > 1 ? `산탄 ${gun.bullets}` : gun.burst ? `${gun.burst}연발` : '단발', gun.bullets > 1 ? '발' : '')}${stat('탄창', gun.clip)}${stat('초당', gun.rate, '발')}${stat('DPS', gun.dps)}`;
+  }
+  function popularBuild(id, base) {
+    const build = window.HERO_BUILDS?.[id],
+      catalog = new Map((window.ITEM_CATALOG || []).map(i => [i.id, i])),
+      koById = new Map((window.ITEM_KO || []).map(k => [k.id, k.ko]));
+    if (!build) return '';
+    return PHASE_KO.map(
+      ([k, ko]) =>
+        `<div class="hv-phase"><i>${ko}</i>${(build[k] || [])
+          .slice(0, 4)
+          .map(x => catalog.get(x.id))
+          .filter(Boolean)
+          .map(it => `<span><img src="${base}${esc(it.file)}" alt=""><small>${esc(koById.get(it.id) || it.name)}</small></span>`)
+          .join('')}</div>`
+    ).join('');
+  }
+  function hoverCard(s, base = 'ui/') {
+    const id = s.live?.hover?.heroId,
+      g = guide(id),
+      t = heroType(id);
+    if (!g) return '';
+    const r = window.HERO_RANGES?.[id],
+      gun = r?.gun,
+      build = window.HERO_BUILDS?.[id],
+      first = build?.maxFirst?.[0];
+    const list = xs => (xs || []).map(x => `<li>${esc(x)}</li>`).join('');
+    const flow = [CURVE[t?.curve]?.[0], PATTERN[t?.pattern?.[0]], STRENGTH[g.laneStrength]?.[0], LEVEL[levelOf(g.id, g)] ? '난이도 ' + LEVEL[levelOf(g.id, g)] : '']
+      .filter(Boolean)
+      .join(' · ');
+    const skills = (g.abilities || [])
+      .slice(0, 4)
+      .map((a, n) => {
+        const k = r?.skills?.[n],
+          dist = k?.m ? (k.kind === '반경' ? '반경 ' : '') + (k.m >= 100 ? '매우 멂' : k.m + 'm') : '',
+          focus = first?.slot === a.slot;
+        return `<div class="hv-skill ${focus ? 'focus' : ''}"><b><em>${a.slot}</em>${esc(a.ko)}${dist ? `<small>${esc(dist)}</small>` : ''}${focus ? '<u>먼저 마스터</u>' : ''}</b><p>${esc(skillSummary(a.desc))}</p></div>`;
+      })
+      .join('');
+    const focusText = first
+      ? `${first.slot}번 ${esc(g.abilities?.[first.slot - 1]?.ko || '')} 먼저 마스터 <small>${first.share}%</small>`
+      : '';
+    const mix = t?.share
+      ? `아이템 ${[
+          ['spirit', '마법'],
+          ['weapon', '무기'],
+          ['vitality', '생명']
+        ]
+          .sort((a, b) => t.share[b[0]] - t.share[a[0]])
+          .map(([k, ko]) => `${ko} ${t.share[k]}%`)
+          .join(' · ')}`
+      : '';
+    const range = RANGE_TYPE[gunRange(id)];
+    // How the hero is played: its core moves (data/hero-core-play.json), then phase by phase.
+    const core = (g.core || []).map(x => `<p class="core">${esc(x)}</p>`).join(''),
+      phases = g.plan
+        ? [
+            ['early', '라인전'],
+            ['mid', '중반'],
+            ['late', '후반']
+          ]
+            .filter(([k]) => g.plan[k])
+            .map(([k, ko]) => `<p><i>${ko}</i>${esc(g.plan[k])}</p>`)
+            .join('')
+        : '';
+    const plan = core || phases ? `<section class="hv-plan"><h4>핵심 운용</h4>${core}${phases}</section>` : '';
+    // Tier, win and pick rate here too, so they show even when the portrait grid is not read.
+    const w = t?.winRate?.overall,
+      rank = [...(window.HERO_TYPES || [])].sort((a, b) => (b.winRate?.overall || 0) - (a.winRate?.overall || 0)).findIndex(x => x.id === id) + 1,
+      stats = Number.isFinite(w)
+        ? `<p class="hv-row hv-tier"><i>티어</i><span><em><span class="sel-rank t${tierOf(w)}"><b>${tierOf(w)}</b></span>${tierOf(w)}티어</em><em>승률 ${pct1(w)}%</em><em>픽률 ${pct1(pickRates().get(id))}%</em>${rank ? `<em>승률 ${rank}위 / ${(window.HERO_TYPES || []).length}</em>` : ''}</span></p>`
+        : '';
+    return `<div class="hv"><section class="hv-id"><h3>${esc(g.ko)} <small>${esc(ROLE_FULL[g.role] || '')}</small></h3><p class="hv-concept">${esc(g.style || '')}</p>${stats}<p class="hv-row"><i>운영</i><span>${flow
+      .split(' · ')
+      .map(x => `<em>${esc(x)}</em>`)
+      .join('')}</span></p><p class="hv-row"><i>사격</i><span><em class="hv-range ${range[1]}">${range[0]}</em><em>${esc(FIGHT[t?.fight] || '')}</em></span></p>${
+      gun
+        ? `<p class="hv-row"><i>총</i><span>${gunStats(gun)}</span></p><p class="hv-row"><i>사거리</i><span>${stat('최대 피해', gun.falloffStart, 'm까지')}${stat('최소', gun.falloffEnd, 'm부터')}</span></p>`
+        : ''
+    }</section><section class="hv-skills"><h4>능력</h4>${skills}</section><section class="hv-pros"><h4 class="good">강점</h4><ul>${list(
+      g.strengths
+    )}</ul></section><section class="hv-cons"><h4 class="bad">약점</h4><ul>${list(g.weaknesses)}</ul></section><section class="hv-build"><h4>빌드 중점 · 인기 빌드</h4>${focusText ? `<p class="hv-focus">${focusText}</p>` : ''}${
+      mix ? `<p class="hv-mix">${esc(mix)}</p>` : ''
+    }${popularBuild(id, base) || '<p>—</p>'}</section>${plan}</div>`;
+  }
+  // Hero select grid: the game lists heroes alphabetically by English name ('The' ignored), nine per
+  // row. Each portrait gets its rank by 30-day win rate (just the number, so the game's NEW tag stays
+  // visible), coloured by tier. The cells the reader recognised place the badges: a hero Lookout does
+  // not know yet shifts every later cell by one, so each hero takes the shift of the recognised
+  // heroes around it, and where those disagree (the unknown one sits between) only recognised
+  // cells get a badge.
+  const tierOf = w => (!Number.isFinite(w) ? 5 : w >= 0.53 ? 1 : w >= 0.51 ? 2 : w >= 0.485 ? 3 : w >= 0.465 ? 4 : 5);
+  // Tier by 30-day win rate. Each tier has its own colour and its own shape around the rank, so it
+  // reads without colour too.
+  const TIERS = [
+    [1, '53% 이상'],
+    [2, '51~53%'],
+    [3, '48.5~51%'],
+    [4, '46.5~48.5%'],
+    [5, '46.5% 미만']
+  ];
+  // What each hero is for, in a word or two (from its guide: role, tags, concept), on its portrait.
+  const HERO_LABELS = {
+    1: ['지속딜', '광역 CC'],
+    2: ['능력 누커', '전선 푸셔'],
+    3: ['저격수', '마무리'],
+    4: ['능력 누커', '흡혈'],
+    6: ['탱커', '돌진'],
+    7: ['무기 캐리', '순간이동'],
+    8: ['지역 장악', '포탑'],
+    10: ['CC', '폭딜'],
+    11: ['서포터', '광역 CC'],
+    12: ['서포터', '기동'],
+    13: ['무기 캐리', '은신'],
+    14: ['견제', '헤드샷'],
+    15: ['갈고리', '폭딜'],
+    16: ['암살자', '기습'],
+    17: ['저격수', '견제'],
+    18: ['탱커', '기습'],
+    19: ['근접 전사', '마무리'],
+    20: ['서포터', '아군 강화'],
+    25: ['근접 전사', '버티기'],
+    27: ['암살자', '근접'],
+    31: ['암살자', '광역 CC'],
+    35: ['서포터', 'CC'],
+    50: ['능력 누커', '도주기'],
+    52: ['무기 캐리', '글로벌'],
+    58: ['암살자', '처형'],
+    60: ['견제', 'CC'],
+    63: ['마법 사수', '침묵'],
+    64: ['암살자', '고립'],
+    65: ['CC', '처형'],
+    66: ['탱커', '지속딜'],
+    67: ['서포터', '글로벌 궁'],
+    69: ['CC', '이동 지원'],
+    72: ['근접 전사', '광역 CC'],
+    76: ['소환사', '약화'],
+    77: ['결투가', '근접'],
+    78: ['공중 사수', '기동'],
+    79: ['힐러', 'CC'],
+    80: ['근접 전사', 'CC'],
+    81: ['능력 누커', '침묵'],
+    84: ['탱커', '아군 강화'],
+    85: ['지역 장악', '보호'],
+    86: ['성장형', 'CC'],
+    87: ['힐러', '지속딜'],
+    88: ['견제', '침묵']
+  };
+  // Pick rate: share of matches the hero is in (12 heroes a match).
+  function pickRates() {
+    const types = window.HERO_TYPES || [],
+      total = types.reduce((n, t) => n + (t.winRate?.matches || 0), 0) / 12;
+    return new Map(types.map(t => [t.id, total ? (t.winRate?.matches || 0) / total : null]));
+  }
+  const pct1 = (x, d = 1) => (Number.isFinite(x) ? (x * 100).toFixed(d) : '—');
+  // The game lists heroes by name in the client's language: 가나다 in the Korean client, A–Z in English.
+  const GRID_ORDERS = [
+    (a, b) => a.ko.localeCompare(b.ko, 'ko'),
+    (a, b) => a.en.replace(/^The /, '').toLowerCase().localeCompare(b.en.replace(/^The /, '').toLowerCase())
+  ];
+  function gridPairs(heroes, cells) {
+    const order = new Map(heroes.map((h, k) => [h.id, k])),
+      sure = cells
+        .filter(c => order.has(c.id) && c.score >= 0.75 && c.margin >= 0.15)
+        .map(c => ({ k: order.get(c.id), n: c.row * 9 + c.col }))
+        .sort((a, b) => a.k - b.k);
+    // Unknown heroes only push later ones on: the shift (cell - place in our list) never shrinks
+    // along the list. Reads that break that are dropped; too many dropped and the badges stay off.
+    const pairs = [];
+    for (const p of sure) {
+      const shift = p.n - p.k;
+      if (shift >= 0 && shift <= 6 && (!pairs.length || shift >= pairs.at(-1).n - pairs.at(-1).k)) pairs.push(p);
+    }
+    return pairs.length < 5 || pairs.length < sure.length * 0.8 ? [] : pairs;
+  }
+  function selectBadges(s) {
+    const cells = s.live?.selectGrid?.cells || [];
+    let heroes = [],
+      pairs = [];
+    for (const cmp of GRID_ORDERS) {
+      const list = [...(window.HERO_GUIDE || [])].sort(cmp),
+        found = gridPairs(list, cells);
+      if (found.length > pairs.length) [heroes, pairs] = [list, found];
+    }
+    if (!pairs.length) return '';
+    const cellOf = k => {
+      const own = pairs.find(p => p.k === k);
+      if (own) return own.n;
+      const below = pairs.filter(p => p.k < k).at(-1),
+        above = pairs.find(p => p.k > k),
+        shifts = [below, above].filter(Boolean).map(p => p.n - p.k);
+      return shifts.length && shifts.every(x => x === shifts[0]) ? k + shifts[0] : null;
+    };
+    const ranked = [...(window.HERO_TYPES || [])].sort((a, b) => (b.winRate?.overall || 0) - (a.winRate?.overall || 0)),
+      rankOf = id => ranked.findIndex(t => t.id === id) + 1,
+      H = innerHeight,
+      hover = s.live?.hover?.heroId,
+      picks = pickRates();
+    // Rank in its tier shape at the portrait's top left, what the hero is for at its top right, win and
+    // pick rate along the bottom left (the like mark is bottom right).
+    let last = 0;
+    const badges = heroes
+      .map((h, k) => {
+        const n = cellOf(k);
+        if (n === null) return '';
+        last = Math.max(last, n);
+        const row = Math.floor(n / 9),
+          col = n % 9,
+          w = heroType(h.id)?.winRate?.overall,
+          x = ((0.0694 + col * 0.0771) * H).toFixed(1),
+          y = (0.1407 + row * 0.1234) * H;
+        return `<div class="sel-rank t${tierOf(w)} ${h.id === hover ? 'on' : ''}" style="left:${x}px;top:${y.toFixed(1)}px"><b>${rankOf(h.id) || '?'}</b></div><div class="sel-role" style="left:${((0.0694 + col * 0.0771 + 0.0676) * H).toFixed(1)}px;top:${y.toFixed(1)}px">${(HERO_LABELS[h.id] || [])
+          .map(x => `<span>${esc(x)}</span>`)
+          .join('')}</div>${LEVEL_SHORT[levelOf(h.id, h)] ? `<div class="sel-diff d${levelOf(h.id, h)}" style="left:${((0.0694 + col * 0.0771 + 0.0676) * H).toFixed(1)}px;top:${(y + 0.052 * H).toFixed(1)}px">${LEVEL_SHORT[levelOf(h.id, h)]}</div>` : ''}<div class="sel-rate ${h.id === hover ? 'on' : ''}" style="left:${x}px;top:${(y + 0.111 * H).toFixed(1)}px"><span><i>승</i>${pct1(w)}</span><span><i>픽</i>${pct1(picks.get(h.id))}</span></div>`;
+      })
+      .join('');
+    const top = (0.1407 + (Math.floor(last / 9) + 1) * 0.1234) * H;
+    return `${badges}<div class="sel-legend" style="left:${(0.0694 * H).toFixed(1)}px;top:${top.toFixed(1)}px"><b>티어</b>${TIERS.map(
+      ([t, range]) => `<span><em class="sel-rank t${t}"><b>${t}</b></em>${range}</span>`
+    ).join('')}<b class="sel-legend-gap">난이도</b>${[1, 2, 3, 4].map(d => `<span><em class="sel-diff d${d}">${LEVEL_SHORT[d]}</em></span>`).join('')}<small>숫자 = 승률 순위 · 승 = 승률% · 픽 = 픽률%(경기 중 등장 비율) · 최근 30일 · 난이도 = 게임 공식 영웅 복잡도</small></div>`;
+  }
+  // Collapsed overlay: an urgent alert, the sound just heard, the jungles while laning, then objective
+  // timers, one short row each.
+  // Urns alternate yellow and green lanes: show where this one lands and where the next will.
+  const URN_LANE = { yellow: '노랑', green: '초록' };
+  const urnText = u =>
+    `${clock(u.remaining)} ${URN_LANE[u.lane] || ''}→${URN_LANE[u.lane === 'yellow' ? 'green' : 'yellow']}`;
+  const CURVE_SHORT = { early: '초반형', late: '후반형', even: '균형형' };
+  const FIGHT_SHORT = { gun: '무기', spirit: '마법', hybrid: '혼합' };
+  const rosters = s => ({
+    ours: [s.live?.local?.heroId, ...(s.live?.allies || []).map(a => a.heroId)].filter(Number.isInteger),
+    theirs: (s.live?.opponents || []).map(o => o.heroId).filter(Number.isInteger)
+  });
+  // Preparation: the match HUD is up and the clock has not passed 1:30. The app decides it (sticky
+  // over recognition flicker); views without that flag fall back to the clock. Hero select (no HUD)
+  // keeps the hero picker.
+  function pregame(s) {
+    if (typeof s.prep === 'boolean') return s.prep;
+    const t = s.live?.seconds;
+    return !!(s.live?.hudDetected || s.live?.playing || s.live?.held) && Number.isFinite(t) && t < 90;
+  }
+  const heroShort = id => {
+    const t = heroType(id);
+    return [CURVE_SHORT[t?.curve], FIGHT_SHORT[t?.fight]].filter(Boolean).join(' · ');
+  };
+  function analysis(s) {
+    const { ours, theirs } = rosters(s);
+    return window.Comp && ours.length && theirs.length
+      ? window.Comp.analyze(ours, theirs, window.HERO_GUIDE || [], window.HERO_TYPES || [])
+      : null;
+  }
+  const curveText = t =>
+    [t.curve.late && `후반 ${t.curve.late}`, t.curve.early && `초반 ${t.curve.early}`].filter(Boolean);
+  const topTraits = t =>
+    Object.entries(t.counts)
+      .filter(([, n]) => n >= 2)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 2)
+      .map(([k]) => window.Comp.TRAITS[k].ko);
+  function pregameRows(s, row) {
+    const { ours, theirs } = rosters(s),
+      a = analysis(s),
+      laneOpp = s.intel?.lane?.opponents || [];
+    if (!ours.length && !theirs.length) {
+      row('양 팀', '영웅 인식 중');
+      return;
+    }
+    if (laneOpp.length) row('전선 상대', laneOpp.map(id => guide(id)?.ko || '?').join(' · '), 'enemy');
+    if (a) row('적 조합', [a.them.style, ...curveText(a.them)].join(' · '), 'enemy');
+    for (const id of theirs) row(guide(id)?.ko || '적', heroShort(id), 'enemy sub');
+    if (!theirs.length) row('적 팀', '확인 중', 'enemy');
+    if (a && topTraits(a.them).length) row('적 강점', topTraits(a.them).join(' · '), 'enemy');
+    if (a) row('아군 조합', [a.us.style, ...curveText(a.us)].join(' · '), 'ally');
+    else if (ours.length) row('아군', `${ours.length}명 확인`, 'ally');
+    const shop = (s.coach || []).find(c => c.id === 'items');
+    if (shop) row('준비 아이템', shop.title.replace(/^추천 아이템 · /, ''));
+  }
+  // Tab panel during preparation: both teams at a glance, then every hero's card.
+  function teams(s, base, { compact = false } = {}) {
+    const { ours, theirs } = rosters(s),
+      a = analysis(s);
+    if (!ours.length && !theirs.length)
+      return '<p class="iu-empty">영웅 목록 확인 전</p>';
+    if (compact)
+      return `${a ? `<div class="iu-card top"><b>상대 ${esc(a.them.style)} · 우리 ${esc(a.us.style)}</b><p>${esc(a.strategy[0] || '')}</p></div>` : ''}${
+        theirs.length ? `<p class="iu-line"><i>적 팀</i></p>${theirs.map(id => heroRow(id, base, s, 'enemy')).join('')}` : ''
+      }${ours.length ? `<p class="iu-line"><i>우리 팀</i></p>${ours.map(id => heroRow(id, base, s, 'ally')).join('')}` : ''}`;
+    const summary = (label, t) =>
+      `<div class="iu-card"><b>${label} · ${esc(t.style)}</b><p>${esc(
+        [...curveText(t), ...topTraits(t)].join(' · ') || '뚜렷한 성향 없음'
+      )}${t.strengths[0] ? '<br>' + esc(t.strengths[0]) : ''}${t.weaknesses[0] ? '<br>약점 · ' + esc(t.weaknesses[0]) : ''}</p></div>`;
+    return `${a ? summary('상대', a.them) + summary('우리', a.us) + `<div class="iu-card top"><b>운영</b><p>${a.strategy.slice(0, 3).map(esc).join('<br>')}</p></div>` : ''}${theirs.length ? `<p class="iu-line"><i>적 영웅</i>${theirs.length}명</p>${theirs.map(id => heroCard(id, base, { as: 'enemy' })).join('')}` : ''}${ours.length ? `<p class="iu-line"><i>아군</i>${ours.length}명</p>${ours.map(id => heroCard(id, base, { as: 'ally' })).join('')}` : ''}`;
+  }
+  // The preparation panel's team column, one team. Before the first wave nobody has items or an
+  // ultimate, so it is about the make-up: a few plain lines (style and traits, damage mix and the
+  // defence it calls for, when the team is strong, the team's own plan), then every hero's card
+  // (heroMini) in two groups, my lane first and larger. An enemy card also says what its usual build
+  // threatens and the item that answers it; a lane opponent what to watch out for and the answer to
+  // each ability.
+  function teamPrep(s, base, side) {
+    const enemy = side === 'enemy',
+      { ours, theirs } = rosters(s),
+      ids = enemy ? theirs : ours,
+      a = analysis(s),
+      t = a && (enemy ? a.them : a.us);
+    if (!ids.length) return `<p class="iu-empty">${enemy ? '적 팀' : '우리 팀'} 확인 전</p>`;
+    const info = s.intel?.lane || {},
+      me = s.live?.local?.heroId,
+      near = new Set(enemy ? info.opponents || [] : [me, info.partner]);
+    // Damage mix: hybrid counts half to each side for the defence call.
+    const mix = { spirit: 0, hybrid: 0, gun: 0 };
+    for (const id of ids) {
+      const f = heroType(id)?.fight;
+      if (f in mix) mix[f]++;
+    }
+    const sp = mix.spirit + mix.hybrid / 2,
+      gn = mix.gun + mix.hybrid / 2;
+    const defence =
+      sp - gn >= 1.5 ? '마법 저항부터 챙기세요.' : gn - sp >= 1.5 ? '총탄 방어부터 챙기세요.' : '마법 저항과 총탄 방어를 고르게 챙기세요.';
+    const curve = t?.curve || { early: 0, late: 0 },
+      when =
+        curve.late - curve.early >= 2
+          ? `후반형이 ${curve.late}명이라 오래 갈수록 세집니다.`
+          : curve.early - curve.late >= 2
+            ? `초반형이 ${curve.early}명이라 초반에 몰아붙입니다.`
+            : '시간대를 크게 타지 않습니다.';
+    // The plan sentences that are about this team (the ones about us start with 우리).
+    const plan = (a?.strategy || []).filter(x => /^우리/.test(x) !== enemy).slice(0, 2);
+    const traits = t ? topTraits(t) : [];
+    const head = `<div class="pt-head">${
+      t ? `<p class="pt-style"><b>${esc(t.style)}</b>${traits.length ? ` ${esc(traits.join(', '))}` : ''}</p>` : ''
+    }<p class="pt-mix">마법 ${mix.spirit} · 혼합 ${mix.hybrid} · 무기 ${mix.gun}</p>${enemy ? `<p>${defence}</p>` : ''}<p>${when}</p>${
+      !enemy && t?.weaknesses?.[0] ? `<p>${esc(t.weaknesses[0])}</p>` : ''
+    }${plan.length ? `<ul class="pt-plan">${plan.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}</div>`;
+    const row = id => {
+      const g = guide(id),
+        h = heroType(id);
+      if (!g) return '';
+      const kind = [ROLE[g.role], CURVE_SHORT[h?.curve], FIGHT_SHORT[h?.fight]].filter(Boolean).join(' · ');
+      const mark = enemy ? (near.has(id) ? '내 전선' : '') : id === me ? '나' : id === info.partner ? '파트너' : '';
+      let k = '';
+      if (enemy) {
+        const seen = s.live?.enemyItems?.[id],
+          b = window.ItemIntel
+            ? seen?.length
+              ? window.ItemIntel.inferBuild(seen, window.ITEM_CATALOG || [], window.ITEM_KO || [])
+              : window.ItemIntel.expectedBuild(id, window.HERO_TYPES, window.ITEM_CATALOG || [], window.ITEM_KO || [])
+            : null;
+        // Their threat in the enemy's colour; under it, after a grey 대응, the item that answers it.
+        const threat = b?.threats?.[0],
+          answer = threat && itemByName(window.ItemIntel.THREATS[threat.key]?.counters[0]);
+        k = threat
+          ? `<span class="pt-k"><em>${esc(threat.ko)}</em>${answer ? `<small class="pt-answer"><i>대응</i> ${esc(answer)}</small>` : ''}</span>`
+          : '';
+      }
+      // A lane opponent also says what to watch out for against it.
+      const warn =
+        enemy && near.has(id) && g.vsTips?.[0] ? `<p class="hm-line warn"><i>주의</i>${esc(g.vsTips[0])}</p>` : '';
+      return heroMini(id, base, { side, near: near.has(id), mark, kind, aside: k, after: warn, tips: enemy && near.has(id) });
+    };
+    // Both columns keep the same rows (prepLayout), so my lane and its opponents sit side by side:
+    // a team with fewer heroes in a group gets empty places.
+    const first = ids.filter(id => near.has(id)),
+      rest = ids.filter(id => !near.has(id)),
+      size = prepLayout(s),
+      gaps = (n, cls) => `<div class="hm-gap ${cls}"></div>`.repeat(Math.max(0, n));
+    return `${head}<h4 class="pt-group">${enemy ? '내 전선 상대' : '내 전선'}</h4>${first.map(row).join('')}${gaps(
+      size.near - first.length,
+      'near'
+    )}<h4 class="pt-group">다른 전선</h4>${rest.map(row).join('')}${gaps(size.rest * 2 - rest.length, '')}`;
+  }
+  // The preparation panel's shared rows: the most lane heroes either team has (me and my partner, or
+  // the two opponents), and the rows of two the other heroes take. The panel lays both team columns
+  // on these rows (overlay-live.js prepPanel).
+  function prepLayout(s) {
+    const { ours, theirs } = rosters(s),
+      info = s.intel?.lane || {},
+      mine = new Set([s.live?.local?.heroId, info.partner].filter(Number.isInteger)),
+      opp = new Set(info.opponents || []),
+      nearUs = ours.filter(id => mine.has(id)).length,
+      nearThem = theirs.filter(id => opp.has(id)).length;
+    const near = Math.max(nearUs, nearThem),
+      rest = Math.ceil(Math.max(ours.length - nearUs, theirs.length - nearThem) / 2);
+    // Rows: title, team head, group label, lane cards, group label, the others.
+    return { near, rest, rows: 4 + near + rest };
+  }
+  // One hero in a few lines for the preparation panel, which shows every hero at once: its concept,
+  // how it is played (every core line for my lane, the first for the others) and its four abilities
+  // in a few words each (data/ability-short.json), with how to answer each when `tips`. `aside`
+  // sits right of the name, `after` at the bottom.
+  function heroMini(id, base, { side, near = false, mark = '', kind = '', aside = '', after = '', tips = false } = {}) {
+    const g = guide(id);
+    if (!g) return '';
+    const idea = g.style || (g.tags || []).join('·'),
+      core = (g.core || []).slice(0, near ? 3 : 1);
+    const skills = (g.abilities || [])
+      .slice(0, 4)
+      .map(
+        a =>
+          `<li class="${a.slot === 4 ? 'ult' : ''}"><img src="${base}assets/abilities/${id}-${a.slot}.png" alt=""><p><b>${esc(
+            a.ko || a.en
+          )}</b> ${esc(a.short || a.brief || '')}${tips && a.tip ? `<span><i>대응</i> ${esc(a.tip)}</span>` : ''}</p></li>`
+      )
+      .join('');
+    return `<article class="hm ${side}${near ? ' near' : ''}"><header>${portrait(id, base)}<div class="hm-who"><b>${esc(g.ko)}${
+      mark ? ` <i>${mark}</i>` : ''
+    }</b>${kind ? `<small>${esc(kind)}</small>` : ''}</div>${aside}</header>${idea ? `<p class="hm-idea">${esc(idea)}</p>` : ''}${
+      core.length ? `<ul class="hm-core">${core.map(c => `<li>${esc(c)}</li>`).join('')}</ul>` : ''
+    }<ol class="hm-sk">${skills}</ol>${after}</article>`;
+  }
+  // Tips that hold for every hero: Deadlock-only mechanics players often miss (deadlock.wiki
+  // Mechanics, Movement, Souls, Unsecured, Trooper and Sinner's Sacrifice pages, 2026-10), in the
+  // game's own Korean terms (data/ko-terms.json), shown between the hero's own.
+  const GAME_TIPS = [
+    '활주(슬라이딩)하는 동안은 탄약이 줄지 않습니다. 미끄러지면서 쏘면 재장전 없이 계속 사격합니다.',
+    '방어(패링, F)에 성공하면 상대가 기절하고 2.75초간 모든 피해를 25% 더 받습니다.',
+    '방어(패링) 쿨다운은 영웅의 근거리 공격을 막았을 때만 돌려받습니다. 트루퍼·가디언에겐 아끼세요.',
+    '대시 직후 활력(스태미나) 칸이 파랗게 변할 때 점프하면 멀리 뛰는 대시 점프가 나갑니다.',
+    '공중에서 웅크리기를 두 번 누르면 하강 대시가 나갑니다(활력 0.5칸).',
+    '점프 한 번에 첫 벽 점프는 활력(스태미나)을 쓰지 않습니다. 두 번째 벽 점프부터 0.5칸씩.',
+    '오르기(턱·난간을 잡고 올라가기) 중에 웅크리기를 누르고 있으면, 다 올라선 뒤 바로 활주(슬라이딩)로 이어져 멈추지 않고 달려 나갑니다.',
+    '지고 있는 팀은 트루퍼·중립 유닛·오브젝트 영혼을 최대 26% 더 받습니다. 뒤처져도 파밍이 답입니다.',
+    '우리 팀 평균보다 강한 적을 잡으면 처치 보상을 최대 2배 넘게 받습니다.',
+    '10분 이후 많이 앞선 영웅이 죽으면 부활 시간이 최대 22초 늘어납니다. 앞설수록 조심.',
+    '공중에 뜬 영혼 구슬을 아무도 안 쏘면 1초 뒤 근처 아군에게 갑니다. 근처에 아무도 없으면 그냥 사라집니다.',
+    '트루퍼를 근거리 공격으로 마무리하면 영혼 구슬이 뜨지 않아 상대가 디나이할 수 없습니다.',
+    '한 전선(라인)에 둘이 서 있으면 트루퍼 영혼을 각자 54%씩 받습니다. 셋이면 36%.',
+    '정글·상자·영혼 슬롯머신 영혼은 "미확보 영혼"으로 들어와 몇 초에 걸쳐 확보됩니다. 그 전에 죽으면 떨어져 적이 주워 갑니다.',
+    '바닥에 떨어진 영혼 구슬은 18m 안에 들어가야 흡수됩니다. 멀리서 능력으로만 트루퍼를 잡으면 절반을 놓칩니다.',
+    '영혼 슬롯머신은 불빛이 거의 꺼지면 다시 하나씩 켜집니다. 전부 켜진 순간 강한 근거리 공격으로 마무리하면 영구 능력치 4개.',
+    '기운의 파편(5분부터 5분마다)은 강한 근거리 공격으로 얻고 160초 지속됩니다.',
+    '적 워커를 하나 부술 때마다 플렉스 슬롯이 하나 열립니다.',
+    '워커 영혼은 부서지기 전 20초 안에 때린 영웅들이 40%를 나눠 갖고, 나머지 60%는 팀 전원이 똑같이 나눕니다.',
+    '혼자 워커를 깰 수 있으면 죽더라도 가져가는 게 이득인 경우가 많습니다. 15~20분 이후엔 그 사이 중앙 보스를 내줄 수 있으니 조심하세요.',
+    '황금 동상(50% 확률로 생김)은 부수면 영구 능력치를 줍니다. 쌓일수록 차이가 커지니 보이면 꼭 챙기세요.',
+    '균열 점령전이 60초 넘게 이어지면 영혼이 떠오르기 시작합니다. 그때부턴 쏴서 확정하고 상대 몫은 디나이하는 싸움입니다.',
+    '증기 배출구 안에선 밖에서 보이지 않고 체력 재생이 조금 오릅니다.',
+    '보라색 안개 지역에선 보이지도 들리지도 않지만 활력(스태미나)이 계속 줄어듭니다.',
+    '기지 가디언을 부수면 그 전선의 우리 집라인이 훨씬 빨라집니다.',
+    '영혼 단지를 배달하면 배달한 사람이 영혼과 영구 능력치 4개를 받습니다. 영혼은 구슬로 떨어지니 쏘거나 근거리 공격으로 바로 확보하세요. 아군이 챙기면 배달한 사람과 나눠 갖습니다.'
+  ];
+  // A tip that changes every 7 s, taking turns: the hero's own (plan, spikes, match statistics,
+  // skill order), then a game mechanic. `phase` keeps only that phase's plan line; `max` drops long ones.
+  function tipFor(heroId, { phase, max = 200 } = {}) {
+    const k = Math.floor(Date.now() / 7000),
+      plans = { early: '라인전:', mid: '중반:', late: '후반:' },
+      own = (window.HERO_TIPS?.[heroId] || []).filter(
+        t => t.length <= max && !(phase && Object.entries(plans).some(([p, label]) => p !== phase && t.startsWith(label)))
+      ),
+      general = GAME_TIPS.filter(t => t.length <= max);
+    // Each list steps through its own order (a stride coprime to its length), so every tip comes up.
+    const pick = xs => xs[(Math.floor(k / 2) * 7919) % xs.length];
+    if (own.length && (k % 2 === 0 || !general.length)) {
+      const t = pick(own),
+        at = t.indexOf(': ');
+      return { head: at > 0 ? t.slice(0, at) : '팁', text: at > 0 ? t.slice(at + 2) : t };
+    }
+    return general.length ? { head: '게임 팁', text: pick(general) } : null;
+  }
+  // A lane opponent's ultimate coming in: when its net worth first passes the unlock, an alert for
+  // a while. Enemies outside my lane are left out, and an ultimate already in when first seen is
+  // not news.
+  const ultSeen = new Map(),
+    ULT_ALERT_MS = 15000;
+  function laneUlt(s) {
+    const secs = s.live?.seconds,
+      lane = new Set(s.intel?.lane?.opponents || []),
+      now = Date.now();
+    if (Number.isFinite(secs) && secs < 30) ultSeen.clear();
+    let fresh = null;
+    for (const o of s.live?.opponents || []) {
+      const p = window.SoulLevels?.progress(o.souls);
+      if (!p) continue;
+      const seen = ultSeen.get(o.heroId);
+      if (seen === undefined) ultSeen.set(o.heroId, p.ult.unlocked ? 0 : null);
+      else if (seen === null && p.ult.unlocked) ultSeen.set(o.heroId, now);
+      const at = ultSeen.get(o.heroId);
+      if (lane.has(o.heroId) && at && now - at < ULT_ALERT_MS && (!fresh || at > fresh.at)) fresh = { id: o.heroId, at };
+    }
+    return fresh;
+  }
+  const tipRow = (tip, cls) =>
+    tip ? `<p class="${cls}"><small>${esc(tip.head)}</small>${esc(tip.text)}</p>` : '';
+  // The parts of the overlay the settings can switch off (model.cjs `show`); each part carries its
+  // key in data-pv, which the settings page's preview (preview.html) uses to point at it.
+  const shown = (s, key) => s.settings?.show?.[key] !== false;
+  function brief(s) {
+    const rows = [],
+      part = key => (shown(s, key) ? key : null),
+      row = (name, value, cls = '', pv = null) =>
+        pv && rows.push(`<div class="br-row ${cls}" data-pv="${pv}"><b>${esc(name)}</b><span>${esc(value)}</span></div>`);
+    const alert = (s.coach || []).find(c => ['low', 'status'].includes(c.id));
+    if (alert) row(alert.short || alert.title, '', 'alert', part('alerts'));
+    const ult = laneUlt(s);
+    if (ult && shown(s, 'alerts'))
+      rows.push(
+        `<div class="br-alert bad ult" data-pv="alerts"><small>내 라인 · 적 궁극기</small><b>${esc(guide(ult.id)?.ko || '상대')} 궁극기 해금</b><span>궁극기를 쓰는 걸 보기 전엔 무리하게 들어가지 마세요</span></div>`
+      );
+    // Timed alerts (2:00 small camps and so on) have their own strip: alerts.cjs, hud-label.js.
+    const secs = s.live?.seconds,
+      tip = shown(s, 'tip')
+        ? tipRow(
+            tipFor(s.live?.local?.heroId, {
+              phase: !Number.isFinite(secs) || secs < 600 ? 'early' : secs < 1500 ? 'mid' : 'late',
+              max: 90
+            }),
+            'br-tip'
+          ).replace('<p ', '<p data-pv="tip" ')
+        : '';
+    if (pregame(s)) {
+      if (shown(s, 'pregame')) pregameRows(s, (name, value, cls) => row(name, value, cls, 'pregame'));
+      return rows.join('') + tip;
+    }
+    // Until 10:00, first the camps: the small and medium ones by my lane once it is known, else our
+    // half's and the enemy half's small ones.
+    if ((!Number.isFinite(secs) || secs < 600) && shown(s, 'camps')) {
+      const near = laneCamps(s);
+      if (near?.length)
+        for (const n of near) {
+          const st = campState(n.camp);
+          row(`${SIDE_KO[n.side]} ${n.camp.kind === 'medium' ? '중형' : '소형'}`, st.text, `big ${n.side} ${st.cls}`, 'camps');
+        }
+      else
+        for (const [label, ours] of [
+          ['우리 소형', true],
+          ['상대 소형', false]
+        ]) {
+          const j = jungleSide(s, ours);
+          if (j) row(label, j.text, `big ${ours ? 'ours' : 'theirs'} ${j.cls}`, 'camps');
+        }
+    }
+    // My lane partner's ultimate and each lane opponent's (from the souls under the top-bar portraits),
+    // until three minutes after the whole lane, me included, has one.
+    {
+      const lane = s.intel?.lane,
+        all = soulsMap(s),
+        mine = s.live?.local?.heroId,
+        partner = Number.isInteger(lane?.partner) ? [lane.partner] : [],
+        opp = lane?.opponents || [];
+      if (opp.length && ultShown('lane', [mine, ...partner, ...opp].filter(Number.isInteger), id => all.get(id), secs))
+        for (const [id, side] of [...partner.map(id => [id, 'ally']), ...opp.map(id => [id, 'enemy'])]) {
+          const g = all.has(id) && growth(id, all.get(id));
+          if (g) row(guide(id)?.ko || '', g.text, `ult ${side} ${g.cls}`, part('ults'));
+        }
+    }
+    // While laning: what spawns next on the map.
+    if (Number.isFinite(secs) && secs < 600 && shown(s, 'spawns')) rows.push(spawnTable(secs));
+    // Then the three objectives, always in the same order: mid-boss, rift, urn.
+    const o = s.intel?.objectives,
+      obj = part('objectives');
+    if (o?.known) {
+      row('보스', o.midboss.state === 'respawn' ? clock(o.midboss.remaining) : '생존', '', obj);
+      row(
+        '균열',
+        o.rift.state === 'waiting'
+          ? clock(o.rift.remaining)
+          : o.rift.state === 'window'
+            ? o.rift.remaining > 0
+              ? clock(o.rift.remaining) + ' 안'
+              : '곧'
+            : '—',
+        o.rift.state === 'window' ? 'hot' : '',
+        obj
+      );
+      row('영혼 단지', urnText(o.urn), '', obj);
+    } else for (const k of ['보스', '균열', '영혼 단지']) row(k, '—', 'quiet', obj);
+    return rows.join('') + tip;
+  }
+  // First spawns on the map (deadlock.wiki Denizens · Crate · Soul Urn, 2026-10). After its first
+  // spawn each crate, camp and slot machine keeps its own timer, so only the buffs (기운의 파편, every
+  // 5 min from 5:00 for the whole map) come back here. The urn and the rift have their own rows under it.
+  const SPAWNS = [
+    [120, '소형 캠프'],
+    [180, '상자'],
+    [300, '중형 캠프 · 기운의 파편'],
+    [480, '대형 캠프 · 영혼 슬롯머신'],
+    [600, '기운의 파편']
+  ];
+  function spawnTable(secs) {
+    const next = SPAWNS.filter(([t]) => t > secs).slice(0, 2);
+    return `<div class="br-spawns" data-pv="spawns"><small>다음 생성</small>${next
+      .map(
+        ([t, what], i) =>
+          `<div class="${i === 0 ? 'next' : ''}"><time>${clock(t)}</time><b>${esc(what)}</b><span>${clock(t - Math.floor(secs))} 뒤</span></div>`
+      )
+      .join('')}</div>`;
+  }
+  // One side of the jungle (our half of the minimap is the bottom one, where our base is).
+  // One side's small camps (our half of the minimap is the bottom one, where our base is): before
+  // they spawn the first-spawn countdown; then one that just came back, else the next respawn; with
+  // none down, that they are up (85 s respawn once taken).
+  // One camp, the way the folded list says it: first spawn, just back, respawn, or (not seen cleared) up.
+  function campState(c) {
+    if (c.state === 'first') return { text: `첫 생성 ${clock(c.remaining)}`, cls: c.remaining <= 15 ? 'hot' : '' };
+    if (c.respawnedAgo !== null && c.respawnedAgo !== undefined && c.respawnedAgo <= 20) return { text: '생성됨', cls: 'hot' };
+    if (c.state === 'respawn' && c.remaining !== null) return { text: `재생성 ${clock(c.remaining)}`, cls: c.remaining <= 15 ? 'hot' : '' };
+    // Alive only while the minimap shows its icon: a clear the tracker missed must not read as 생존.
+    // Before 5:00 the minimap shows no camps at all, so then it stays 미확인 (jungle.cjs MAP_ICONS_FROM).
+    if (c.observation === 'absent') return { text: '처치됨', cls: '' };
+    return c.observation === 'present' ? { text: '생존', cls: 'quiet' } : { text: '미확인', cls: 'quiet' };
+  }
+  const SIDE_KO = { ours: '우리 쪽', theirs: '상대 쪽', mid: '전선 옆' };
+  // The small camps within reach of where my lane's waves meet (lane-route.js: the same point and
+  // reach as the route after the wave), and the nearest medium one by the lane itself; nearest first,
+  // each on our side, theirs or by the lane.
+  function laneCamps(s) {
+    const j = s.jungle,
+      lane = s.intel?.lane?.lane,
+      P = window.MAP_POINTS,
+      R = window.LaneRoute;
+    if (!j?.camps?.length || !Number.isFinite(j.seconds) || !lane || !P?.guardians || !R) return null;
+    const team = j.rotation === 180 ? 1 : 0,
+      band = lane.band || R.COLOR_BAND[team]?.[lane.color];
+    if (!band) return null;
+    const id = R.LANES[team][band],
+      [ox, oy] = P.guardians[team][id],
+      [ex, ey] = P.guardians[1 - team][id],
+      start = { x: ox + (ex - ox) * 0.55, y: oy + (ey - oy) * 0.55 },
+      midY = (oy + ey) / 2;
+    return j.camps
+      .filter(c => ['weak', 'medium'].includes(c.kind) && Number.isFinite(c.x) && Number.isFinite(c.y))
+      .map(c => ({ camp: c, d: Math.hypot(c.x - start.x, c.y - start.y) }))
+      .filter(x => x.d <= R.REACH)
+      .sort((a, b) => a.d - b.d)
+      .map(({ camp, d }) => {
+        // Team 0's base is at the bottom of the map data (larger y), team 1's at the top.
+        const off = (camp.y - midY) * (team === 0 ? 1 : -1);
+        return { camp, side: off >= 0.015 ? 'ours' : off <= -0.015 ? 'theirs' : 'mid' };
+      })
+      // Every small camp in reach; of the medium ones only the nearest by the lane itself.
+      .filter((x, i, all) => x.camp.kind === 'weak' || (x.side === 'mid' && all.findIndex(y => y.camp.kind === 'medium' && y.side === 'mid') === i));
+  }
+  // Team against team: what each composition is (comp.js) and how our heroes have done against theirs
+  // in public matches (hero-counters.js, last 30 days): the mean, over every pair, of our hero's win
+  // rate against theirs less our hero's own win rate.
+  function teamMatch(ours, theirs) {
+    if (ours.length < 2 || theirs.length < 2 || !window.Comp) return null;
+    const a = window.Comp.analyze(ours, theirs, window.HERO_GUIDE || [], window.HERO_TYPES || []),
+      C = window.HERO_COUNTERS;
+    let sum = 0,
+      n = 0;
+    for (const h of ours)
+      for (const e of theirs) {
+        const v = C?.vs?.[h]?.[e];
+        if (v && v[1] >= 1000 && Number.isFinite(C.overall[h])) {
+          sum += v[0] - C.overall[h];
+          n++;
+        }
+      }
+    return { us: a.us.style, them: a.them.style, edge: n ? sum / n : null, pairs: n, tips: a.strategy.slice(0, 2) };
+  }
+  function jungleSide(s, ours) {
+    const j = s.jungle;
+    if (!j?.camps?.length || !Number.isFinite(j.seconds)) return null;
+    const t = j.mapTransform,
+      yOf = c => (t ? t.ty + t.scale * (t.rotation ? 1 - c.y : c.y) : j.rotation === 180 ? 1 - c.y : c.y),
+      mid = t ? t.ty + t.scale * 0.5 : 0.5,
+      side = j.camps.filter(c => c.kind === 'weak' && yOf(c) > mid === ours);
+    if (!side.length) return null;
+    const first = side.find(c => c.state === 'first');
+    if (first) return { text: `첫 생성 ${clock(first.remaining)}`, cls: first.remaining <= 15 ? 'hot' : '' };
+    const back = side.filter(c => c.respawnedAgo !== null && c.respawnedAgo !== undefined && c.respawnedAgo <= 20);
+    if (back.length) return { text: `생성됨${back.length > 1 ? ` ${back.length}곳` : ''}`, cls: 'hot' };
+    const due = side.filter(c => c.state === 'respawn' && c.remaining !== null).sort((a, b) => a.remaining - b.remaining);
+    if (due.length) return { text: `재생성 ${clock(due[0].remaining)}${due.length > 1 ? ` 외 ${due.length - 1}` : ''}`, cls: due[0].remaining <= 15 ? 'hot' : '' };
+    const gone = side.filter(c => c.observation === 'absent');
+    if (gone.length) return { text: `처치됨${gone.length > 1 ? ` ${gone.length}곳` : ''}`, cls: '' };
+    return side.every(c => c.observation === 'present') ? { text: '생존', cls: 'quiet' } : { text: '미확인', cls: 'quiet' };
+  }
+  // Shared clicks for the views above. `view` holds per-page focus/skill selection.
+  function handle(b, s, view, rerender) {
+    const info = s?.intel?.lane || {};
+    if (b.dataset.laneOpp) {
+      const id = +b.dataset.laneOpp,
+        opp = info.manual?.opponents?.length ? info.manual.opponents : info.opponents || [];
+      window.lane.command('lane-set', {
+        opponents: opp.includes(id) ? opp.filter(x => x !== id) : [...opp, id].slice(-2)
+      });
+      return true;
+    }
+    if (b.dataset.lanePartner) {
+      const id = +b.dataset.lanePartner;
+      window.lane.command('lane-set', { partner: info.partner === id ? null : id });
+      return true;
+    }
+    if (b.dataset.laneFocus !== undefined) {
+      view.focus = +b.dataset.laneFocus;
+      view.skill = 1;
+      rerender();
+      return true;
+    }
+    if (b.dataset.skill !== undefined) {
+      view.skill = +b.dataset.skill;
+      rerender();
+      return true;
+    }
+    if (b.dataset.objective) {
+      window.lane.command('objective-record', b.dataset.objective);
+      return true;
+    }
+    if (b.dataset.objectiveUndo) {
+      window.lane.command('objective-undo', b.dataset.objectiveUndo);
+      return true;
+    }
+    return false;
+  }
+  window.IntelUI = {
+    tipFor,
+    esc,
+    guide,
+    clock,
+    heroType,
+    typeChips,
+    heroPicker,
+    buildBlock,
+    enemyBuilds,
+    heroCard,
+    skills,
+    lane,
+    mia,
+    timers,
+    now,
+    urgent,
+    pregame,
+    teams,
+    teamPrep,
+    prepLayout,
+    hoverCard,
+    selectBadges,
+    board,
+    keyItems,
+    shopList,
+    brief,
+    shown,
+    handle
+  };
+})();

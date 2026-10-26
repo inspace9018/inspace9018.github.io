@@ -1,0 +1,381 @@
+/* 라인 동선 page (route-guide.js). Path colours match the arrows in the pictures (guide_overlay.py):
+   out orange, back blue. */
+.rg-pick {
+  align-items: center;
+}
+.rg-gap {
+  width: 1px;
+  height: 22px;
+  margin: 0 var(--sp-2);
+  background: var(--line);
+}
+.rg-lane::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 7px;
+  border-radius: 50%;
+  vertical-align: 1px;
+  background: var(--n-500);
+}
+.rg-lane.lane-yellow::before {
+  background: var(--lane-yellow);
+}
+.rg-lane.lane-green::before {
+  background: var(--lane-green);
+}
+.rg-lane.lane-blue::before {
+  background: var(--lane-blue);
+}
+.rg-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+.rg-figure {
+  margin: 0 0 18px;
+  padding: 12px;
+}
+.rg-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--r-lg);
+}
+.rg-figure figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 12px 4px 6px;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+.rg-figure .note {
+  margin: 0 4px 2px;
+}
+.rg-key::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 4px;
+  margin-right: 6px;
+  border-radius: 2px;
+  vertical-align: 3px;
+}
+.rg-key.out::before {
+  background: #ffaa5a;
+}
+.rg-key.back::before {
+  background: #6ec8ff;
+}
+.rg-key.num::before {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffaa5a;
+  box-shadow: 0 0 0 2px #14161a;
+}
+.rg-key.ring::before {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  vertical-align: -1px;
+  border: 2px solid var(--n-white);
+  background: none;
+}
+/* The models in the picture: a wooden crate, a purple slot machine; the camps' green discs. */
+.rg-key.tier::before {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  vertical-align: -1px;
+  background: #43c773;
+  box-shadow: 0 0 0 1px #14161a;
+}
+.rg-key.crate::before,
+.rg-key.slot::before {
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+  vertical-align: -1px;
+  background: #d9a05b;
+  box-shadow: inset 0 -3px 0 #3a2410;
+}
+.rg-key.slot::before {
+  background: #8c4dff;
+  box-shadow: inset 0 3px 0 #b98cff;
+}
+.rg-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sp-4);
+  margin-bottom: 18px;
+  padding: 16px 20px;
+}
+.rg-summary.short {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.rg-summary div + div {
+  padding-left: var(--sp-4);
+  border-left: 1px solid var(--line);
+}
+.rg-summary div {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.rg-summary small,
+.rg-summary span {
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+.rg-summary b {
+  font-size: var(--fs-lg);
+}
+.rg-leg + .rg-leg {
+  margin-top: 18px;
+}
+.rg-leg h3 {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin: 0 0 10px;
+  font-size: var(--fs-md);
+}
+.rg-leg h3 i {
+  width: 18px;
+  height: 4px;
+  border-radius: 2px;
+}
+.rg-leg.out h3 i {
+  background: #ffaa5a;
+}
+.rg-leg.back h3 i {
+  background: #6ec8ff;
+}
+.rg-leg h3 span {
+  font-weight: 400;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+.rg-leg ol {
+  margin: 0;
+  padding: 0 0 0 9px;
+  list-style: none;
+  border-left: 2px solid var(--n-300);
+}
+.rg-leg.out ol {
+  border-left-color: color-mix(in srgb, #ffaa5a 55%, transparent);
+}
+.rg-leg.back ol {
+  border-left-color: color-mix(in srgb, #6ec8ff 55%, transparent);
+}
+.rg-leg li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: var(--fs-md);
+}
+.rg-leg li small {
+  display: block;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+.rg-num {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  color: var(--n-0);
+  border: 2px solid var(--n-0);
+}
+.rg-leg.out .rg-num {
+  background: #ffaa5a;
+}
+.rg-leg.back .rg-num {
+  background: #6ec8ff;
+}
+.rg-crates {
+  color: var(--muted);
+}
+.rg-dot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  margin: 0 7px;
+  border-radius: 2px;
+  background: #d08a3c;
+}
+/* The ring the picture draws round the leg's crates. */
+.rg-leg.out .rg-dot {
+  box-shadow: 0 0 0 2px #14161a, 0 0 0 4px #ffaa5a;
+}
+.rg-leg.back .rg-dot {
+  box-shadow: 0 0 0 2px #14161a, 0 0 0 4px #6ec8ff;
+}
+.rg-crates small {
+  margin-left: 8px;
+}
+.rg-end {
+  color: var(--text);
+}
+.rg-end::before {
+  content: '';
+  flex: none;
+  width: 12px;
+  height: 12px;
+  margin: 0 6px;
+  border-radius: 50%;
+  border: 2px solid var(--n-white);
+}
+.rg-two {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  margin-bottom: 18px;
+}
+.rg-side {
+  margin: 0 0 12px;
+  font-size: var(--fs-md);
+}
+.rg-tips h3 {
+  margin: 0 0 8px;
+  font-size: var(--fs-md);
+}
+.rg-tips .list li {
+  margin: 6px 0;
+  font-size: var(--fs-sm);
+}
+@media (max-width: 1100px) {
+  .rg-grid,
+  .rg-summary {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .rg-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .rg-summary div + div {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+/* The picture and, beside it, the same loop on the minimap (route-guide.js minimap): 16:9 and a
+   square of the same height. */
+.rg-views {
+  display: grid;
+  grid-template-columns: minmax(0, 16fr) minmax(0, 9fr);
+  gap: 10px;
+}
+.rg-mini {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: var(--r-lg);
+}
+/* map.png is black where you can walk: turned light and faint, the streets show like the game's. */
+.rg-mini image.map {
+  filter: invert(1);
+  opacity: 0.2;
+}
+/* Under the picture: what the minimap's own marks are. */
+.rg-mm-key {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 14px;
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+.rg-mm-key b {
+  color: var(--text);
+}
+.rg-mm-key span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.rg-mm-key small {
+  color: var(--n-600);
+}
+.rg-mm-key img {
+  height: 16px;
+  width: auto;
+}
+.rg-mm-key i {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+}
+.rg-mm-key .mk-camp {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #a6e39a;
+  color: #14161a;
+  font: 700 10px/15px var(--font);
+  font-style: normal;
+  text-align: center;
+}
+.rg-mm-key .mk-camp.m {
+  background: #4fb06a;
+  color: #fff;
+}
+.rg-mm-key .mk-camp.s {
+  background: #1f6e3d;
+  color: #fff;
+}
+.rg-mm-key .mk-slot {
+  width: 15px;
+  height: 12px;
+  border-radius: 3px;
+  background: #8b5cf6;
+  border: 1.5px solid #fff;
+}
+.rg-mm-key .mk-crate {
+  background: #b0743a;
+}
+.rg-mm-key .mk-tough {
+  width: 11px;
+  height: 11px;
+  background: #7a4a22;
+  border: 1.5px solid #d9a066;
+}
+.rg-mm-key .mk-statue {
+  border-radius: 50%;
+  background: #f0cf4a;
+}
+.rg-mm-key .mk-buff {
+  width: 10px;
+  height: 10px;
+  background: #a77bf0;
+  border: 1.5px solid #fff;
+  transform: rotate(45deg);
+}
+.rg-mini text {
+  fill: #fff;
+  font-weight: 700;
+  text-anchor: middle;
+  stroke: #0e1012;
+  paint-order: stroke;
+}
+.rg-mini text.n {
+  fill: #14161a;
+  stroke: none;
+}
+@media (max-width: 900px) {
+  .rg-views {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .rg-mini {
+    max-width: 420px;
+  }
+}

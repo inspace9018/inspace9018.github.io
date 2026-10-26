@@ -1,0 +1,315 @@
+/* Lane matchup, hero guide, timers and "now" cards: shared by the overlay and the dashboard. */
+.iu-tabs {
+  display: flex;
+  gap: 4px;
+  margin: 10px 0 8px;
+}
+.iu-tabs button {
+  flex: 1;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid #ffffff22;
+  background: #ffffff10;
+  color: var(--n-900);
+  font-size: 12px;
+  cursor: pointer;
+}
+.iu-tabs button.active {
+  background: color-mix(in srgb, var(--green-300) 20%, transparent);
+  border-color: var(--green-300);
+  color: #fff;
+  font-weight: 700;
+}
+.iu-tabs.small button {
+  height: 24px;
+  font-size: 11px;
+}
+.iu-body {
+  overflow-y: auto;
+  min-height: 0;
+  flex: 1;
+  padding-right: 2px;
+}
+.iu-lane-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.iu-lane-head small {
+  margin-left: auto;
+  color: var(--n-800);
+  font-size: 10px;
+}
+.iu-hero {
+  border: 1px solid #ffffff1c;
+  border-radius: 7px;
+  padding: 8px;
+  margin: 6px 0;
+  background: #00000026;
+}
+.iu-hero.ally {
+  border-color: color-mix(in srgb, var(--blue-500) 33%, transparent);
+}
+.iu-hero-head {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.iu-hero-head b {
+  font-size: 14px;
+  margin-right: 6px;
+}
+.iu-hero-head small {
+  display: block;
+  color: var(--n-800);
+  font-size: 11px;
+  line-height: 1.35;
+}
+.iu-portrait {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #0006;
+  flex: none;
+}
+.iu-badge {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 9px;
+  border: 1px solid currentColor;
+  vertical-align: 1px;
+}
+.iu-badge.strong {
+  color: var(--red-300);
+}
+.iu-badge.even {
+  color: var(--gold-500);
+}
+.iu-badge.weak {
+  color: var(--green-500);
+}
+.iu-line,
+.iu-pros p,
+.iu-skill,
+.iu-note,
+.iu-empty {
+  font-size: 11.5px;
+  line-height: 1.45;
+  margin: 5px 0 0;
+  color: var(--n-900);
+}
+.iu-line i,
+.iu-pros i,
+.iu-skill i {
+  font-style: normal;
+  color: var(--green-300);
+  margin-right: 5px;
+  font-weight: 700;
+}
+.iu-note,
+.iu-empty {
+  color: var(--n-800);
+  font-size: 10.5px;
+}
+.iu-tips {
+  margin: 5px 0 0;
+  padding-left: 16px;
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+.iu-skills {
+  display: flex;
+  gap: 5px;
+  margin-top: 6px;
+}
+.iu-skills button {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  padding: 3px;
+  border-radius: 7px;
+  border: 1px solid #ffffff22;
+  background: #ffffff10;
+  cursor: pointer;
+}
+.iu-skills button.active {
+  border-color: var(--green-300);
+  background: color-mix(in srgb, var(--green-300) 20%, transparent);
+}
+.iu-skills img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.iu-skills span {
+  position: absolute;
+  right: 2px;
+  bottom: 0;
+  font-size: 9px;
+  color: #fff;
+  text-shadow: 0 0 3px #000;
+}
+.iu-chip {
+  display: inline-block;
+  font-size: 10.5px;
+  padding: 2px 7px;
+  border-radius: 9px;
+  background: #ffffff14;
+  margin: 2px 3px 2px 0;
+}
+.iu-chip.lane {
+  background: color-mix(in srgb, var(--green-300) 20%, transparent);
+}
+.iu-chip.missing {
+  background: color-mix(in srgb, var(--red-500) 33%, transparent);
+  color: #fff;
+  font-weight: 700;
+}
+.iu-chip.dead {
+  opacity: 0.55;
+}
+.iu-chip.visible {
+  background: color-mix(in srgb, var(--blue-500) 20%, transparent);
+}
+.iu-pick {
+  margin-top: 6px;
+}
+.iu-pick small {
+  display: block;
+  color: var(--n-800);
+  font-size: 10px;
+  margin: 5px 0 3px;
+}
+.iu-pick button {
+  font-size: 11px;
+  padding: 3px 8px;
+  margin: 0 4px 4px 0;
+  border-radius: 12px;
+  border: 1px solid #ffffff26;
+  background: #ffffff0d;
+  color: var(--n-950);
+  cursor: pointer;
+}
+.iu-pick button.selected {
+  border-color: var(--amber-500);
+  background: color-mix(in srgb, var(--amber-500) 20%, transparent);
+}
+.iu-more summary {
+  font-size: 11px;
+  color: var(--n-800);
+  cursor: pointer;
+  margin-top: 6px;
+}
+.iu-card {
+  border-left: 3px solid #ffffff33;
+  padding: 5px 8px;
+  margin: 6px 0;
+  background: #00000026;
+  border-radius: 0 6px 6px 0;
+}
+.iu-card.top {
+  border-left-color: var(--green-300);
+}
+.iu-card.alert {
+  border-left-color: var(--red-300);
+}
+.iu-card.plan {
+  border-left-color: var(--blue-500);
+}
+.iu-card b {
+  font-size: 12.5px;
+}
+.iu-card p {
+  font-size: 11.5px;
+  line-height: 1.45;
+  margin: 3px 0 0;
+}
+.iu-card small {
+  font-size: 10px;
+  color: var(--n-800);
+}
+.iu-timer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 0;
+  border-bottom: 1px solid #ffffff14;
+}
+.iu-timer div {
+  flex: 1;
+  min-width: 0;
+}
+.iu-timer b {
+  font-size: 12.5px;
+}
+.iu-timer small {
+  display: block;
+  font-size: 10.5px;
+  color: var(--n-800);
+}
+.iu-timer strong {
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+}
+.iu-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  margin-top: 8px;
+}
+.iu-actions button {
+  font-size: 11px;
+  padding: 5px;
+  border-radius: 6px;
+  border: 1px solid #ffffff26;
+  background: #ffffff12;
+  color: var(--n-950);
+  cursor: pointer;
+}
+.iu-actions button.ghost {
+  background: transparent;
+  color: var(--n-800);
+}
+.iu-actions kbd {
+  font-size: 9.5px;
+  opacity: 0.8;
+}
+.iu-mia {
+  margin-bottom: 4px;
+}
+.iu-types {
+  margin-top: 3px;
+}
+.iu-chip.curve.late {
+  background: color-mix(in srgb, var(--blue-500) 20%, transparent);
+  color: var(--blue-100);
+}
+.iu-chip.curve.early {
+  background: color-mix(in srgb, var(--amber-500) 20%, transparent);
+  color: var(--amber-100);
+}
+.iu-build {
+  margin-top: 5px;
+  border-top: 1px dashed #ffffff1f;
+  padding-top: 4px;
+}
+.iu-pick-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 6px 0;
+  border-bottom: 1px solid #ffffff12;
+}
+.iu-pick-row .iu-portrait {
+  width: 30px;
+  height: 30px;
+}
+.iu-pick-row b {
+  font-size: 12.5px;
+}
+.iu-pick-row small {
+  color: var(--n-800);
+  font-size: 10.5px;
+}

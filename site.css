@@ -140,3 +140,6 @@ footer {
 footer a {
   color: var(--muted);
 }
+.guide-link {
+  font-size: 14px;
+}

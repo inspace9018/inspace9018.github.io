@@ -1,0 +1,119 @@
+/* Lookout design tokens, shared by the dashboard (ui/index.html) and every in-game window (overlay,
+   minimap, HUD labels). One palette: cool slate neutrals, Lookout mint as the brand colour, blue for our
+   team, red for theirs, amber for "now", gold for the big camps, teal for souls.
+   The other stylesheets only use these variables (tools/apply-tokens.cjs maps raw colours here). */
+:root {
+  /* Neutrals, dark to light. */
+  --n-black: #000;
+  --n-0: #0b0d0f;
+  --n-50: #101315;
+  --n-100: #15191c;
+  --n-150: #1b2024;
+  --n-200: #22282c;
+  --n-300: #2c3338;
+  --n-400: #3a4248;
+  --n-500: #535d64;
+  --n-600: #737e85;
+  --n-700: #96a1a8;
+  --n-800: #b9c2c7;
+  --n-900: #dce2e5;
+  --n-950: #f2f5f6;
+  --n-white: #fff;
+
+  /* Hue ramps: 900 tinted background, 700 deep, 500 base, 300 light, 100 pale. */
+  --red-900: #3a1d1f;
+  --red-700: #b23a40;
+  --red-500: #ff6b6b;
+  --red-300: #ff9e96;
+  --red-100: #ffd8d2;
+  --amber-900: #3a2a12;
+  --amber-700: #b8761f;
+  --amber-500: #ffb547;
+  --amber-300: #ffd27a;
+  --amber-100: #ffeac4;
+  --gold-900: #33300f;
+  --gold-700: #a99622;
+  --gold-500: #f0cf4a;
+  --gold-300: #f6e28c;
+  --gold-100: #fbf3cf;
+  --green-900: #17271b;
+  --green-700: #4b8a57;
+  --green-500: #86d494;
+  --green-300: #b8ebbf;
+  --green-100: #e3f7e6;
+  --teal-900: #12302a;
+  --teal-700: #2f8f7a;
+  --teal-500: #5fd4b8;
+  --teal-300: #9ff0d8;
+  --teal-100: #d8fbf1;
+  --blue-900: #182a44;
+  --blue-700: #2f6fd0;
+  --blue-500: #6aa8ff;
+  --blue-300: #a3c8ff;
+  --blue-100: #dcebff;
+  --purple-900: #2a1f3d;
+  --purple-700: #6f45b0;
+  --purple-500: #a77bf0;
+  --purple-300: #c9aef7;
+  --purple-100: #ece2fc;
+
+  /* Meaning. */
+  --brand: var(--green-300);
+  --brand-ink: #10251a;
+  --ally: var(--blue-500);
+  --ally-bg: var(--blue-900);
+  --enemy: var(--red-500);
+  --enemy-bg: var(--red-900);
+  --now: var(--amber-500);
+  --good: var(--green-500);
+  --soul: var(--teal-300);
+  --big: var(--gold-500);
+  /* Lane colours as the in-game minimap draws them. */
+  --lane-yellow: #e8c547;
+  --lane-green: #6cbf5a;
+  --lane-blue: #3fa9dc;
+
+  /* Type, radius, space. */
+  --font: 'Pretendard Variable', Pretendard, 'Segoe UI Variable Text', 'Malgun Gothic', 'Segoe UI', sans-serif;
+  --fs-xs: 11px;
+  --fs-sm: 12px;
+  --fs-md: 14px;
+  --fs-lg: 16px;
+  --fs-xl: 20px;
+  --fs-2xl: 26px;
+  --r-sm: 3px;
+  --r-md: 4px;
+  --r-lg: 6px;
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+
+  /* Dashboard surfaces (names kept from the earlier stylesheets). */
+  --bg: var(--n-50);
+  --panel: var(--n-100);
+  --panel-2: var(--n-150);
+  --line: var(--n-300);
+  --text: var(--n-950);
+  --muted: var(--n-700);
+  --accent: var(--brand);
+  --warning: var(--amber-300);
+  --blue: var(--ally);
+  --blue-bg: var(--ally-bg);
+  --red: var(--enemy);
+  --red-bg: var(--enemy-bg);
+
+  /* In-game surfaces: darker and see-through, over the game (half the game shows through). */
+  --s-bg: color-mix(in srgb, var(--n-0) 50%, transparent);
+  --s-bg-2: rgba(255, 255, 255, 0.045);
+  --s-line: rgba(255, 255, 255, 0.09);
+  --t-1: var(--n-950);
+  --t-2: var(--n-700);
+  --t-3: var(--n-600);
+  --c-now: var(--now);
+  --c-enemy: var(--enemy);
+  --c-ally: var(--ally);
+  --c-ok: var(--good);
+}

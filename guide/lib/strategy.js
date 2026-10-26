@@ -195,6 +195,16 @@
 </svg>`;
   }
 
+  // 최상위 vs 하위 랭크 table for the 시스템 분석 section (strategy-data.js ranks).
+  function rankTable() {
+    const R = D().ranks,
+      fmt = (v, kind) => (kind === 'time' ? mmss(Math.round(v)) : kind === 'pct' ? `${v}%` : kind === 'dec' ? v.toFixed(1) : n(v)),
+      row = x => `<tr><td>${esc(x.name)}</td><td><b>${fmt(x.top, x.kind)}</b></td><td>${fmt(x.low, x.kind)}</td></tr>`;
+    return `<table class="sg-table sg-ranks"><thead><tr><th></th><th>최상위 랭크</th><th>하위 랭크</th></tr></thead><tbody>
+<tr class="sub"><td colspan="3">경기 단위 · 시각은 중앙값</td></tr>${R.match.map(row).join('')}
+<tr class="sub"><td colspan="3">플레이어 1명 평균 (최상위 ${n(R.players.top)}명 · 하위 ${n(R.players.low)}명)</td></tr>${R.player.map(row).join('')}</tbody></table>`;
+  }
+
   // --- Sections (목차 order). Each: id, title, one-line summary, body. ---
   function sections(state) {
     const W = D().worth,
@@ -268,21 +278,46 @@ ${fig(carryFigure(), `개념도 · 영웅 분류와 운영 출처 ${yt('mGn4T4B4
       },
       {
         id: 'basics',
-        key: ['FPS 출신: 1:1은 이기는데 전선을 비워 가디언·워커를 잃음', 'MOBA 출신: 에임이 약하면 공중 구슬 확정·디나이부터 막힘', '합류가 늦는 건 무빙보다 타이밍. <b>웨이브를 먼저 밀어 두고</b> 움직이기'],
-        title: '기초 운영: 무빙보다 타이밍',
-        short: 'FPS 출신·MOBA 출신이 막히는 곳',
-        body: `<p>데드락은 FPS의 교전 실력과 MOBA의 운영이 둘 다 필요한 게임입니다. 어느 게임을 하다 왔느냐에 따라 막히는 곳이 다르고, 둘 다 결국 "무빙이 부족해서"라고 착각하기 쉽습니다.${dc(176674, '유입들이 왜 자꾸 무빙 타령하는지')}</p>
-<div class="sg-two">
-<div><b>FPS·히어로 슈터 출신</b><p>오버워치·에이펙스·마블 라이벌즈에서 온 경우. 에임과 교전이 되니 초반 킬은 잘 땁니다. 막히는 곳은 영혼 수급·디나이·전선 관리·정글·오브젝트. 시간이 갈수록 아이템 차이가 벌어지고, 그제야 정글을 돌기 시작하는데 그사이 비운 전선에서 가디언·워커가 밀립니다. "1:1은 안 지는데 왜 지지?"의 답이 대부분 여기입니다.</p><p class="fix">먼저 볼 것: <a href="#sg-rules">영혼 규칙</a> · <a href="#sg-lane">라인전 실전</a> · <a href="#sg-macro">경기 큰 흐름</a></p></div>
-<div><b>리그 오브 레전드·도타 출신</b><p>전선 관리·로밍·정글·오브젝트 개념은 익숙합니다. 막히는 곳은 위아래(높이)까지 쓰는 3인칭 전투와 에임. 에임이 약하면 공중 구슬 확정·디나이부터 막혀 라인전이 무너집니다. 운영 감각 덕분에 중후반에 만회하는 경우는 많습니다.</p><p class="fix">먼저 볼 것: <a href="#sg-rules">영혼 규칙</a>의 공중 구슬·디나이 · <a href="#sg-movement">이동 기술</a></p></div>
-</div>
-<h4>합류가 늦는 진짜 이유</h4>
+        key: [
+          '구조물 피해 저항은 시간이 갈수록 낮아짐(가디언 6분, 워커 9분에 0%) → 최상위 랭크 첫 가디언 6:22, 하위 7:52',
+          '부활 시간은 5분 8초 → 30분 70초. 초반 죽음은 싸서 최상위는 15분까지 더 죽고도 순자산 1.3k 앞섬',
+          '차이는 킬이 아니라 정글(+576)과 구조물·보스. 첫 중앙 보스 18분 vs 27분'
+        ],
+        title: '시스템 분석: 고수는 규칙을 어떻게 쓰나',
+        short: '랭크별 경기 데이터로 본 운영',
+        body: `<p>데드락의 규칙은 시간에 따라 바뀝니다. 구조물 저항은 낮아지고, 부활 시간은 길어지고, 웨이브 주기는 짧아집니다. 고수일수록 이 변화에 맞춰 움직입니다. 아래는 최근 일반전에서 <b>최상위 랭크</b>(11단계, 랭크 경기의 약 2%)와 <b>하위 랭크</b>(1~3단계)를 비교한 결과입니다. 공개 데이터에는 대회 경기가 없어서, 프로 대부분이 섞여 있는 최상위 랭크로 대신 봤습니다.${src('https://api.deadlock-api.com/docs', 'deadlock-api', `deadlock-api.com · 일반전 경기 데이터 (${D().ranks.checked} 조회, 최상위 ${n(D().ranks.games.top)}판 · 하위 ${n(D().ranks.games.low)}판)`)}</p>
+${rankTable()}
+<h4>구조물은 시간이 갈수록 약해진다</h4>
 <ul class="sg-list">
-<li><b>빠르게 움직이는 것과 언제 어디로 움직일지 아는 것은 다른 문제.</b> 무빙이 부족해서 늦는 것과 합류할 때를 몰라서 늦는 것은 해결법이 다릅니다.</li>
-<li>고수가 한타에 제때 오는 건 무빙이 빨라서만이 아니라 <b>미리 전선을 정리해 움직일 수 있는 상황을 만들어 두기</b> 때문입니다. 영상에서 화려한 무빙만 따라 하면 이 부분을 놓칩니다.</li>
-<li>순서: 싸움이 날 곳(영혼 단지·균열·중앙 보스, <a href="#sg-timeline">생성 시각</a>)이 열리기 30초 전에 <b>내 전선 웨이브를 상대 쪽으로 밀어 두기 → 그다음 이동</b>. 웨이브를 못 밀었으면 늦더라도 웨이브부터.</li>
-<li>정글을 돌다가도 내 전선 웨이브가 우리 가디언 쪽으로 오면 돌아가기. 비운 전선은 트루퍼만으로도 구조물이 깎입니다.</li>
-</ul>`
+<li><b>규칙</b> 가디언 피해 저항은 50%에서 시작해 12분에 -50%까지 낮아짐(6분에 0%). 반경 24m 안에 적 트루퍼나 영웅이 없으면 무적.${wiki('Lane_Guardian', 'Lane Guardian')} 워커는 65%에서 18분에 -65%(9분에 0%). 웨이브가 워커에 닿기 전 영웅이 치면 피해 65% 감소 + 초당 65 회복(백도어 보호), 22m 안에 적이 없으면 무적.${wiki('Walker', 'Walker')}</li>
+<li><b>최상위의 사용법</b> 저항이 0이 되는 6분 전후에 웨이브를 붙여 가디언을 칩니다. 첫 가디언 6:22(하위보다 1분 30초 빠름), 10분까지 양 팀 합쳐 3.6개(하위 2.1개). 워커는 저항이 0이 된 뒤 웨이브를 붙여서. 첫 워커 13:39(하위 15:47).</li>
+<li><b>트루퍼가 구조물 피해의 약 40%</b>(가디언 기준 최상위 ${D().ranks.trooperDamage.guardian[0]}%, 하위 ${D().ranks.trooperDamage.guardian[1]}%). 웨이브 없이 영웅만 치면 그만큼 느리고, 워커는 백도어 보호까지 받습니다.</li>
+</ul>
+<h4>초반 죽음은 싸고 후반 죽음은 비싸다</h4>
+<ul class="sg-list">
+<li><b>규칙</b> 부활 시간은 5분 8초 → 20분 38초 → 30분 70초 → 40분 85초(최대 90초). 10분 이후 순자산이 15% 이상 앞선 채 죽으면 6~22초 추가.${wiki('Respawn', 'Respawn')}</li>
+<li><b>최상위의 사용법</b> 15분까지 더 많이 죽고(2.7회, 하위 2.3회) 죽어서 떨어뜨린 영혼도 더 많지만(313, 하위 185), 순자산은 1,297 많습니다. 8초 부활을 내주고 가디언·캠프를 가져오는 교환이기 때문입니다.</li>
+<li><b>그래서</b> 초반 1:1 교환은 그 사이 구조물·캠프를 챙기면 이득. 20분이 넘으면 한 번 죽을 때 웨이브 2~3개와 구조물이 같이 날아가니 혼자 죽지 않기가 먼저.</li>
+</ul>
+<h4>영혼은 근처에 있는 사람이 나눠 갖는다</h4>
+<ul class="sg-list">
+<li><b>규칙</b> 전선 배정은 팀당 2-2-2. 한 전선에 둘이 있으면 각자 54%. 웨이브는 20분까지 30초, 20~35분 25초, 35분부터 20초마다.${wiki('Trooper', 'Trooper')}</li>
+<li><b>최상위의 사용법</b> 잡을 수 있던 트루퍼 중 72.4%를 처치(하위 66.7%)하고, 웨이브 사이에 정글 캠프로 15분까지 576을 더 법니다. 영웅 처치 영혼 차이는 161로 작습니다. 격차는 킬이 아니라 <b>웨이브 사이 30초를 어떻게 쓰느냐</b>에서 납니다.</li>
+<li><b>그래서</b> 웨이브를 밀고 둘 중 하나는 정글로. 둘이 붙어 서 있는 시간이 길수록 108%를 둘이 나눠 갖는 셈입니다(<a href="#sg-rules">영혼 규칙</a>).</li>
+</ul>
+<h4>중앙 보스는 잡는 것보다 가져가는 것</h4>
+<ul class="sg-list">
+<li><b>규칙</b> 처치 후 7분 → 6분 → 5분마다 부활. 소생의 보석은 수정을 강한 근거리 공격으로 깬 팀이 가져가서, 잡은 팀과 가져간 팀이 다를 수 있습니다.</li>
+<li><b>최상위의 사용법</b> 첫 보스 18:18(하위 27:18, 9분 빠름). 보석을 상대가 가로챈 비율 16.1%(하위 8.3%), 보스를 끝까지 다툽니다. 보석을 가져간 팀은 3분 안에 구조물을 하나 이상 부순 경우가 ${D().ranks.bossNext.pct[0]}%, 승률 ${D().ranks.bossNext.win[0]}%.</li>
+<li><b>그래서</b> 보스 체력이 낮아지면 딜보다 수정 앞 자리싸움. 보석을 가져왔으면 바로 가장 가까운 워커·기지 가디언으로.</li>
+</ul>
+<h4>집라인은 밀어 둔 만큼만 탄다</h4>
+<ul class="sg-list">
+<li><b>규칙</b> 아군 트루퍼가 밀어 둔 지점까지만 탈 수 있음. 바깥 전선 초속 21m, 가운데 18m. 6분부터 F로 32초간 +80%(재사용 6분). 적 영웅·구조물에게 맞으면 3초간 못 타고, 탄 지 3초 안에 맞으면 떨어지면서 최대 체력 15% 피해 + 2.5초 기절. 기지 가디언을 부수면 그 전선 집라인이 영구 +80%.${wiki('Ziplines', 'Ziplines')}</li>
+<li><b>그래서</b> 웨이브를 밀어 둔 상태가 곧 집라인이 길어진 상태. 고수가 한타에 제때 오는 건 무빙이 빨라서라기보다 <b>전선을 먼저 밀어 두고 출발하기</b> 때문입니다.${dc(176674, '유입들이 왜 자꾸 무빙 타령하는지')} 가속은 6분에 한 번이라 영혼 단지(5분 주기)·중앙 보스 합류용으로 아끼고, 적 근처에서는 막 올라타지 않기.</li>
+</ul>
+<h4>앞서면 얼마나 이기나</h4>
+<p>15분에 팀 순자산이 ${D().ranks.lead.map(x => `${x.gap} 앞서면 승률 약 ${x.win}%`).join(', ')}. 랭크와 상관없이 비슷합니다. 거꾸로 8k 넘게 뒤져도 6판 중 1판은 뒤집힙니다. 지는 팀은 영혼을 최대 26% 더 받고(<a href="#sg-rules">영혼 규칙</a> 6번) 앞선 팀은 부활이 길어지니, 뒤질 땐 무리한 싸움보다 파밍·수비로 버티다 보스·워커 한 번을 노리기.</p>`
       },
       {
         id: 'rules',
@@ -505,65 +540,83 @@ ${list
   )
   .join('')}`;
   }
-  // One section at a time: the 목차 picks it (data-sg-sec), cross-links (#sg-<id>) and the pager at the
-  // bottom move between them. pick() is called by the page shells (desktop.js, the website) on click.
+  // The whole guide is one page, namu-wiki style: 목차 and cross-links (#sg-<id>) scroll to a section,
+  // and every source is gathered in one 출처 list at the bottom. pick() is called by the page shells
+  // (desktop.js, the website) on click and returns the section to scroll to.
   const SECTION_ORDER = ['about', 'summary', 'basics', 'macro', 'lane', 'rules', 'jungle', 'objectives', 'items', 'timeline', 'diagnose', 'movement', 'community', 'youtube'];
-  let open = null;
   function guidePage(state) {
     const list = sections(state),
-      i = Math.max(0, list.findIndex(s => s.id === open)),
-      s = list[i],
-      prev = list[i - 1],
-      next = list[i + 1];
-    const pager = `<nav class="sg-pager" aria-label="이전·다음">${prev ? `<button data-sg-sec="${prev.id}"><small>이전</small>${esc(prev.title)}</button>` : '<span></span>'}${
-      next ? `<button class="next" data-sg-sec="${next.id}"><small>다음</small>${esc(next.title)}</button>` : ''
-    }</nav>`;
+      notes = [];
+    const body = list
+      .map(
+        (s, i) =>
+          `<section class="card sg-sec" id="sg-${s.id}"><h2><em>${i + 1}.</em> ${esc(s.title)}</h2>${
+            s.key ? `<div class="sg-key"><b>핵심</b><ul>${s.key.map(k => `<li>${k}</li>`).join('')}</ul></div>` : ''
+          }${footnotes(numbered(s.body, i + 1), s.id, notes)}</section>`
+      )
+      .join('');
+    const refs = notes.length
+      ? `<section class="card sg-sec sg-fns" id="sg-refs"><h2>출처</h2><ol>${notes
+          .map((x, j) => `<li id="fn-${j + 1}"><span>[${j + 1}]</span> <a href="${x.href}" target="_blank">${x.fn}</a></li>`)
+          .join('')}</ol></section>`
+      : '';
     return `<div class="page-heading"><div><h1>공략</h1><p>데드락 기본 공략과 영혼 올리는 법 · ${esc(D().updated)} 기준 · 패치에 따라 수치가 바뀔 수 있음 · 용어는 게임 한국어판 표기</p></div></div>
 <div class="sg-layout"><nav class="sg-toc" aria-label="목차"><b>목차</b><ol>${list
-      .map(x => `<li class="${x === s ? 'on' : ''}"><button data-sg-sec="${x.id}" ${x === s ? 'aria-current="true"' : ''}><span>${esc(x.title)}</span><small>${esc(x.short)}</small></button></li>`)
+      .map((x, i) => `<li data-sec="${x.id}" class="${i ? '' : 'on'}"><a href="#sg-${x.id}"><span>${esc(x.title)}</span><small>${esc(x.short)}</small></a></li>`)
       .join('')}</ol></nav>
-<div class="sg-body"><section class="card sg-sec" id="sg-${s.id}"><p class="sg-step">${i + 1} / ${list.length} · ${esc(s.short)}</p><h2><em>${i + 1}.</em> ${esc(s.title)}</h2>${
-      s.key ? `<div class="sg-key"><b>핵심</b><ul>${s.key.map(k => `<li>${k}</li>`).join('')}</ul></div>` : ''
-    }${footnotes(numbered(s.body, i + 1), s.id)}${pager}</section></div></div>`;
+<div class="sg-body">${body}${refs}</div></div>`;
   }
   // Sub-headings get namu-wiki numbers (3.1, 3.2 ...).
   function numbered(body, no) {
     let m = 0;
     return body.replace(/<h4>/g, () => `<h4><em>${no}.${++m}.</em> `);
   }
-  // Every source link becomes [n] in the text and one line in the 출처 list under the section; the same
+  // Every source link becomes [n] in the text and one line in the 출처 list at the bottom of the page; the same
   // URL keeps its number. "출처 a · b" and "(a)" collapse to the marks alone. The link sections
   // (커뮤니티, 유튜브) are lists of sources themselves and stay as they are.
-  function footnotes(body, id) {
+  function footnotes(body, id, notes) {
     if (id === 'community' || id === 'youtube') return body;
-    const notes = [],
-      A = '<a class="src[^"]*" href="[^"]*" target="_blank" data-fn="[^"]*">[^<]*</a>',
+    const A = '<a class="src[^"]*" href="[^"]*" target="_blank" data-fn="[^"]*">[^<]*</a>',
       run = new RegExp(String.raw`(출처\s*)?(\()?(${A}(?:\s*(?:·|/|,)?\s*${A})*)(\))?`, 'g'),
       one = /<a class="src( keep)?" href="([^"]*)" target="_blank" data-fn="([^"]*)">([^<]*)<\/a>/g;
     const mark = (href, fn) => {
       let n = notes.findIndex(x => x.href === href) + 1;
       if (!n) n = notes.push({ href, fn });
-      return `<sup class="fn"><a href="#fn-${id}-${n}" title="${fn}">[${n}]</a></sup>`;
+      return `<sup class="fn"><a href="#fn-${n}" title="${fn}">[${n}]</a></sup>`;
     };
-    const out = body.replace(run, (all, lead, open, links, close) => {
+    return body.replace(run, (all, lead, open, links, close) => {
       const marks = links.replace(/\s*(?:·|\/|,)?\s*(?=<a )/g, '').replace(one, (x, keep, href, fn, label) => (keep ? `${label}${mark(href, fn)}` : mark(href, fn)));
       // A lone "(" or ")" belongs to the sentence, not to the link.
       return (open && !close ? open : '') + marks + (close && !open ? close : '');
     });
-    if (!notes.length) return out;
-    return `${out}<div class="sg-fns"><b>출처</b><ol>${notes
-      .map((x, j) => `<li id="fn-${id}-${j + 1}"><span>[${j + 1}]</span> <a href="${x.href}" target="_blank">${x.fn}</a></li>`)
-      .join('')}</ol></div>`;
   }
-  // A click on a 목차 entry, the pager or a cross-link: opens that section and returns its id.
+  // A click on a 목차 entry, a cross-link or a footnote mark: returns the element to scroll to.
   function pick(target) {
-    const el = target?.closest?.('[data-sg-sec], a[href^="#sg-"]');
-    if (!el) return null;
-    const id = el.dataset.sgSec || el.getAttribute('href').slice(4);
-    if (!sections().some(x => x.id === id)) return null;
-    open = id;
-    return id;
+    const el = target?.closest?.('a[href^="#sg-"], .sg-layout a[href^="#fn-"]');
+    return el ? document.getElementById(el.getAttribute('href').slice(1)) : null;
   }
+  // 목차 follows the scroll: the last section whose top has passed the header is marked.
+  let spyFrame = 0;
+  function spy() {
+    spyFrame = 0;
+    const secs = document.querySelectorAll('.sg-body > .sg-sec[id^="sg-"]:not(#sg-refs)');
+    if (!secs.length) return;
+    // A section counts once its top is within its scroll margin (under the sticky header and 목차).
+    const line = parseFloat(getComputedStyle(secs[0]).scrollMarginTop) + 24;
+    let cur = secs[0];
+    for (const s of secs) if (s.getBoundingClientRect().top < line) cur = s;
+    const id = cur.id.slice(3),
+      on = document.querySelector('.sg-toc li.on');
+    if (on?.dataset.sec === id) return;
+    on?.classList.remove('on');
+    const li = document.querySelector(`.sg-toc li[data-sec="${id}"]`);
+    if (!li) return;
+    li.classList.add('on');
+    // On phones the 목차 is a sideways row: keep the marked chip in view.
+    const toc = li.closest('.sg-toc');
+    if (toc.scrollWidth > toc.clientWidth + 4) toc.scrollLeft = li.offsetLeft - (toc.clientWidth - li.offsetWidth) / 2;
+  }
+  document.addEventListener('scroll', () => (spyFrame ||= requestAnimationFrame(spy)), { capture: true, passive: true });
 
   // --- 빌드 스타일 (in the 영웅 page): per hero, the styles its games actually took (tools/build-archetypes.cjs). ---
   function buildStyles(id) {

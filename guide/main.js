@@ -105,17 +105,12 @@
   }
 
   document.addEventListener('click', e => {
-    // 공략: the 목차, the pager and links to another section open that section (kept in the address).
+    // 공략: the 목차, cross-links and footnote marks scroll within the page (kept in the address).
     const sec = window.StrategyUI?.pick(e.target);
     if (sec) {
       e.preventDefault();
-      history.replaceState(null, '', '#sg-' + sec);
-      render();
-      $('.sg-layout')?.scrollIntoView({ block: 'start' });
-      // On phones the 목차 is a sideways row: bring the open section's chip into it.
-      const toc = $('.sg-toc'),
-        on = $('.sg-toc li.on');
-      if (toc && on) toc.scrollLeft = on.offsetLeft - (toc.clientWidth - on.offsetWidth) / 2;
+      if (sec.id.startsWith('sg-')) history.replaceState(null, '', '#' + sec.id);
+      sec.scrollIntoView({ block: 'start' });
       return;
     }
     const row = e.target.closest('tr[data-guide-id]');
@@ -191,13 +186,8 @@
     }
   }
 
-  // Opening /guide/#sg-jungle opens that section; #yt-<id> is a video in the 유튜브 section.
-  const hash = decodeURIComponent(location.hash.slice(1));
-  if (page === 'index' && hash) {
-    const a = document.createElement('a');
-    a.setAttribute('href', '#sg-' + (hash.startsWith('yt-') ? 'youtube' : hash.replace(/^sg-/, '')));
-    StrategyUI.pick(a);
-  }
+  // Opening /guide/#sg-jungle scrolls to that section; #yt-<id> is a video in the 유튜브 section.
   render();
-  if (hash.startsWith('yt-')) document.getElementById(hash)?.scrollIntoView();
+  const hash = decodeURIComponent(location.hash.slice(1));
+  if (hash) document.getElementById(hash)?.scrollIntoView();
 })();

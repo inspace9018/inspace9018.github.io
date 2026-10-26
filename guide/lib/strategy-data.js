@@ -19,6 +19,40 @@ window.STRATEGY = {
     { name: '정글 캠프', low: 1175, high: 1740 },
     { name: '상자·영혼 슬롯머신', low: 835, high: 1281 }
   ],
+  // Top ranks (badge 110+, about the top 2% of ranked games) vs low ranks (badge 10-39), normal games,
+  // api.deadlock-api.com/v1/sql on 2026-10-26. Match rows: last 14 days, games over 15 min. Player rows
+  // (per player, at 15:00): last 5 days, games over 20 min. Times in seconds.
+  ranks: {
+    checked: '2026-10-26',
+    games: { top: 6421, low: 127258 },
+    players: { top: 30245, low: 536189 },
+    match: [
+      { name: '경기 시간', top: 1866, low: 2244, kind: 'time' },
+      { name: '첫 가디언 파괴', top: 382, low: 472, kind: 'time' },
+      { name: '10분까지 부서진 가디언 (양 팀 6개 중)', top: 3.58, low: 2.05, kind: 'dec' },
+      { name: '첫 워커 파괴', top: 819, low: 947, kind: 'time' },
+      { name: '첫 중앙 보스 처치', top: 1098, low: 1638, kind: 'time' },
+      { name: '소생의 보석을 상대 팀이 가로챈 비율', top: 16.1, low: 8.3, kind: 'pct' }
+    ],
+    player: [
+      { name: '15분 순자산', top: 13362, low: 12065, kind: 'n' },
+      { name: '15분까지 정글 캠프 영혼', top: 1722, low: 1146, kind: 'n' },
+      { name: '15분까지 구조물·보스 영혼', top: 959, low: 760, kind: 'n' },
+      { name: '15분까지 영웅 처치 영혼', top: 1948, low: 1787, kind: 'n' },
+      { name: '잡을 수 있던 트루퍼 중 처치 비율', top: 72.4, low: 66.7, kind: 'pct' },
+      { name: '15분까지 죽은 횟수', top: 2.74, low: 2.33, kind: 'dec' },
+      { name: '15분까지 죽어서 떨어뜨린 영혼', top: 313, low: 185, kind: 'n' }
+    ],
+    // Share of structure damage done by troopers (last 7 days), and what the team holding the
+    // 소생의 보석 does next: at least one enemy structure within 3 minutes / average structures.
+    trooperDamage: { guardian: [38.4, 42.9], walker: [34.0, 39.3] },
+    bossNext: { pct: [78.2, 74.2], count: [2.02, 2.31], win: [72.1, 74.4] },
+    // Team net worth gap at 15:00 and the win rate of the team ahead (last 4 days, all ranks alike).
+    lead: [
+      { gap: '3k~8k', win: 67 },
+      { gap: '8k 이상', win: 83 }
+    ]
+  },
   share: [
     { n: 1, each: 100, total: 100 },
     { n: 2, each: 54, total: 108 },

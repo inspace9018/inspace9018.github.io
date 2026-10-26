@@ -498,3 +498,7 @@
     display: none;
   }
 }
+/* An open card sits where the legend is: the legend steps aside. */
+.ma-view:has(.ma-card:not([hidden])) .ma-legend {
+  display: none;
+}

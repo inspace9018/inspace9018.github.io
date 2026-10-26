@@ -25,7 +25,7 @@
   margin: 0 0 2px;
   color: var(--muted);
 }
-.sg-toc button {
+.sg-toc a {
   display: block;
   width: 100%;
   min-height: 0;
@@ -37,12 +37,12 @@
   font: inherit;
   font-size: 13.5px;
   text-align: left;
-  cursor: pointer;
+  text-decoration: none;
 }
-.sg-toc button:hover span {
+.sg-toc a:hover span {
   color: var(--accent);
 }
-.sg-toc li.on button {
+.sg-toc li.on a {
   background: var(--n-300);
 }
 .sg-toc li.on span {
@@ -61,7 +61,8 @@
   min-width: 0;
 }
 .sg-sec {
-  scroll-margin-top: 68px;
+  /* The app has no sticky header; the website sets its own margin (guide.css). */
+  scroll-margin-top: 20px;
   padding: 24px 28px;
   font-size: 15px;
   /* namu-wiki rhythm: 1.6 line height, normal letter spacing, Korean words kept whole at line ends. */
@@ -90,11 +91,6 @@
   color: var(--blue-300);
   font-style: normal;
 }
-.sg-step {
-  margin: 0 0 2px !important;
-  color: var(--muted) !important;
-  font-size: 12.5px;
-}
 .sg-sec h4 {
   margin: 34px 0 10px;
   padding-bottom: 5px;
@@ -122,42 +118,6 @@
 .sg-key li {
   margin: 2px 0;
 }
-.sg-pager {
-  display: flex;
-  /* desktop.css stacks every <nav> for the app sidebar. */
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 32px;
-  padding: 18px 0 0;
-  border-top: 1px solid var(--line);
-  border-right: 0;
-}
-.sg-pager button {
-  min-height: 0;
-  padding: 10px 14px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--panel-2);
-  color: var(--text);
-  font: inherit;
-  font-weight: 700;
-  text-align: left;
-  cursor: pointer;
-}
-.sg-pager button.next {
-  margin-left: auto;
-  text-align: right;
-}
-.sg-pager button:hover {
-  border-color: var(--accent);
-}
-.sg-pager small {
-  display: block;
-  color: var(--muted);
-  font-size: 11.5px;
-  font-weight: 400;
-}
 .sg-sec p {
   margin: 0 0 12px;
   color: var(--text);
@@ -171,16 +131,10 @@
 .sg-sec sup.fn a {
   text-decoration: none;
 }
-.sg-fns {
-  margin-top: 36px;
-  padding-top: 10px;
-  border-top: 1px solid var(--line);
+/* 출처: every footnote of the page in one list at the bottom. */
+.sg-fns ol {
   font-size: 13px;
   line-height: 1.5;
-}
-.sg-fns > b {
-  color: var(--muted);
-  font-size: 12.5px;
 }
 .sg-fns ol {
   list-style: none;
@@ -512,6 +466,24 @@
 .sg-table tr.warn td {
   color: var(--warning);
 }
+/* 시스템 분석: 최상위 vs 하위 랭크, grouped by match and player rows. */
+/* Three short columns: stays a full-width table on phones, where other tables scroll sideways. */
+.sg-table.sg-ranks {
+  display: table;
+}
+.sg-table.sg-ranks td:first-child {
+  white-space: normal;
+}
+.sg-ranks td:nth-child(n + 2),
+.sg-ranks th:nth-child(n + 2) {
+  text-align: right;
+  white-space: nowrap;
+}
+.sg-ranks tr.sub td {
+  padding-top: 12px;
+  color: var(--muted);
+  font-size: 12.5px;
+}
 .sg-table td.hot {
   color: var(--amber-500);
   font-weight: 700;
@@ -763,9 +735,9 @@
   .sg-layout {
     grid-template-columns: 1fr;
   }
-  /* The 목차 becomes one row of chips that scrolls sideways. */
+  /* The 목차 becomes one row of chips that scrolls sideways and stays on top while reading. */
   .sg-toc {
-    position: static;
+    z-index: 3;
     max-height: none;
     padding: 8px;
     overflow-x: auto;
@@ -785,7 +757,7 @@
     flex: 0 0 auto;
     margin: 0;
   }
-  .sg-toc button {
+  .sg-toc a {
     white-space: nowrap;
     border: 1px solid var(--line);
   }

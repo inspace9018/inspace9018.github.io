@@ -174,9 +174,15 @@ footer a {
     margin: 0 -16px;
     padding: 0 12px 6px;
   }
-  .sg-toc,
   .op-heroes .op-list {
     top: 0;
+  }
+  /* The 목차 chip row sticks under the two-row header; sections stop below both. */
+  .sg-toc {
+    top: 92px;
+  }
+  .sg-sec {
+    scroll-margin-top: 150px;
   }
   /* The header is two rows here. */
   .sg-layout {

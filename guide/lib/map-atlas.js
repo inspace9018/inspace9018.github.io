@@ -210,7 +210,7 @@ window.MapAtlas = (() => {
     // Searching shows the kinds that match even if they were hidden.
     root.classList.toggle('searching', !!q);
     root.dataset.floor = view.floor;
-    $$('[data-floor]').forEach(b => b.setAttribute('aria-pressed', b.dataset.floor === view.floor));
+    $$('button[data-floor]').forEach(b => b.setAttribute('aria-pressed', b.dataset.floor === view.floor));
     place();
   }
   // Zoom and pan: the stage is a square that fits the view at zoom 1; markers keep their size.
@@ -335,7 +335,12 @@ window.MapAtlas = (() => {
     });
     const up = e => {
       pts.delete(e.pointerId);
-      if (pts.size) return;
+      // One finger lifted from a pinch: keep panning from where the other finger is now.
+      if (pts.size) {
+        const [[x, y]] = pts.values();
+        drag = { x: view.x, y: view.y, sx: x, sy: y, d: null, z: view.z };
+        return;
+      }
       v.classList.remove('grab');
       if (drag && moved < 4) {
         const m = document.elementFromPoint(e.clientX, e.clientY)?.closest('.ma-m');
@@ -361,7 +366,8 @@ window.MapAtlas = (() => {
       place();
     });
     root.addEventListener('click', e => {
-      const b = e.target.closest('[data-ma], [data-floor]');
+      // button[data-floor]: the root itself carries data-floor for the CSS, and every click is inside it.
+      const b = e.target.closest('[data-ma], button[data-floor]');
       if (!b) return;
       const a = b.dataset.ma;
       if (b.dataset.floor) {

@@ -114,8 +114,8 @@
   margin-bottom: 18px;
   padding: 16px 20px;
 }
-.rg-summary.short {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+.rg-summary.three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 .rg-summary div + div {
   padding-left: var(--sp-4);

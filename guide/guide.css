@@ -88,6 +88,64 @@ main {
 .sg-sec {
   scroll-margin-top: 72px;
 }
+/* Ad (RevIQ 300x250, the same slot as the app's ad column): under the page on narrow screens, a
+   column on the right on wide ones. The house card shows until RevIQ fills #ad. */
+.ad-side {
+  width: 300px;
+  margin: 0 auto 32px;
+}
+.ad-side small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+.ad-slot {
+  position: relative;
+  width: 300px;
+  height: 250px;
+}
+.ad-house {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  padding: 16px;
+  box-sizing: border-box;
+  border: 1px dashed var(--n-500);
+  border-radius: 6px;
+  background: var(--n-100);
+  color: var(--text);
+  font-size: 13px;
+  text-decoration: none;
+}
+.ad-house span {
+  color: var(--muted);
+}
+.ad-house em {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 700;
+}
+#ad {
+  position: relative;
+  z-index: 1;
+  width: 300px;
+  height: 250px;
+}
+@media (min-width: 1600px) {
+  body {
+    padding-right: 332px;
+  }
+  .ad-side {
+    position: fixed;
+    top: 72px;
+    right: 16px;
+    margin: 0;
+  }
+}
 footer {
   display: flex;
   flex-wrap: wrap;
@@ -119,6 +177,10 @@ footer a {
   .sg-toc,
   .op-heroes .op-list {
     top: 0;
+  }
+  /* The header is two rows here. */
+  .sg-layout {
+    scroll-margin-top: 104px;
   }
   .card {
     padding: 16px;

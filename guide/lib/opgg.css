@@ -145,6 +145,7 @@ main {
   font-size: 11px;
   font-weight: 700;
   text-align: center;
+  white-space: nowrap;
   color: #fff;
 }
 .op-tier.t1 {
@@ -870,8 +871,9 @@ header .status {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 58px;
-  padding: 3px 1px 4px;
+  position: relative;
+  width: 92px;
+  padding: 3px 2px 5px;
   background: none;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -931,6 +933,83 @@ header .status {
   color: var(--n-800);
   text-align: center;
   word-break: keep-all;
+}
+.ib-ico u {
+  position: absolute;
+  right: -6px;
+  bottom: -4px;
+  padding: 0 3px;
+  border-radius: 3px;
+  background: var(--n-950);
+  color: var(--amber-300);
+  font-size: 9.5px;
+  font-weight: 700;
+  line-height: 13px;
+  text-decoration: none;
+}
+/* The item's job in this build, always shown under the tile. */
+.ib-role {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  margin-top: 3px;
+  font-size: 10.5px;
+  line-height: 13px;
+  color: var(--muted);
+  text-align: center;
+  word-break: keep-all;
+}
+/* Hover box: what the item does (and, for actives, when to use it). */
+.ib-tip {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  width: 280px;
+  padding: 10px 12px;
+  background: var(--n-100);
+  border: 1px solid var(--n-400);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 45%);
+  text-align: left;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text);
+  pointer-events: none;
+}
+.ib-item:hover .ib-tip,
+.ib-item:focus-visible .ib-tip {
+  display: block;
+}
+.ib-tip > b {
+  display: block;
+  font-size: 13px;
+}
+.ib-tip small {
+  display: block;
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 11.5px;
+  text-align: left;
+}
+.ib-tip p {
+  margin: 4px 0 0;
+}
+.ib-tip p b {
+  margin-right: 6px;
+  color: var(--amber-300);
+  font-size: 11px;
+}
+.ib-tip p.use {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid var(--n-300);
+}
+.ib-tip p.use b {
+  color: var(--accent);
 }
 .ib-item em {
   font-style: normal;
@@ -1039,6 +1118,14 @@ header .status {
   border-radius: 3px;
   background: var(--amber-900);
   font-size: 11px;
+}
+.ib-if.use {
+  color: var(--text);
+  line-height: 1.5;
+}
+.ib-if.use b {
+  background: var(--blue-bg);
+  color: var(--accent);
 }
 .ib-detail h5 {
   display: flex;

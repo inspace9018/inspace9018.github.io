@@ -27,8 +27,6 @@
   let guideId = heroParam || (window.HERO_GUIDE || [])[0]?.id,
     guideQuery = '',
     heroSort = 'tier';
-  // 추천 빌드
-  let buildHero = heroParam;
   // 조합 분석: kept in this browser only.
   let comp = { us: [], them: [] },
     compSide = 'us';
@@ -86,7 +84,6 @@
   const draw = {
     index: () => StrategyUI.guidePage(data),
     heroes: () => OpggUI.heroes(guideId, guideQuery, heroSort, guideView),
-    builds: () => StrategyUI.buildsPage(data, buildHero),
     comp: compPage,
     routes: () => RouteGuide.page(data, routePick, heading)
   };
@@ -96,7 +93,7 @@
     // Buttons that open another app page become links to the matching web page, or to the download.
     for (const b of app.querySelectorAll('button[data-page]')) {
       const a = document.createElement('a'),
-        web = { builds: 'builds.html', guide: 'heroes.html', comp: 'comp.html', routes: 'routes.html', strategy: './' }[b.dataset.page];
+        web = { guide: 'heroes.html', comp: 'comp.html', routes: 'routes.html', strategy: './' }[b.dataset.page];
       a.href = web || DOWNLOAD;
       a.textContent = web ? b.textContent : `Lookout ${b.textContent}`;
       b.replaceWith(a);
@@ -106,6 +103,19 @@
   }
 
   document.addEventListener('click', e => {
+    // 공략: the 목차, the pager and links to another section open that section (kept in the address).
+    const sec = window.StrategyUI?.pick(e.target);
+    if (sec) {
+      e.preventDefault();
+      history.replaceState(null, '', '#sg-' + sec);
+      render();
+      $('.sg-layout')?.scrollIntoView({ block: 'start' });
+      // On phones the 목차 is a sideways row: bring the open section's chip into it.
+      const toc = $('.sg-toc'),
+        on = $('.sg-toc li.on');
+      if (toc && on) toc.scrollLeft = on.offsetLeft - (toc.clientWidth - on.offsetWidth) / 2;
+      return;
+    }
     const row = e.target.closest('tr[data-guide-id]');
     if (row) {
       guideId = +row.dataset.guideId;
@@ -135,9 +145,6 @@
         setTimeout(() => (b.textContent = '복사'), 1200);
       });
       return;
-    } else if (d.buildHero) {
-      buildHero = +d.buildHero;
-      setHero(buildHero);
     } else if (d.routeTeam !== undefined) routePick = { ...routePick, team: +d.routeTeam };
     else if (d.routeBand) routePick = { ...routePick, team: routePick.team ?? 0, band: d.routeBand };
     else if (d.routePlan) routePick = { ...routePick, plan: d.routePlan };
@@ -161,11 +168,11 @@
   document.addEventListener('input', e => {
     if (e.target.id !== 'guide-q') return;
     guideQuery = e.target.value;
-    const pos = e.target.selectionStart;
-    render();
-    const input = $('#guide-q');
-    input?.focus();
-    input?.setSelectionRange(pos, pos);
+    // Only the list is redrawn: a new input box would cut off Korean typing mid-syllable.
+    const fresh = document.createElement('div');
+    fresh.innerHTML = draw.heroes();
+    const table = fresh.querySelector('.op-list table');
+    if (table) $('.op-list table')?.replaceWith(table);
   });
   async function copyText(text) {
     try {
@@ -182,7 +189,13 @@
     }
   }
 
+  // Opening /guide/#sg-jungle opens that section; #yt-<id> is a video in the 유튜브 section.
+  const hash = decodeURIComponent(location.hash.slice(1));
+  if (page === 'index' && hash) {
+    const a = document.createElement('a');
+    a.setAttribute('href', '#sg-' + (hash.startsWith('yt-') ? 'youtube' : hash.replace(/^sg-/, '')));
+    StrategyUI.pick(a);
+  }
   render();
-  // Opening /guide/#sg-jungle: the anchor exists only after drawing, so scroll to it now.
-  if (location.hash) document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView();
+  if (hash.startsWith('yt-')) document.getElementById(hash)?.scrollIntoView();
 })();

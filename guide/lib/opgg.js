@@ -224,14 +224,27 @@
   const num = v => Number(v || 0).toLocaleString('ko-KR');
   const mmss = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
   const IB_KIND = { core: '핵심', situ: '상황별', counter: '상황 대비', skip: '비추천' };
+  // A tile: icon, name, the price-band number and, under it, the item's job in this build (why[0]; for
+  // 상황 대비 the reason it answers that threat). Hovering shows what the item does and, for actives,
+  // when to use it.
   function ibTile(x, kind, key, sel, n) {
     const it = items().get(x.id);
     if (!it) return '';
     const ko = itemKo().get(x.id) || it.name,
+      info = window.HERO_ITEM_BUILDS.items[x.id] || {},
+      active = (info.tt || []).find(t => t.k === 'active'),
+      use = active && window.ITEM_USE?.[x.id],
       adj = x.s ? `<em class="${x.s.rel >= 1 ? 'up' : x.s.rel <= -1 ? 'down' : ''}">${signed(x.s.rel)}%p</em>` : '<em>—</em>';
-    return `<button type="button" class="ib-item ${SLOT_CLS[it.slot] || ''}${sel === key ? ' on' : ''}" data-ib-item="${esc(key)}" title="${esc(ko)}"><span class="ib-ico"><img src="${esc(it.file)}" alt="">${
+    const effects = (info.tt || [])
+      .filter(t => t.k !== 'base' && t.text)
+      .map(t => `<p><b>${t.k === 'active' ? `사용${t.cd ? ` · ${esc(t.cd)}` : ''}` : '지속'}</b>${esc(t.text)}</p>`)
+      .join('');
+    const tip = `<span class="ib-tip" role="tooltip"><b>${esc(ko)}</b><small>${esc(window.ITEM_BRIEF?.[x.id] || info.head || '')} · ${num(it.cost)} 영혼</small>${effects}${
+      use ? `<p class="use"><b>사용법</b>${esc(use)}</p>` : ''
+    }</span>`;
+    return `<button type="button" class="ib-item ${SLOT_CLS[it.slot] || ''}${sel === key ? ' on' : ''}" data-ib-item="${esc(key)}"><span class="ib-ico"><img src="${esc(it.file)}" alt="">${
       n ? `<i>${n}</i>` : ''
-    }</span><small>${esc(ko)}</small>${kind === 'skip' ? '' : adj}</button>`;
+    }${active ? '<u>사용</u>' : ''}</span><small>${esc(ko)}</small>${kind === 'skip' ? '' : adj}${x.why[0] ? `<span class="ib-role">${esc(x.why[0])}</span>` : ''}${tip}</button>`;
   }
   function ibDetail(x, kind, b, heroKo) {
     const it = items().get(x.id),
@@ -265,7 +278,9 @@
       : '';
     return `<div class="ib-detail"><div class="ib-detail-head"><span class="ib-ico big ${SLOT_CLS[it?.slot] || ''}"><img src="${esc(it?.file || '')}" alt=""></span><div><h4>${esc(ko)} <span class="ib-kind ${kind}">${IB_KIND[kind]}</span></h4><p>${esc(
       info.head || ''
-    )} · <span class="soul">${num(it?.cost)} 영혼</span></p></div></div>${x.if ? `<p class="ib-if"><b>언제</b>${esc(x.if)}</p>` : ''}<div class="ib-detail-body"><div class="ib-tts">${tt}</div><div class="ib-why">${
+    )} · <span class="soul">${num(it?.cost)} 영혼</span></p></div></div>${x.if ? `<p class="ib-if"><b>언제</b>${esc(x.if)}</p>` : ''}${
+      window.ITEM_USE?.[x.id] && (info.tt || []).some(t => t.k === 'active') ? `<p class="ib-if use"><b>사용법</b>${esc(window.ITEM_USE[x.id])}</p>` : ''
+    }<div class="ib-detail-body"><div class="ib-tts">${tt}</div><div class="ib-why">${
       x.why.length ? `<h5>${kind === 'skip' ? '빼는 이유' : '이유'}</h5><ul>${x.why.map(w => `<li>${esc(w)}</li>`).join('')}</ul>` : ''
     }${rows ? `<h5>${esc(b.name)} 빌드 통계</h5><dl class="ib-nums">${rows}</dl>` : ''}</div></div></div>`;
   }
@@ -454,7 +469,7 @@
       t?.winRate?.short
     )}</b></div><div><small>40분 후</small><b>${pct(t?.winRate?.long)}</b></div></div></div><div class="op-skill-icons">${abilities
       .map(a => `<span><img src="assets/abilities/${id}-${a.slot}.png" alt=""><small>${a.slot}</small></span>`)
-      .join('')}</div></section>${ib}<div class="op-cols"><section class="op-box"><h3>능력 마스터 순서 <small>먼저 마스터하는 능력 · 최근 30일</small></h3>${order || '<p class="op-empty">—</p>'}${ib ? '' : `<h3>인기 빌드 <small>시간대별 가장 많이 사는 아이템 · 승률</small></h3>${phase('early', '초반')}${phase('mid', '중반')}${phase('late', '후반')}`}</section><section class="op-box"><h3>능력</h3>${abilities
+      .join('')}</div></section>${ib}${window.StrategyUI?.buildStyles(id) || ''}<div class="op-cols"><section class="op-box"><h3>능력 마스터 순서 <small>먼저 마스터하는 능력 · 최근 30일</small></h3>${order || '<p class="op-empty">—</p>'}${ib ? '' : `<h3>인기 빌드 <small>시간대별 가장 많이 사는 아이템 · 승률</small></h3>${phase('early', '초반')}${phase('mid', '중반')}${phase('late', '후반')}`}</section><section class="op-box"><h3>능력</h3>${abilities
       .map((a, n) => {
         const k = ranges?.skills?.[n],
           dist = k?.m ? (k.kind === '반경' ? '반경 ' : '') + (k.m >= 100 ? '매우 멂' : k.m + 'm') : '';

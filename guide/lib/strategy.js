@@ -250,6 +250,7 @@
     return [
       {
         id: 'about',
+        key: ['승리 조건은 킬이 아니라 상대 기지의 <b>패트런</b> 파괴', '영혼 = 돈 + 경험치. 많이 번 쪽이 강함', '전선 3개(노랑·파랑·초록), 전선 사이 건물 안팎이 정글'],
         title: '데드락은 어떤 게임인가',
         short: '6대6 3인칭 슈터 + MOBA',
         body: `<p><b>데드락(Deadlock)</b>은 밸브(Valve)가 만드는 6대6 <b>3인칭 슈터와 MOBA를 섞은 게임</b>입니다. 총을 직접 조준해 쏘고, 영웅마다 능력 4개(4번째가 궁극기)를 씁니다. 리그 오브 레전드·도타처럼 전선에 트루퍼(미니언)가 계속 나오고, 그걸 잡아 얻은 영혼으로 아이템을 사서 강해집니다. 아직 정식 출시 전(초대제 테스트)이라 패치가 잦습니다. ${wiki('Deadlock', '출처')}</p>
@@ -265,6 +266,7 @@
       },
       {
         id: 'macro',
+        key: ['<b>0~10분</b> 라인전·파밍 → 상대 가디언 먼저', '<b>10~25분</b> 영혼 단지·균열·중앙 보스 싸움 → 워커', '<b>25분~</b> 기지 가디언 → 성지 2개 → 패트런. 한타를 이기면 바로 구조물로'],
         title: '경기 큰 흐름',
         short: '라인전 → 오브젝트 싸움 → 기지 공략',
         body: `${fig(pathFigure(), `전선 구조물과 보상 · 출처 ${wiki('Map', 'Map')} · ${wiki('Shrine', 'Shrine')} · ${wiki('Patron', 'Patron')}`)}
@@ -304,6 +306,7 @@ ${fig(carryFigure(), `개념도 · 영웅 분류와 운영은 ${yt('mGn4T4B4cdY'
       },
       {
         id: 'rules',
+        key: ['근처(구슬 45m·처치자 30m)에만 있어도 분배. 둘이면 각자 54%', '바닥 구슬 50% + 공중 구슬 50%. 공중 구슬은 쏴서 확정·디나이', '정글·상자·영혼 슬롯머신 영혼은 미확보 → 들고 죽으면 떨어뜨림'],
         title: '데드락 영혼 규칙',
         short: '다른 MOBA와 다른, 게임에 정해진 규칙',
         body: `<p>데드락의 트루퍼(크립) 영혼은 <b>막타를 누가 쳤는지보다 근처에 누가 있었는지</b>로 나뉩니다. 리그 오브 레전드처럼 막타를 놓쳤다고 0이 되지 않습니다.</p>
@@ -329,6 +332,7 @@ ${callout('note', '위키 문서끼리 다른 부분', `${wiki('Trooper', 'Troop
       },
       {
         id: 'diagnose',
+        key: ['기준선: 분당 약 1k, 20분에 18k 근처', '랭크 차이는 전선이 아니라 정글·상자에서 남', '흔한 원인: 전선 비우기 · 둘이 한 전선 · 공중 구슬 놓치기 · 웨이브 사이에 놀기'],
         title: '영혼이 안 쌓일 때',
         short: '내 순자산이 정상인지, 어디서 새는지',
         body: `<p>"아무리 파밍해도 영혼이 안 쌓인다"면 먼저 숫자로 확인하세요. 아래는 최근 30일 일반전의 분당 순자산 평균입니다. 순자산은 경기 중 상단 바 초상화 아래 숫자(예: 6.2k)이고, Lookout이 자동으로 읽습니다.</p>
@@ -356,6 +360,7 @@ ${D()
       },
       {
         id: 'timeline',
+        key: ['<b>2:00</b> 소형 캠프 · <b>3:00</b> 상자 · <b>5:00</b> 기운의 파편·중형 캠프', '<b>8:00</b> 대형 캠프·영혼 슬롯머신 · <b>10:00</b> 영혼 단지 · <b>11:20~</b> 균열', '생성 30초 전 웨이브를 밀어 둔 쪽이 먼저 먹음'],
         title: '시간대별 운영 (0~12분)',
         short: '분 단위로 무엇을 할지',
         body: `${fig(timelineFigure(), '생성 시각 · 출처 deadlock.wiki Denizens·Crate·Soul Urn, Deathy·Ghoul 영상 (2026-10)')}
@@ -372,6 +377,7 @@ ${fig(loopFigure(), '웨이브 사이 루프 · 출처 Shotty·Ghoul 파밍 영�
       },
       {
         id: 'lane',
+        key: ['트루퍼는 막타 직전에만, 평소엔 상대 영웅 견제', '<b>웨이브 → 캠프 → 웨이브</b>: 밀고 남는 15초에 가까운 곳 한 곳', '순자산 3,200(평균 6:26) 궁극기가 먼저 열린 쪽이 킬 각'],
         title: '라인전 실전',
         short: '몇 분에 무엇을 · 막타·디나이·엄폐·회복',
         body: `<h4>분 단위로 보는 라인전</h4>
@@ -398,6 +404,7 @@ ${fig(loopFigure(), '웨이브 사이 루프 · 출처 Shotty·Ghoul 파밍 영�
       },
       {
         id: 'jungle',
+        key: ['우선순위: 전선 → 영혼 슬롯머신 → 정글 캠프 → 상자·황금 동상', '웨이브를 민 직후 가까운 곳만, 웨이브가 오면 전선으로', '앞설 땐 상대 정글 먼저, 돌아오며 아군 정글'],
         title: '정글·상자·영혼 슬롯머신',
         short: '파밍 순서·영혼 슬롯머신·동선',
         body: `${fig(mapFigure(), '정글 캠프 51곳 · 색은 종류와 첫 생성 시각 · Lookout 미니맵에 리스폰 타이머 표시')}
@@ -431,6 +438,7 @@ ${fig(invadeFigure(), `출처 ${yt('mGn4T4B4cdY', '7:44', '네크로 7:44')} · 
       },
       {
         id: 'objectives',
+        key: ['궁극기는 순자산 3,200에서 해금', '가디언 1,375 · 워커 3,675 · 중앙 보스 3,000 + 분당 50', '한타 승리 직후 가장 가까운 구조물·보스로'],
         title: '오브젝트와 성장',
         short: '가디언·워커·보스·균열·영혼 단지, 궁극기 시점',
         body: `${fig(levelFigure(), '쌓인 영혼(순자산)에 따른 능력 해금과 포인트 · deadlock-api 영웅 데이터')}
@@ -454,13 +462,14 @@ ${fig(invadeFigure(), `출처 ${yt('mGn4T4B4cdY', '7:44', '네크로 7:44')} · 
       },
       {
         id: 'items',
+        key: ['카테고리별 투자 보너스, 3,200 → 4,800 구간 효율이 큼', '로딩 화면에서 적 주 피해(총/능력) 보고 초반 카운터', '초록(생명) 아이템은 약 4.8k까지만'],
         title: '아이템 원칙',
         short: '스파이크·카운터·초록 아이템',
         body: `<ul class="sg-list">
 <li><b>카테고리별 투자 보너스</b>: 무기·생존·능력 각각 800 / 1,600 / 2,400 / 3,200 / 4,800 / 6,400 ... 구간마다 보너스가 붙고, 3,200 → 4,800 구간 효율이 특히 큽니다. 4.8k 직전이면 구매를 미루지 마세요(${dc(133606, 'DC 빌드 스파이크')}).</li>
 <li><b>로딩 화면에서 적 조합의 주 피해</b>(총/능력)를 보고 초반 카운터(실드·전투 조끼·마법사의 문장·힐베인)를 미리 삽니다(${yt('NV8G-p3xzmI', '0:46', 'Metro 아이템 0:46')}).</li>
 <li><b>초록(생명) 아이템은 첫 대형 아이템 전 약 4.8k까지만.</b> 뒤처질수록 초록을 줄이고, 죽은 원인이 위치 선정인지부터 확인.</li>
-<li><b>빌드 순서는 임의로 바꾸지 않기.</b> 카운터템은 실제로 불편할 때만. 처음엔 <button class="sg-link" data-page="builds">추천 빌드</button>의 통계 빌드를 그대로 따라 하세요.</li>
+<li><b>빌드 순서는 임의로 바꾸지 않기.</b> 카운터템은 실제로 불편할 때만. 처음엔 <button class="sg-link" data-page="guide">영웅</button> 페이지의 통계 빌드를 그대로 따라 하세요.</li>
 <li>잘못 산 아이템은 쓰기 전·상점 범위 안이면 전액 환불.</li></ul>`
       },
       {
@@ -513,31 +522,47 @@ ${list
   )
   .join('')}`;
   }
+  // One section at a time: the 목차 picks it (data-sg-sec), cross-links (#sg-<id>) and the pager at the
+  // bottom move between them. pick() is called by the page shells (desktop.js, the website) on click.
+  let open = null;
   function guidePage(state) {
-    const list = sections(state);
-    return `<div class="page-heading"><div><h1>공략</h1><p>데드락 기본 공략과 영혼 올리는 법 · ${esc(D().updated)} 기준 · 패치에 따라 수치가 바뀔 수 있습니다. 용어는 게임 한국어판 표기를 따릅니다.</p></div></div>
-<div class="sg-layout"><nav class="sg-toc" aria-label="목차"><b>목차</b><ol>${list.map(s => `<li><a href="#sg-${s.id}"><span>${esc(s.title)}</span><small>${esc(s.short)}</small></a></li>`).join('')}</ol></nav>
-<div class="sg-body">${list.map((s, i) => `<section class="card sg-sec" id="sg-${s.id}"><h2>${esc(s.title)}</h2>${s.body}</section>`).join('')}</div></div>`;
+    const list = sections(state),
+      i = Math.max(0, list.findIndex(s => s.id === open)),
+      s = list[i],
+      prev = list[i - 1],
+      next = list[i + 1];
+    const pager = `<nav class="sg-pager" aria-label="이전·다음">${prev ? `<button data-sg-sec="${prev.id}"><small>이전</small>${esc(prev.title)}</button>` : '<span></span>'}${
+      next ? `<button class="next" data-sg-sec="${next.id}"><small>다음</small>${esc(next.title)}</button>` : ''
+    }</nav>`;
+    return `<div class="page-heading"><div><h1>공략</h1><p>데드락 기본 공략과 영혼 올리는 법 · ${esc(D().updated)} 기준 · 패치에 따라 수치가 바뀔 수 있음 · 용어는 게임 한국어판 표기</p></div></div>
+<div class="sg-layout"><nav class="sg-toc" aria-label="목차"><b>목차</b><ol>${list
+      .map(x => `<li class="${x === s ? 'on' : ''}"><button data-sg-sec="${x.id}" ${x === s ? 'aria-current="true"' : ''}><span>${esc(x.title)}</span><small>${esc(x.short)}</small></button></li>`)
+      .join('')}</ol></nav>
+<div class="sg-body"><section class="card sg-sec" id="sg-${s.id}"><p class="sg-step">${i + 1} / ${list.length} · ${esc(s.short)}</p><h2>${esc(s.title)}</h2>${
+      s.key ? `<div class="sg-key"><b>핵심</b><ul>${s.key.map(k => `<li>${k}</li>`).join('')}</ul></div>` : ''
+    }${s.body}${pager}</section></div></div>`;
+  }
+  // A click on a 목차 entry, the pager or a cross-link: opens that section and returns its id.
+  function pick(target) {
+    const el = target?.closest?.('[data-sg-sec], a[href^="#sg-"]');
+    if (!el) return null;
+    const id = el.dataset.sgSec || el.getAttribute('href').slice(4);
+    if (!sections().some(x => x.id === id)) return null;
+    open = id;
+    return id;
   }
 
-  // --- 추천 빌드: per hero, the styles its games actually took (tools/build-archetypes.cjs). ---
-  function buildsPage(state, heroId) {
+  // --- 빌드 스타일 (in the 영웅 page): per hero, the styles its games actually took (tools/build-archetypes.cjs). ---
+  function buildStyles(id) {
     const A = window.HERO_ARCHETYPES,
-      guide = window.HERO_GUIDE || [],
-      items = new Map((window.ITEM_KO || []).map(i => [i.id, i])),
+      h = A?.heroes[id];
+    if (!h) return '';
+    const items = new Map((window.ITEM_KO || []).map(i => [i.id, i])),
       cat = new Map((window.ITEM_CATALOG || []).map(i => [i.id, i]));
-    if (!A) return '<p class="note">빌드 통계를 불러오지 못했습니다.</p>';
-    const id = A.heroes[heroId] ? heroId : state?.live?.local?.heroId && A.heroes[state.live.local.heroId] ? state.live.local.heroId : guide[0]?.id;
-    const h = A.heroes[id],
-      g = guide.find(x => x.id === id);
     const name = it => items.get(it)?.ko || cat.get(it)?.name || it,
       icon = it => (cat.get(it)?.file ? `<img src="${cat.get(it).file}" alt="">` : '');
     const phase = (order, from, to) => order.filter(o => o.t >= from && o.t < to);
     const SLOT = { weapon: ['무기', 'w'], spirit: ['능력', 's'], vitality: ['생존', 'v'] };
-    const picker = `<div class="sg-heroes">${[...guide]
-      .sort((a, b) => a.ko.localeCompare(b.ko, 'ko'))
-      .map(x => `<button data-build-hero="${x.id}" class="${x.id === id ? 'selected' : ''}" title="${esc(x.ko)}"><img src="assets/portraits/${x.id}-small.png" alt=""><span>${esc(x.ko)}</span></button>`)
-      .join('')}</div>`;
     // Where each style leans compared with the hero's other styles (e.g. Seven: gun vs ultimate builds).
     const mean = s => h.groups.reduce((a, x) => a + (x.split[s] || 0), 0) / h.groups.length;
     const lean = grp => {
@@ -546,7 +571,7 @@ ${list
         .sort((a, b) => b[1] - a[1])[0];
       return d >= 3 ? `다른 스타일보다 ${SLOT[s][0]} +${Math.round(d)}%p` : '';
     };
-    const card = (grp, i) => {
+    const card = grp => {
       const sig = grp.signature ? name(grp.signature) : '';
       return `<article class="card sg-build ${grp.recommended ? 'rec' : ''}"><div class="card-head"><div><h3>${grp.recommended ? '<span class="sg-rec">뉴비 추천</span>' : ''}${esc(grp.style)}${sig ? ` · ${esc(sig)}` : ''}</h3><p class="meta">경기 ${grp.share}% · 승률 <b class="${grp.win >= 52 ? 'up' : grp.win < 48 ? 'down' : ''}">${grp.win}%</b> · ${n(grp.games)}판${lean(grp) ? `<span class="sg-lean">${lean(grp)}</span>` : ''}</p></div><div class="sg-split">${Object.entries(grp.split)
         .filter(([s]) => SLOT[s])
@@ -564,12 +589,10 @@ ${list
         })
         .join('')}</article>`;
     };
-    return `<div class="page-heading"><div><h1>추천 빌드</h1><p>실제 경기 ${n(Object.values(A.heroes).reduce((a, x) => a + x.games, 0))}판(최근 ${A.days}일, 20분 이상 일반전)에서 빌드가 흘러간 방향대로 묶었습니다 · deadlock-api.com</p></div></div>
-${picker}
-<section class="sg-build-head"><img src="assets/portraits/${id}-small.png" alt=""><div><h2>${esc(g?.ko || '')}</h2><p>${h.groups.length}가지 스타일 · 묶음 기준: 20분까지 산 아이템 · 각 아이템 옆 숫자는 평균 구매 시각과 그 스타일에서 보유한 비율</p></div></section>
+    return `<section class="op-box sg-styles"><h3>빌드 스타일 <small>실제 경기 ${n(h.games)}판(최근 ${A.days}일, 20분 이상 일반전)을 빌드가 흘러간 방향대로 묶은 ${h.groups.length}가지 · 묶음 기준: 20분까지 산 아이템 · 아이템 옆 숫자는 평균 구매 시각과 그 스타일에서 보유한 비율 · deadlock-api.com</small></h3>
 <div class="sg-builds">${h.groups.map(card).join('')}</div>
-<p class="note">"뉴비 추천"은 경기의 15% 이상이 쓰는 스타일 중 승률이 가장 높은 것입니다. 승률 차이에는 실력 차이도 섞여 있으니 2%p 안쪽은 비슷하다고 보세요. 처음엔 추천 스타일을 순서대로 따라 사고, 익숙해지면 상대 조합에 맞춰 카운터 아이템을 끼워 넣으세요.</p>`;
+<p class="note">"뉴비 추천"은 경기의 15% 이상이 쓰는 스타일 중 승률이 가장 높은 것. 승률 차이에는 실력 차이도 섞여 있으니 2%p 안쪽은 비슷한 수준. 처음엔 추천 스타일을 순서대로 따라 사고, 익숙해지면 상대 조합에 맞춰 카운터 아이템 끼워 넣기.</p></section>`;
   }
 
-  window.StrategyUI = { guidePage, buildsPage, worthFigure, sections };
+  window.StrategyUI = { guidePage, pick, buildStyles, worthFigure, sections };
 })();

@@ -1,7 +1,7 @@
 'use strict';
 // 라인 동선: the farming loops per team and lane, from the map guide (route-guide-data.js and
 // assets/routes, made by work/map-blender/export_app.py from the game's navigation mesh), three of
-// them: small camps, crates and slot machines, and 기운의 파편 with crates and slot machines. The middle
+// them: small camps with crates, crates and slot machines, and 기운의 파편 with crates and slot machines. The middle
 // lane has all three to either side, so its pictures hold two loops (left and right). The
 // team and lane follow the match when they are known; buttons pick others.
 (function () {
@@ -15,7 +15,11 @@
   const SIDE = { left: '왼쪽', right: '오른쪽' };
   const KIND = { weak: '소형 캠프', medium: '중형 캠프', strong: '대형 캠프', vault: '영혼 슬롯머신', buff: '기운의 파편' };
   const PLAN = {
-    small: { title: '소형 정글', when: '2:00부터', text: '웨이브를 밀고 가까운 소형 캠프만 잡고 돌아옵니다.' },
+    small: {
+      title: '소형 정글',
+      when: '소형 캠프 2:00 · 상자 3:00부터',
+      text: '웨이브를 밀고 가까운 소형 캠프를 잡은 뒤, 가는 길과 오는 길에 서로 다른 상자·황금 동상을 챙기며 돌아옵니다.'
+    },
     loot: {
       title: '박스 · 영혼 슬롯',
       when: '상자 3:00 · 슬롯머신 8:00부터',
@@ -234,18 +238,14 @@
         steps = [...lp.out.steps, ...lp.back.steps],
         vaults = steps.filter(s => s.kind === 'vault').length + (lp.target.kind === 'vault' ? 1 : 0),
         crates = steps.reduce((n, s) => n + (s.crates || 0), 0);
-      // The small-camp loop takes no crates or slot machines: its card leaves those out.
-      return `<section class="card rg-summary ${small ? 'short' : ''}"><div><small>${esc(side(lp) + p.title)}</small><b>약 ${lp.loop}초</b><span>${esc(
+      // The small-camp loop passes no slot machine: its card leaves that out.
+      return `<section class="card rg-summary ${small ? 'three' : ''}"><div><small>${esc(side(lp) + p.title)}</small><b>약 ${lp.loop}초</b><span>${esc(
         p.when
       )} · 그동안 웨이브 약 ${waves}번</span></div><div><small>목표</small><b>${esc(lp.target.name)}</b><span>${
         lp.target.kind === 'buff' ? '5:00부터' : KIND[lp.target.kind]
       }${lp.target.clear ? ` · 정리 약 ${lp.target.clear}초` : ''}</span></div>${
-        small
-          ? ''
-          : `<div><small>영혼 슬롯머신</small><b>${vaults}곳</b><span>${vaults ? '8:00부터' : '이 동선에는 없음'}</span></div><div><small>상자·황금 동상</small><b>${crates}개</b><span>${
-              crates ? '3:00부터' : '이 동선에는 없음'
-            }</span></div>`
-      }</section>`;
+        small ? '' : `<div><small>영혼 슬롯머신</small><b>${vaults}곳</b><span>${vaults ? '8:00부터' : '이 동선에는 없음'}</span></div>`
+      }<div><small>상자·황금 동상</small><b>${crates}개</b><span>${crates ? '3:00부터 · A·B가 서로 다른 곳' : '이 동선에는 없음'}</span></div></section>`;
     };
     const route = lp => {
       const target = `<b>${esc(lp.target.name)}</b> ${lp.target.kind === 'buff' ? '획득' : KIND[lp.target.kind] + ' 정리'}`;
@@ -266,11 +266,13 @@
           ? '가운데 전선은 양쪽에 기운의 파편과 영혼 슬롯머신이 있습니다. 미니맵에서 상대가 보이지 않는 쪽, 우리 팀원이 가지 않은 쪽을 고릅니다.'
           : '',
       {
-        small: '소형 캠프는 2:00에 처음 생기고, 잡은 뒤 약 1분 25초 뒤에 다시 생깁니다. 웨이브를 밀 때마다 한 번씩 다녀옵니다.',
+        small: '소형 캠프는 2:00에 처음 생기고, 잡은 뒤 약 1분 25초 뒤에 다시 생깁니다. 상자는 3:00부터라 2:00~3:00에는 캠프만 잡고 짧은 길로 복귀.',
         loot: '상자는 3:00부터, 영혼 슬롯머신은 8:00부터 있습니다. 8:00 전에는 같은 길에서 상자만 챙깁니다.',
         buff: '기운의 파편은 5:00에 생깁니다. 8:00 전에는 파편과 상자만 챙기고, 슬롯머신은 8:00부터 들릅니다.'
       }[plan],
-      plan === 'small' ? '' : '가는 길과 오는 길이 다른 거리를 지나서, 한 번 지나간 상자를 다시 찾지 않아도 됩니다.',
+      `가는 길(A)과 오는 길(B)을 나눈 이유: 서로 다른 거리의 상자·황금 동상${
+        small ? '' : '과 영혼 슬롯머신'
+      }을 한 바퀴에 모두 챙기기 위해서. 같은 길로 돌아오면 이미 부순 상자만 지나갑니다.`,
       shared
         ? '‘상대 팀 동선과 겹침’ 표시된 곳은 상대도 같은 시간에 노리기 쉬운 곳입니다. 미니맵에 상대가 안 보이면 먼저 들르지 않습니다.'
         : ''
@@ -282,10 +284,8 @@
     // The picture first, right under the pickers, so it shows without scrolling in a small window.
     return `${head}<div class="guide-top rg-pick rg-plans">${plans}</div><div class="guide-top rg-pick">${teams}<span class="rg-gap"></span>${lanes}</div><figure class="card rg-figure"><div class="rg-views"><img src="${esc(r.image)}" alt="${esc(
       TEAM[team] + ' ' + r.lane + ' ' + p.title
-    )} 동선">${minimap(r)}</div><figcaption><span class="rg-key out">가는 길 (A)</span><span class="rg-key back">오는 길 (B)</span>${small ? '' : '<span class="rg-key num">번호 · 들르는 순서</span>'}<span class="rg-key ring">흰 원 · 목표</span>${
-      small
-        ? ''
-        : '<span class="rg-key crate">주황 · 파란 테두리 상자 · 가는 길(A) · 오는 길(B)에 챙길 상자(금색은 황금 동상)</span><span class="rg-key slot">보라색 모형 · 영혼 슬롯머신</span>'
+    )} 동선">${minimap(r)}</div><figcaption><span class="rg-key out">가는 길 (A)</span><span class="rg-key back">오는 길 (B)</span>${small ? '' : '<span class="rg-key num">번호 · 들르는 순서</span>'}<span class="rg-key ring">흰 원 · 목표</span><span class="rg-key crate">주황 · 파란 테두리 상자 · 가는 길(A) · 오는 길(B)에 챙길 상자(금색은 황금 동상)</span>${
+      small ? '' : '<span class="rg-key slot">보라색 모형 · 영혼 슬롯머신</span>'
     }<span class="rg-key tier">초록 원 · 정글 캠프(1 소형 · 2 중형 · 3 대형)</span></figcaption><p class="rg-mm-key"><b>미니맵</b><span><i class="mk-camp">1</i><i class="mk-camp m">2</i><i class="mk-camp s">3</i>정글 캠프 <small>소형 · 중형 · 대형</small></span><span><i class="mk-slot"></i>영혼 슬롯머신</span><span><img src="assets/objectives/guardian.png" alt="">가디언·워커 <small>초록 테두리 우리 · 빨강 상대</small></span><span><i class="mk-crate"></i>상자</span><span><i class="mk-tough"></i>튼튼한 상자</span><span><i class="mk-statue"></i>황금 동상 자리 <small>50% 확률</small></span><span><i class="mk-buff"></i>기운의 파편</span></p><p class="note">${esc(
       p.text
     )}${

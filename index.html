@@ -20,8 +20,8 @@
           게임 화면을 읽어서 지금 챙길 것만 왼쪽에 조용히 띄웁니다. 정글이 언제 다시 생기는지, 웨이브를 민 뒤 어디를 돌고 올지, 상대 궁극기가 열렸는지.
         </p>
         <p class="actions">
-          <a class="button" href="https://github.com/inspace9018/lookout-releases/releases/latest">Windows용 받기</a>
-          <span>무료 · Windows · 게임은 창 모드 또는 테두리 없는 창 모드</span>
+          <a class="button" id="get" href="https://github.com/inspace9018/lookout-releases/releases/latest/download/Lookout-Setup.exe">Windows용 받기 <small id="get-version">0.1.5</small></a>
+          <span>무료 · Windows · 게임은 창 모드 또는 테두리 없는 창 모드 · <a id="get-notes" href="https://github.com/inspace9018/lookout-releases/releases/latest">바뀐 점</a></span>
         </p>
         <p class="guide-link">설치 없이 브라우저에서: <a href="guide/">공략</a> · <a href="guide/heroes.html">영웅 정보·빌드</a> · <a href="guide/comp.html">조합 분석</a> · <a href="guide/routes.html">라인 동선</a></p>
       </section>
@@ -49,9 +49,12 @@
           <li>상점을 열면 이번 적 팀을 상대로 살 만한 아이템</li>
           <li>영웅 선택 화면에서 초상화마다 승률 · 픽률</li>
           <li>2:00 소형 캠프처럼 생성 30초 전 시간 알림</li>
+          <li>레벨업까지 남은 영혼과 트루퍼 수, 다음 레벨에 궁극기가 열리는지</li>
         </ul>
         <p class="note">
-          게임 파일을 고치거나 게임 메모리를 읽지 않습니다. 화면에 보이는 것만 이 PC 안에서 읽고, 게임 화면은 밖으로 보내지 않습니다.
+          기본은 화면 인식이라 게임 파일을 건드리지 않습니다. 화면에 보이는 것만 이 PC 안에서 읽고, 게임 화면은 밖으로 보내지 않습니다.
+          더 정확하게 쓰고 싶으면 '게임 HUD 연동'을 따로 켤 수 있습니다. 게임 폴더에 모드 파일 1개를 넣고 gameinfo.gi에 3줄을 더하며(먼저 백업), 대시보드에서 언제든 뺄 수 있습니다.
+          어느 쪽도 게임 메모리를 읽지 않습니다.
           Valve와 관계없는 팬 제작 도구입니다.
         </p>
       </section>
@@ -61,5 +64,16 @@
       <a href="https://github.com/inspace9018/lookout-releases/issues/new/choose">버그 · 제안</a>
       <a href="privacy.html">개인정보 처리방침</a>
     </footer>
+    <script>
+      // The button always gets the newest installer (a fixed-name copy on each release); this only
+      // writes that release's version next to it. Without an answer the version above stays.
+      fetch('https://api.github.com/repos/inspace9018/lookout-releases/releases/latest')
+        .then(r => (r.ok ? r.json() : null))
+        .then(r => {
+          const v = r && /^v?(\d+\.\d+\.\d+)$/.exec(r.tag_name || '');
+          if (v) document.getElementById('get-version').textContent = v[1];
+        })
+        .catch(() => {});
+    </script>
   </body>
 </html>

@@ -818,6 +818,41 @@ header .status {
   gap: 16px;
   align-items: start;
 }
+.ib-finish {
+  margin: 18px 0;
+  padding: 16px;
+  border: 1px solid var(--green-500);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--green-500) 5%, var(--panel));
+}
+.ib-finish-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.ib-finish h4 { margin: 0; font-size: 14px; }
+.ib-finish-head p { margin: 5px 0 0; color: var(--muted); font-size: 12px; }
+.ib-finish-count { white-space: nowrap; color: var(--green-300); font-size: 18px; }
+.ib-finish-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.ib-finish-slot { display: grid; justify-items: stretch; min-width: 0; align-content: start; }
+.ib-finish-slot .ib-item { width: 100%; min-width: 0; padding: 8px 4px; }
+.ib-finish-slot .ib-ico { width: 46px; height: 46px; }
+.ib-finish-slot .ib-ico img { width: 100%; height: 100%; }
+.ib-finish-slot .ib-item > em,.ib-finish-slot .ib-role { display: none; }
+.ib-finish-slot .ib-item > small { width: 100%; white-space: normal; overflow-wrap: anywhere; font-size: 12px; }
+.ib-finish-slot.extra { border-radius: 5px; background: color-mix(in srgb, var(--green-500) 8%, transparent); }
+.ib-extra-label { color: var(--green-300); text-align: center; font-size: 10px; padding-bottom: 5px; }
+.ib-finish-note { margin: 12px 0 0; font-size: 12px; line-height: 1.6; color: var(--muted); }
+.ib-finish-sales { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+.ib-finish h5 { margin: 0 0 8px; font-size: 12px; }
+.ib-finish ul { margin: 0; padding-left: 18px; font-size: 12px; line-height: 1.7; }
+.ib-finish-sales li > span { color: var(--muted); margin-left: 6px; }
+.ib-finish-upgrades { margin-top: 12px; font-size: 12px; }
+.ib-finish-upgrades summary { cursor: pointer; color: var(--muted); }
+.ib-finish-upgrades[open] summary { margin-bottom: 8px; }
+.ib-kind.finish { color: var(--green-300); border-color: var(--green-500); }
 .ib-phase {
   display: grid;
   grid-template-columns: 58px minmax(0, 1fr);
@@ -867,6 +902,38 @@ header .status {
   flex-wrap: wrap;
   gap: 4px 2px;
 }
+.ib-ph-core { min-width: 0; max-width: 100%; }
+.ib-recipes {
+  margin: 8px 0 12px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--panel-2);
+  max-width: 100%;
+}
+.ib-recipes h5 { margin: 0 0 8px; font-size: 12px; color: var(--text); }
+.ib-recipe-step { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin: 6px 0; }
+.ib-recipe-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  max-width: 150px;
+  min-height: 32px;
+  padding: 4px 6px;
+  white-space: normal;
+  text-align: left;
+  font-size: 11px;
+}
+.ib-recipe-item img { width: 23px; height: 23px; flex: 0 0 23px; border-radius: 3px; }
+.ib-recipe-item span { min-width: 0; overflow-wrap: anywhere; }
+.ib-recipe-symbol { color: var(--muted); font-size: 14px; padding: 0 2px; }
+.ib-recipes > p { margin: 8px 0 0; font-size: 11px; line-height: 1.5; color: var(--muted); }
+.ib-kind.material { color: var(--purple-300); border-color: var(--purple-500); }
+.ib-material-for { display: block; margin-top: 3px; color: var(--purple-300); font-size: 10px; line-height: 1.4; }
+.ib-purchase-note { margin: 7px 0 0; font-size: 11px; line-height: 1.5; color: var(--muted); }
+.ib-phase-order { display: block; margin-top: 6px; font-size: 11px; font-style: normal; color: var(--blue-300); }
+.ib-sh-cat li[value]::before { content: attr(value); }
 .ib-item {
   display: flex;
   flex-direction: column;

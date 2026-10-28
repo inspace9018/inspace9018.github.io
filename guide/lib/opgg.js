@@ -178,6 +178,22 @@
       onWay ? `<p class="op-onway"><small>가는 길에</small>${onWay}</p>` : ''
     }${alt}<p class="note">전선이 먼저, 그다음 캠프, 상자는 마지막. 웨이브가 오면 캠프는 두고 돌아가세요.</p></div></div></section>`;
   }
+  function nextObjective(s) {
+    const o=s.intel?.objectives;
+    if(!o?.known)return '<p class="op-empty">경기 시계 확인 후 다음 목표물을 표시합니다.</p>';
+    const targets=[
+      {name:'영혼 단지',remaining:o.urn.remaining,detail:o.urn.laneName||''},
+      {name:'균열 생성',remaining:o.rift.state==='window'?0:o.rift.remaining,detail:window.IntelUI.clock(o.rift.from)+'~'+window.IntelUI.clock(o.rift.to)+' 생성 밴드'},
+      ...(o.midboss.state==='respawn'?[{name:'중앙 보스',remaining:o.midboss.remaining,detail:'재생성'}]:[])
+    ].filter(t=>Number.isFinite(t.remaining)&&t.remaining>=0).sort((a,b)=>a.remaining-b.remaining);
+    const t=targets[0];
+    return t?'<div class="op-next"><b>'+esc(t.name)+'</b><strong>'+ (t.remaining===0?'지금 확인':window.IntelUI.clock(t.remaining))+'</strong><small>'+esc(t.detail)+'</small></div>':'<p>목표물 시각 확인 중</p>';
+  }
+  function laneSummary(s) {
+    const lane=s.intel?.lane||{},us=[s.live?.local?.heroId,lane.partner].filter(Number.isInteger),them=lane.opponents||[];
+    const names=ids=>ids.map(id=>'<span>'+portrait(id)+'<b>'+esc(window.IntelUI.guide(id)?.ko||'식별 대기')+'</b></span>').join('');
+    return '<div class="op-lane-summary"><div>'+names(us)+'</div><small>우리 전선</small><b class="op-versus">VS</b><div>'+names(them)+'</div><small>상대 전선'+(!them.length?' · 배정·관측 대기':'')+'</small></div>';
+  }
   function match(s, view, actions) {
     const live = s.live || {},
       ours = [live.local?.heroId, ...(live.allies || []).map(a => a.heroId)].filter(Number.isInteger),
@@ -185,12 +201,12 @@
       ok = s.connection?.code === 'receiving' && !live.stale;
     // Most urgent first: what to do now and the objective timers, then the lane, then who is in the
     // match, then where to go after the wave.
-    const now = window.IntelUI.now(s, 4) || '<p class="op-empty">경기 화면이 읽히면 지금 할 일이 여기 뜹니다.</p>';
+    const primary = (s.coach||[]).find(c=>!['plan','comp','items','team','clock-wait'].includes(c.id));
+    const sentence = primary?.body?.split(/(?<=[.!?])\s+/)[0] || '';
+    const now = primary ? '<div class="iu-card top"><b>'+esc(primary.title)+'</b><p>'+esc(sentence)+'</p></div>' : '<p class="op-empty">경기 화면이 읽히면 지금 할 일이 여기 뜹니다.</p>';
     return `<div class="op-strip"><div><span class="op-live ${ok ? 'on' : ''}">${ok ? 'LIVE' : '대기'}</span><b>${
       Number.isFinite(live.seconds) ? window.IntelUI.clock(live.seconds) : '--:--'
-    }</b><span>${esc(s.connection?.message || '')}</span></div><div class="op-actions">${actions}</div></div><div class="op-grid3 op-now"><section class="op-box op-todo"><h3>지금 할 일</h3>${now}</section><section class="op-box"><h3>오브젝트</h3>${window.IntelUI.timers(
-      s
-    )}</section><section class="op-box"><h3>라인전</h3>${window.IntelUI.lane(s, '', { ...view, detail: true })}</section></div><div class="op-teams">${teamTable(
+    }</b><span>${esc(s.connection?.message || '')}</span></div><div class="op-actions">${actions}</div></div><section class="op-box status-summary" data-reading-status>${window.ReadingStatus?.html(s)||''}</section><div class="op-grid3 op-now"><section class="op-box op-todo"><h3>지금 할 행동</h3>${now}<small class="op-phase">${esc(window.MatchPhase?.of(live.seconds).label||'시간 확인 중')}</small></section><section class="op-box"><h3>다음 목표물</h3>${nextObjective(s)}</section><section class="op-box"><h3>내 전선 · 상대</h3>${laneSummary(s)}</section></div><details class="op-box op-more"><summary>능력·빌드·운영과 전체 목표물 자세히</summary><div class="op-grid3"><section><h3>추가 안내·운영</h3>${window.IntelUI.now(s,4)}</section><section><h3>전체 목표물</h3>${window.IntelUI.timers(s)}</section><section><h3>전선 상대 상세</h3>${window.IntelUI.lane(s,'',{...view,detail:true})}</section></div></details><div class="op-teams">${teamTable(
       '우리 팀',
       'ally',
       ours,
@@ -223,7 +239,45 @@
   const signed = v => (v > 0 ? '+' : v < 0 ? '−' : '±') + Math.abs(v).toFixed(1);
   const num = v => Number(v || 0).toLocaleString('ko-KR');
   const mmss = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
-  const IB_KIND = { core: '핵심', situ: '상황별', counter: '상황 대비', skip: '비추천' };
+  const IB_KIND = { core: '핵심', material: '조합 재료', finish: '완성안', situ: '상황별', counter: '상황 대비', skip: '비추천' };
+  function ibRecipeSteps(xs) {
+    const seen=new Set(),steps=[];
+    const visit=id=>{
+      if(seen.has(id))return;
+      seen.add(id);
+      const parts=window.HERO_ITEM_BUILDS.items[id]?.parts||[];
+      parts.forEach(visit);
+      if(parts.length)steps.push({id,parts});
+    };
+    xs.forEach(x=>visit(x.id));
+    return steps;
+  }
+  function ibRecipeKey(b,id) {
+    for(const p of b.phases){
+      const purchase=p.purchases?.findIndex(x=>x.id===id)??-1;
+      if(purchase>=0)return `buy:${p.key}:${purchase}`;
+    }
+    const material=b.materials?.findIndex(x=>x.id===id)??-1;
+    if(material>=0)return `material:0:${material}`;
+    for(const p of b.phases)for(const kind of ['core','situ']){
+      const i=p[kind].findIndex(x=>x.id===id);
+      if(i>=0)return `${kind}:${p.key}:${i}`;
+    }
+    for(let j=0;j<b.counters.length;j++){
+      const i=b.counters[j].items.findIndex(x=>x.id===id);
+      if(i>=0)return `counter:${j}:${i}`;
+    }
+    return null;
+  }
+  function ibRecipes(xs,b) {
+    const steps=ibRecipeSteps(xs);
+    if(!steps.length)return '';
+    const node=id=>{
+      const it=items().get(id),key=ibRecipeKey(b,id),label=itemKo().get(id)||it?.name||'';
+      return `<button type="button" class="ib-recipe-item" data-ib-item="${esc(key||'')}"><img src="${esc(it?.file||'')}" alt=""><span>${esc(label)}</span></button>`;
+    };
+    return `<div class="ib-recipes"><h5>조합 전 아이템</h5>${steps.map(s=>`<div class="ib-recipe-step">${s.parts.map(node).join('<span class="ib-recipe-symbol" aria-label="함께 조합">+</span>')}<span class="ib-recipe-symbol" aria-label="업그레이드">→</span>${node(s.id)}</div>`).join('')}<p>이미 가진 재료는 다시 사지 않습니다. 슬롯이 부족하면 상위 아이템을 바로 구매하세요.</p></div>`;
+  }
   // A tile: icon, name, the price-band number and, under it, the item's job in this build (why[0]; for
   // 상황 대비 the reason it answers that threat). Hovering shows what the item does and, for actives,
   // when to use it.
@@ -244,7 +298,7 @@
     }</span>`;
     return `<button type="button" class="ib-item ${SLOT_CLS[it.slot] || ''}${sel === key ? ' on' : ''}" data-ib-item="${esc(key)}"><span class="ib-ico"><img src="${esc(it.file)}" alt="">${
       n ? `<i>${n}</i>` : ''
-    }${active ? '<u>사용</u>' : ''}</span><small>${esc(ko)}</small>${kind === 'skip' ? '' : adj}${x.why[0] ? `<span class="ib-role">${esc(x.why[0])}</span>` : ''}${tip}</button>`;
+    }${active ? '<u>사용</u>' : ''}</span><small>${esc(ko)}</small>${x.materialFor ? `<span class="ib-material-for">재료 → ${esc(itemKo().get(x.materialFor)||items().get(x.materialFor)?.name||'상위 아이템')}</span>` : ''}${kind === 'skip' ? '' : adj}${x.why[0] ? `<span class="ib-role">${esc(x.why[0])}</span>` : ''}${tip}</button>`;
   }
   function ibDetail(x, kind, b, heroKo) {
     const it = items().get(x.id),
@@ -280,7 +334,7 @@
       info.head || ''
     )} · <span class="soul">${num(it?.cost)} 영혼</span></p></div></div>${x.if ? `<p class="ib-if"><b>언제</b>${esc(x.if)}</p>` : ''}${
       window.ITEM_USE?.[x.id] && (info.tt || []).some(t => t.k === 'active') ? `<p class="ib-if use"><b>사용법</b>${esc(window.ITEM_USE[x.id])}</p>` : ''
-    }<div class="ib-detail-body"><div class="ib-tts">${tt}</div><div class="ib-why">${
+    }${x.purchaseOrder?`<p class="ib-if ib-purchase-position"><b>구매 순서</b>${{early:'초반',mid:'중반',late:'후반'}[x.phase]} ${x.phaseOrder}번째 · 전체 ${x.purchaseOrder}번</p>`:''}${kind==='skip'?'':ibRecipes([x],b)}<div class="ib-detail-body"><div class="ib-tts">${tt}</div><div class="ib-why">${
       x.why.length ? `<h5>${kind === 'skip' ? '빼는 이유' : '이유'}</h5><ul>${x.why.map(w => `<li>${esc(w)}</li>`).join('')}</ul>` : ''
     }${rows ? `<h5>${esc(b.name)} 빌드 통계</h5><dl class="ib-nums">${rows}</dl>` : ''}</div></div></div>`;
   }
@@ -327,16 +381,27 @@
     const desc = [
       b.line,
       ...b.points.map(([k, v]) => `${k}: ${v}`),
+      b.phases.map(p=>`${p.label} ${p.orderStart}~${p.orderEnd}번`).join(' → '),
       b.skip.length ? `비추천: ${b.skip.map(x => itemKo().get(x.id) || items().get(x.id)?.name).join(', ')}` : '',
       `통계: 최근 ${D.days}일 ${num(b.n)}판 · 승률 ${b.win.toFixed(1)}% · 같은 길이 경기 대비 ${signed(b.adj)}%p (deadlock-api, ${D.updated})`
     ]
       .filter(Boolean)
       .join('\n');
     const cats = [];
+    const finish = b.finish;
+    const itemName = id => itemKo().get(id) || items().get(id)?.name || '';
+    const memo = x => {
+      if(x.materialFor)return `조합 재료 · ${itemName(x.materialFor)} 구매 전 준비 · 이미 보유했다면 생략`;
+      const sale = finish?.sell.find(y => y.id === x.id);
+      if (sale) return sale.why[0] + (sale.before ? ` · ${itemName(sale.before)} 구매 전` : '');
+      const parts=D.items[x.id]?.parts||[];
+      return parts.length ? `${parts.map(itemName).join(' + ')}에서 업그레이드 · 재료와 중복 보유하지 않음` : '';
+    };
     b.phases.forEach(p => {
-      if (p.core.length) cats.push({ name: `${p.label} 핵심`, desc: `${p.when}${p.ordered ? ' · 왼쪽부터 순서대로' : ''}`, items: p.core.map(x => [x, '']) });
+      if (p.core.length) cats.push({ name: `${p.label} 핵심`, desc: `${p.when} · 전체 ${p.orderStart}~${p.orderEnd}번 순서대로 · 재료 포함${p.note ? ' · '+p.note : ''} · 보유한 재료는 생략, 슬롯이 부족하면 상위 아이템을 바로 구매`, items: (p.purchases||p.core).map(x=>[x,memo(x)]) });
       if (p.situ.length) cats.push({ name: `${p.label} 상황별`, desc: '필요할 때만', opt: true, items: p.situ.map(x => [x, x.if || '']) });
     });
+    if (finish) cats.push({name:'완성 12칸 · 참고',desc:'추가 구매 목록 아님. 후반 핵심 구매·임시 아이템 판매 후 남길 12개. 기본 9칸 + 워커 해금 3칸 기준.',opt:true,items:finish.items.map(x=>[x,'최종 유지 · 이미 보유했다면 추가 구매하지 않음'])});
     if (b.counters.length) cats.push({ name: '상황 대비', desc: '상대 조합을 보고 필요할 때만', opt: true, items: b.counters.flatMap(g => g.items.map(x => [x, g.if])) });
     const imbue = x => {
       const m = x.imb;
@@ -355,7 +420,7 @@
             .map(([x, memo]) => {
               const it = items().get(x.id);
               if (!it) return '';
-              return `<li><img src="${esc(it.file)}" alt="" class="${SLOT_CLS[it.slot] || ''}"><span class="ib-sh-name">${esc(itemKo().get(x.id) || it.name)}</span>${imbue(x)}${
+              return `<li${x.purchaseOrder?` value="${x.purchaseOrder}"`:''}><img src="${esc(it.file)}" alt="" class="${SLOT_CLS[it.slot] || ''}"><span class="ib-sh-name">${esc(itemKo().get(x.id) || it.name)}</span>${imbue(x)}${
                 memo ? `<span class="ib-sh-memo">메모: ${esc(memo)} ${copy(memo)}</span>` : ''
               }</li>`;
             })
@@ -373,6 +438,14 @@
       .map(t => `<span>${esc(t)}</span>`)
       .join('')}</p></div><div class="ib-sh-field"><div class="ib-sh-label"><b>능력 포인트 순서</b></div><p class="ib-sh-hint">편집을 누르고 아래 번호 순서대로 능력을 클릭 (${steps.length}번)</p><ol class="ib-sh-clicks">${clicks}</ol></div></div><div class="ib-sh-right"><p class="ib-sh-hint">카테고리 추가 → 이름·설명 입력 → 아이템 넣기를 ${cats.length}번 반복</p>${catCards}</div></div></div>`;
   }
+  function ibFinish(b, sel) {
+    const f = b.finish;
+    if (!f) return '';
+    const name = id => itemKo().get(id) || items().get(id)?.name || '';
+    const sales = f.sell.map(x=>`<li><b>${esc(name(x.id))}</b><span>${esc(x.why[0])}${x.before ? ' · '+esc(name(x.before))+' 구매 전' : ''}</span></li>`).join('');
+    const upgrades = f.upgrades.map(x=>`<li>${x.from.map(id=>esc(name(id))).join(' + ')} <span aria-label="업그레이드">→</span> <b>${esc(name(x.to))}</b></li>`).join('');
+    return `<section class="ib-finish" aria-label="최종 아이템 완성안"><div class="ib-finish-head"><div><h4>후반 핵심까지 구매한 완성안</h4><p>기본 ${f.base}칸 + 추가 ${f.extra}칸 해금 기준 · 아이콘 숫자는 전체 구매 번호</p></div><b class="ib-finish-count">${f.items.length} / ${f.capacity}칸</b></div><div class="ib-finish-grid">${f.items.map((x,i)=>`<div class="ib-finish-slot${i>=f.base?' extra':''}">${ibTile(x,'finish',`finish:0:${i}`,sel,x.purchaseOrder||i+1)}${i>=f.base?'<small class="ib-extra-label">추가 슬롯</small>':''}</div>`).join('')}</div><p class="ib-finish-note">워커를 파괴해 추가 슬롯을 열어야 12개를 모두 보유할 수 있습니다. 상황별·상황 대비 아이템은 이 구성에서 교체하며, 13번째로 더 사지 않습니다.</p>${sales?`<div class="ib-finish-sales"><h5>후반에 정리할 임시 아이템</h5><ul>${sales}</ul></div>`:''}${upgrades?`<details class="ib-finish-upgrades"><summary>재료가 합쳐지는 업그레이드 ${f.upgrades.length}개</summary><ul>${upgrades}</ul></details>`:''}</section>`;
+  }
   function itemBuilds(id, view = {}) {
     const H = window.HERO_ITEM_BUILDS?.heroes?.[id];
     if (!H) return '';
@@ -382,11 +455,14 @@
     const all = new Map();
     const add = (key, x, kind) => (all.set(key, [x, kind]), key);
     b.phases.forEach(p => {
+      (p.purchases||p.core).forEach((x,i)=>add(`buy:${p.key}:${i}`,x,x.materialFor?'material':'core'));
       p.core.forEach((x, i) => add(`core:${p.key}:${i}`, x, 'core'));
       p.situ.forEach((x, i) => add(`situ:${p.key}:${i}`, x, 'situ'));
     });
     b.counters.forEach((g, j) => g.items.forEach((x, i) => add(`counter:${j}:${i}`, x, 'counter')));
     b.skip.forEach((x, i) => add(`skip:0:${i}`, x, 'skip'));
+    b.finish?.items.forEach((x, i) => add(`finish:0:${i}`, x, 'finish'));
+    b.materials?.forEach((x, i) => add(`material:0:${i}`, x, 'material'));
     const sel = all.has(view.item) ? view.item : all.keys().next().value,
       [selX, selKind] = all.get(sel);
     const tabs =
@@ -401,9 +477,7 @@
     const phases = b.phases
       .map(
         p =>
-          `<div class="ib-phase"><div class="ib-ph-label"><b>${p.label}</b><small>${p.when}</small></div><div class="ib-ph-items"><div class="ib-ph-core"><p class="ib-label">핵심${
-            p.ordered ? ' · 순서대로' : ''
-          }</p><div class="ib-row">${p.core.map((x, i) => ibTile(x, 'core', `core:${p.key}:${i}`, sel, p.ordered ? i + 1 : 0)).join('')}</div></div>${
+          `<div class="ib-phase"><div class="ib-ph-label"><b>${p.label}</b><small>${p.when}</small><em class="ib-phase-order">${p.orderStart}~${p.orderEnd}번</em></div><div class="ib-ph-items"><div class="ib-ph-core"><p class="ib-label">핵심 · ${p.orderStart}~${p.orderEnd}번 순서대로 · 재료 포함</p><div class="ib-row">${(p.purchases||p.core).map((x, i) => ibTile(x, x.materialFor?'material':'core', `buy:${p.key}:${i}`, sel, x.purchaseOrder||i+1)).join('')}</div><p class="ib-purchase-note">보유한 재료는 생략 · 슬롯이 부족하면 상위 아이템을 바로 구매</p></div>${
             p.situ.length
               ? `<div class="ib-ph-situ"><p class="ib-label opt">상황별</p><div class="ib-row">${p.situ.map((x, i) => ibTile(x, 'situ', `situ:${p.key}:${i}`, sel)).join('')}</div></div>`
               : ''
@@ -418,14 +492,14 @@
       .join('');
     const skip = b.skip.map((x, i) => ibTile(x, 'skip', `skip:0:${i}`, sel)).join('');
     const statsView = () =>
-      `${ibOrder(id, b)}<div class="ib-body"><div class="ib-main"><div class="ib-phases">${phases}</div>${
-      counters ? `<h4 class="ib-sub">상황 대비 <small>상대 조합을 보고 필요할 때만</small></h4><div class="ib-threats">${counters}</div>` : ''
+      `${ibOrder(id, b)}<div class="ib-body"><div class="ib-main"><div class="ib-phases">${phases}</div>${ibFinish(b,sel)}${
+      counters ? `<h4 class="ib-sub">상황 대비 <small>필요할 때 완성안의 아이템과 교체</small></h4><div class="ib-threats">${counters}</div>` : ''
     }${skip ? `<h4 class="ib-sub">비추천 <small>많이 사지만 이 빌드엔 덜 맞는 아이템</small></h4><div class="ib-row">${skip}</div>` : ''}</div><aside class="ib-side">${ibDetail(
       selX,
       selKind,
       b,
       heroKo
-    )}</aside></div><p class="ib-foot">아이콘 아래 숫자: 같은 가격대 아이템 대비 승률 차이. 이 빌드에서 그 아이템을 산 판을 같은 길이(5분 단위) 경기와 비교한 뒤, 같은 가격 아이템들의 평균을 뺀 값입니다. 비싼 아이템은 영혼이 넉넉한(이기는) 판에서 많이 사기 때문에 가격대끼리만 비교합니다. 아이템을 누르면 효과와 전체 통계가 나옵니다.</p>`;
+    )}</aside></div><p class="ib-foot">아이콘 아래 숫자: 같은 가격대 아이템 대비 승률 차이. 이 빌드에서 그 아이템을 산 판을 같은 길이(5분 단위) 경기와 비교한 뒤, 같은 가격 아이템들의 평균을 뺀 값입니다. 비싼 아이템은 영혼이 넉넉한(이기는) 판에서 많이 사기 때문에 가격대끼리만 비교합니다. 아이템을 누르면 효과와 전체 통계가 나옵니다. 표시 승률은 빌드군의 통계이며, 완성안 12개를 동시에 보유한 승률은 아닙니다.</p>`;
     return `<section class="op-box op-ib"><div class="op-box-head"><h3>아이템 빌드 <small>최근 ${window.HERO_ITEM_BUILDS.days}일 ${esc(heroKo)} ${num(
       H.n
     )}판 · 평균 승률 ${H.win.toFixed(1)}%</small></h3><button type="button" class="ib-sheet-btn${view.sheet ? ' on' : ''}" data-ib-sheet="${

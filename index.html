@@ -1,77 +1,111 @@
 <!doctype html>
+<!-- Written by lane-electron/tools/build-site-guide.cjs. Edit there, not here. -->
 <html lang="ko">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Lookout · Deadlock 오버레이</title>
-    <meta name="description" content="Deadlock 경기 중 정글 리스폰, 라인 동선, 적 궁극기, 시간 알림을 화면 옆에 띄워 주는 Windows 오버레이." />
+    <title>Lookout · Deadlock 무료 오버레이 다운로드</title>
+    <meta name="description" content="Deadlock 경기 중 정글 리스폰, 라인 동선, 적 궁극기, 시간 알림을 화면 옆에 띄워 주는 무료 Windows 오버레이. 공략·영웅 빌드·지도는 설치 없이 브라우저에서." />
+    <meta property="og:title" content="Lookout · Deadlock 무료 오버레이 다운로드" />
+    <meta property="og:description" content="Deadlock 경기 중 정글 리스폰, 라인 동선, 적 궁극기, 시간 알림을 화면 옆에 띄워 주는 무료 Windows 오버레이. 공략·영웅 빌드·지도는 설치 없이 브라우저에서." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://obeloworks.com/" />
+    <meta property="og:image" content="https://obeloworks.com/guide/assets/map.png" />
+    <meta name="theme-color" content="#101315" />
+    <link rel="canonical" href="https://obeloworks.com/" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="site.css" />
+    <link rel="stylesheet" href="guide/lib/tokens.css" />
+    <link rel="stylesheet" href="guide/lib/desktop.css" />
+    <link rel="stylesheet" href="guide/lib/intel-ui.css" />
+    <link rel="stylesheet" href="guide/lib/opgg.css" />
+    <link rel="stylesheet" href="guide/lib/strategy.css" />
+    <link rel="stylesheet" href="guide/lib/lane-ui.css" />
+    <link rel="stylesheet" href="guide/lib/route-guide.css" />
+    <link rel="stylesheet" href="guide/lib/map-atlas.css" />
+    <link rel="stylesheet" href="guide/guide.css" />
+    <script defer src="https://js.rev.iq/obeloworks.com"></script>
   </head>
-  <body>
-    <header class="top">
-      <a class="brand" href="./"><img src="favicon.svg" alt="" width="28" height="28" />Lookout</a>
-      <nav><a href="guide/">공략·영웅 정보</a><a href="#features">기능</a><a href="privacy.html">개인정보 처리방침</a></nav>
-    </header>
-    <main>
-      <section class="hero">
-        <h1>Deadlock을 하면서 옆에 두는 작은 메모장</h1>
-        <p>
-          게임 화면을 읽어서 지금 챙길 것만 왼쪽에 조용히 띄웁니다. 정글이 언제 다시 생기는지, 웨이브를 민 뒤 어디를 돌고 올지, 상대 궁극기가 열렸는지.
-        </p>
-        <p class="actions">
-          <a class="button" id="get" href="https://github.com/inspace9018/lookout-releases/releases/latest/download/Lookout-Setup.exe">Windows용 받기 <small id="get-version">0.1.5</small></a>
-          <span>무료 · Windows · 게임은 창 모드 또는 테두리 없는 창 모드 · <a id="get-notes" href="https://github.com/inspace9018/lookout-releases/releases/latest">바뀐 점</a></span>
-        </p>
-        <p class="guide-link">설치 없이 브라우저에서: <a href="guide/">공략</a> · <a href="guide/heroes.html">영웅 정보·빌드</a> · <a href="guide/comp.html">조합 분석</a> · <a href="guide/routes.html">라인 동선</a></p>
-      </section>
-      <section id="features" class="features">
-        <figure>
-          <img src="img/folded-list.png" alt="왼쪽 접힌 목록: 라인 궁극기, 동선, 다음 생성, 오브젝트 시간" width="325" height="368" loading="lazy" />
-          <figcaption>
-            <b>접힌 목록</b>
-            내 라인 상대의 궁극기, 웨이브를 민 뒤 갈 동선, 다음에 생기는 캠프와 상자, 보스 · 균열 · 영혼 단지 시간.
-          </figcaption>
-        </figure>
-        <figure>
-          <img src="img/route-tab.png" alt="Alt+Q 패널의 동선 탭: 지도 위 가는 길과 오는 길" width="443" height="548" loading="lazy" />
-          <figcaption>
+  <body data-page="download">
+    <aside class="side">
+      <a class="brand" href="./"><img src="favicon.svg" alt="" width="26" height="26" /><b>Lookout</b></a>
+      <nav class="menu" aria-label="메뉴"><a href="./" aria-current="page" class="nav-get"><b>다운로드</b><small>무료 · Windows 오버레이</small></a><a href="guide/"><b>공략</b><small>영혼 · 라인전 · 정글</small></a><a href="guide/heroes.html"><b>영웅</b><small>티어 · 아이템 빌드</small></a><a href="guide/comp.html"><b>조합 분석</b><small>팀 상성 · 남은 픽</small></a><a href="guide/map.html"><b>지도</b><small>캠프 · 상자 · 상점 위치</small></a><a href="guide/routes.html"><b>라인 동선</b><small>웨이브 사이 정글 루트</small></a></nav>
+      <div class="side-foot">
+        <a class="side-get" href="https://github.com/inspace9018/lookout-releases/releases/latest/download/Lookout-Setup.exe">Windows용 무료 다운로드<small>Lookout <span data-version>0.1.6</span></small></a>
+        <div class="side-meta"><a href="https://github.com/inspace9018/lookout-releases/issues/new/choose">오류 제보</a><a href="privacy.html">개인정보</a></div>
+      </div>
+    </aside>
+    <div class="page">
+      <main class="dl">
+        <section class="dl-hero">
+          <div class="dl-copy">
+            <span class="dl-kicker">Deadlock 오버레이 · 무료</span>
+            <h1>Deadlock을 하면서 옆에 두는 작은 메모장</h1>
+            <p>게임 화면을 읽어서 지금 챙길 것만 왼쪽에 조용히 띄웁니다. 정글이 언제 다시 생기는지, 웨이브를 민 뒤 어디를 돌고 올지, 상대 궁극기가 열렸는지.</p>
+            <div class="dl-actions">
+              <a class="dl-button" href="https://github.com/inspace9018/lookout-releases/releases/latest/download/Lookout-Setup.exe">Windows용 무료 다운로드</a>
+              <span class="dl-meta">버전 <b data-version>0.1.6</b> · 설치 파일 <span data-size>약 150MB</span> · <a href="https://github.com/inspace9018/lookout-releases/releases/latest">바뀐 점</a></span>
+            </div>
+            <p class="dl-req">Windows 전용 · 게임은 창 모드 또는 테두리 없는 창 모드</p>
+          </div>
+          <img class="dl-shot" src="img/route-tab.png" alt="Alt+Q 패널의 동선 탭: 지도 위 가는 길과 오는 길" width="443" height="548" />
+        </section>
+        <section class="dl-steps" aria-label="설치 순서">
+          <div><b>1</b><p><strong>설치 파일 실행</strong>받은 Lookout-Setup.exe를 실행합니다. 새 버전은 앱이 알아서 받아 둡니다.</p></div>
+          <div><b>2</b><p><strong>게임 화면 모드</strong>Deadlock을 창 모드나 테두리 없는 창 모드로 켭니다.</p></div>
+          <div><b>3</b><p><strong>경기 시작</strong>경기에 들어가면 오버레이가 뜹니다. Alt+Q로 패널을 엽니다.</p></div>
+        </section>
+        <h2 class="dl-h">경기 중에 보이는 것</h2>
+        <section class="dl-features">
+          <figure>
+            <img src="img/folded-list.png" alt="왼쪽 접힌 목록: 라인 궁극기, 동선, 다음 생성, 오브젝트 시간" width="325" height="368" loading="lazy" />
+            <figcaption><b>접힌 목록</b>내 라인 상대의 궁극기, 웨이브를 민 뒤 갈 동선, 다음에 생기는 캠프와 상자, 보스 · 균열 · 영혼 단지 시간.</figcaption>
+          </figure>
+          <div class="dl-more">
             <b>라인 동선</b>
-            내 전선과 팀에 맞춘 한 바퀴. 가는 길(A)과 오는 길(B)에 챙길 상자, 걸리는 시간까지.
-          </figcaption>
-        </figure>
-      </section>
-      <section class="list">
-        <h2>그 밖에</h2>
-        <ul>
-          <li>미니맵 위 정글 캠프 리스폰 타이머와 층 표시</li>
-          <li>Tab을 누르면 적마다 궁극기 해금 여부, 팀 상성</li>
-          <li>상점을 열면 이번 적 팀을 상대로 살 만한 아이템</li>
-          <li>영웅 선택 화면에서 초상화마다 승률 · 픽률</li>
-          <li>2:00 소형 캠프처럼 생성 30초 전 시간 알림</li>
-          <li>레벨업까지 남은 영혼과 트루퍼 수, 다음 레벨에 궁극기가 열리는지</li>
-        </ul>
-        <p class="note">
+            <p>Alt+Q 패널의 동선 탭. 내 전선과 팀에 맞춘 한 바퀴. 가는 길(A)과 오는 길(B)에 챙길 상자, 걸리는 시간까지.</p>
+            <b>그 밖에</b>
+            <ul>
+              <li>미니맵 위 정글 캠프 리스폰 타이머와 층 표시</li>
+              <li>Tab을 누르면 적마다 궁극기 해금 여부, 팀 상성</li>
+              <li>상점을 열면 이번 적 팀을 상대로 살 만한 아이템</li>
+              <li>영웅 선택 화면에서 초상화마다 승률 · 픽률</li>
+              <li>2:00 소형 캠프처럼 생성 30초 전 시간 알림</li>
+              <li>레벨업까지 남은 영혼과 트루퍼 수, 다음 레벨에 궁극기가 열리는지</li>
+              <li>대시보드에서 Deadlock 패치노트를 한국어로</li>
+            </ul>
+          </div>
+        </section>
+        <h2 class="dl-h">설치 없이 브라우저에서</h2>
+        <section class="dl-pages"><a href="guide/"><b>공략</b><span>영혼 · 라인전 · 정글</span></a><a href="guide/heroes.html"><b>영웅</b><span>티어 · 아이템 빌드</span></a><a href="guide/comp.html"><b>조합 분석</b><span>팀 상성 · 남은 픽</span></a><a href="guide/map.html"><b>지도</b><span>캠프 · 상자 · 상점 위치</span></a><a href="guide/routes.html"><b>라인 동선</b><span>웨이브 사이 정글 루트</span></a></section>
+        <p class="dl-note">
           기본은 화면 인식이라 게임 파일을 건드리지 않습니다. 화면에 보이는 것만 이 PC 안에서 읽고, 게임 화면은 밖으로 보내지 않습니다.
           더 정확하게 쓰고 싶으면 '게임 HUD 연동'을 따로 켤 수 있습니다. 게임 폴더에 모드 파일 1개를 넣고 gameinfo.gi에 3줄을 더하며(먼저 백업), 대시보드에서 언제든 뺄 수 있습니다.
-          어느 쪽도 게임 메모리를 읽지 않습니다.
-          Valve와 관계없는 팬 제작 도구입니다.
+          어느 쪽도 게임 메모리를 읽지 않습니다. Valve와 관계없는 팬 제작 도구입니다.
         </p>
-      </section>
-    </main>
-    <footer>
-      <span>© 2026 넥서스랩 (Nexus lab)</span>
-      <a href="https://github.com/inspace9018/lookout-releases/issues/new/choose">버그 · 제안</a>
-      <a href="privacy.html">개인정보 처리방침</a>
-    </footer>
+      </main>
+      <aside class="ad-side" aria-label="광고">
+        <small>광고</small>
+        <div class="ad-slot">
+          <a class="ad-house" href="./"><b>Lookout 무료 오버레이</b><span>경기 중 적 궁극기, 정글 리스폰, 라인 동선을 게임 위에 표시합니다.</span><em>무료 다운로드</em></a>
+          <div id="ad" data-ad="right-rail-1" data-ad-size="300x250"></div>
+        </div>
+      </aside>
+      <footer>
+        <span>© 2026 넥서스랩 (Nexus lab) · Valve와 관계없는 팬 제작 사이트</span>
+        <a href="https://github.com/inspace9018/lookout-releases/issues/new/choose">오류 제보</a>
+        <a href="privacy.html">개인정보 처리방침</a>
+      </footer>
+    </div>
     <script>
-      // The button always gets the newest installer (a fixed-name copy on each release); this only
-      // writes that release's version next to it. Without an answer the version above stays.
+      // The download buttons always get the newest installer; this writes that release's version and
+      // size next to them. Without an answer the version from the last site build stays.
       fetch('https://api.github.com/repos/inspace9018/lookout-releases/releases/latest')
         .then(r => (r.ok ? r.json() : null))
         .then(r => {
-          const v = r && /^v?(\d+\.\d+\.\d+)$/.exec(r.tag_name || '');
-          if (v) document.getElementById('get-version').textContent = v[1];
+          const v = r && /^v?(\d+\.\d+\.\d+)$/.exec(r.tag_name || ''),
+            exe = r && (r.assets || []).find(a => a.name === 'Lookout-Setup.exe');
+          if (v) for (const e of document.querySelectorAll('[data-version]')) e.textContent = v[1];
+          if (exe) for (const e of document.querySelectorAll('[data-size]')) e.textContent = Math.round(exe.size / 1048576) + 'MB';
         })
         .catch(() => {});
     </script>

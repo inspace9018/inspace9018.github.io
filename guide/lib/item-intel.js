@@ -6,11 +6,23 @@
   else root.ItemIntel = api;
 })(globalThis, () => {
   'use strict';
+  // Display language: ui/i18n.js (the global I18N in a window, required in node). Without it, Korean.
+  const I18N = (typeof module === 'object' && module.exports ? require('./i18n.js') : globalThis.I18N) || null;
+  const L = (ko, en) => (I18N ? I18N.L(ko, en) : ko),
+    only = ko => (I18N ? I18N.only(ko) : ko);
+  // Getters that pick the language when read, so a language switch shows on the next render.
+  const localized = (ko, en) => {
+    const out = {};
+    for (const k of Object.keys(ko)) Object.defineProperty(out, k, { enumerable: true, get: () => L(ko[k], en[k]) });
+    return out;
+  };
   // Threat groups: what the item does to you, and the answer (counter items by English shop name).
   const THREATS = {
     heal: {
       ko: '회복',
+      en: 'Healing',
       tip: '긴 교전에서 계속 회복합니다. 치유 억제를 맞히고 짧게 몰아쳐 끝내세요.',
+      tipEn: 'Heals through long fights. Land anti-heal and end it with a short burst.',
       counters: ['Healbane', 'Toxic Bullets', 'Decay'],
       items: [
         'Healing Tempo',
@@ -30,7 +42,9 @@
     },
     gunBurst: {
       ko: '무기 폭딜',
+      en: 'Gun burst',
       tip: '사격 피해가 매우 큽니다. 긴 사선을 피하고 총탄 방어를 올리세요.',
+      tipEn: 'Very high gun damage. Avoid long sightlines and build bullet defense.',
       counters: ['Metal Skin', 'Bullet Resilience', 'Return Fire', 'Plated Armor'],
       items: [
         'Glass Cannon',
@@ -50,7 +64,9 @@
     },
     spiritBurst: {
       ko: '마법 폭딜',
+      en: 'Spirit burst',
       tip: '능력 한 번에 큰 피해가 들어옵니다. 마법 저항을 올리고 주요 능력이 빠진 뒤 싸우세요.',
+      tipEn: 'One ability combo hits hard. Build Spirit resist and fight after their key abilities are used.',
       counters: ['Spirit Resilience', 'Spirit Shielding', 'Witchmail', 'Counterspell'],
       items: [
         'Echo Shard',
@@ -70,7 +86,9 @@
     },
     control: {
       ko: '제어·침묵',
+      en: 'CC · silence',
       tip: '묶이거나 능력이 막힙니다. 약화 감소·마법 해제로 풀고, 뭉쳐 서지 마세요.',
+      tipEn: "Locks you down or blocks abilities. Clear it with Debuff Reducer or Dispel Magic, and don't bunch up.",
       counters: ['Debuff Reducer', 'Dispel Magic', 'Unstoppable'],
       items: [
         'Silence Wave',
@@ -88,7 +106,9 @@
     },
     dive: {
       ko: '진입·기습',
+      en: 'Dive · gank',
       tip: '갑자기 붙어 옵니다. 혼자 다니지 말고, 진입기에 맞춰 제어기를 아껴 두세요.',
+      tipEn: "Jumps on you suddenly. Don't walk alone, and save your CC for their engage.",
       counters: ['Knockdown', 'Slowing Hex', 'Silence Wave'],
       items: [
         'Phantom Strike',
@@ -103,13 +123,17 @@
     },
     gunDefense: {
       ko: '총탄 방어',
+      en: 'Bullet defense',
       tip: '총으로는 잘 안 죽습니다. 마법 피해로 공격하거나 방어 관통을 고려하세요.',
+      tipEn: 'Hard to kill with guns. Hit with Spirit damage or consider armor piercing.',
       counters: ['Armor Piercer', 'Spirit Burn', 'Escalating Exposure'],
       items: ['Metal Skin', 'Plated Armor', 'Bullet Resilience', 'Juggernaut', 'Return Fire']
     },
     spiritDefense: {
       ko: '능력 방어',
+      en: 'Spirit defense',
       tip: '마법 피해가 덜 들어갑니다. 무기 피해로 마무리하세요.',
+      tipEn: 'Takes less Spirit damage. Finish with weapon damage.',
       counters: ['Spirit Shredder', 'Toxic Bullets', 'Crippling Headshot'],
       items: [
         'Spirit Resilience',
@@ -123,15 +147,27 @@
     },
     immune: {
       ko: '면역·무적',
+      en: 'Immunity',
       tip: '제어 면역이나 잠깐의 무적이 있습니다. 효과가 끝난 뒤 제어기와 궁극기를 쓰세요.',
+      tipEn: 'Has CC immunity or brief invulnerability. Use CC and ultimates after it ends.',
       counters: ['Silence Wave', 'Knockdown'],
       items: ['Unstoppable', 'Ethereal Shift', 'Cheat Death', 'Colossus', 'Indomitable', 'Nullification Burst']
     }
   };
+  // ko and tip read in the display language (en and tipEn hold the English).
+  for (const t of Object.values(THREATS)) {
+    const ko = t.ko,
+      tip = t.tip;
+    Object.defineProperties(t, {
+      ko: { enumerable: true, get: () => L(ko, t.en) },
+      tip: { enumerable: true, get: () => L(tip, t.tipEn) }
+    });
+  }
   const SLOT_KO = { weapon: '무기', spirit: '마법', vitality: '생명' };
+  const SLOT_EN = { weapon: 'Weapon', spirit: 'Spirit', vitality: 'Vitality' };
   // How each answer item works against the enemy, for the shop strip. HOW_VS overrides it where the
   // same item answers a threat in a different way.
-  const HOW = {
+  const HOW_KO = {
     Healbane: '내 마법 피해를 맞은 적은 회복을 덜 받아 버티지 못합니다.',
     'Toxic Bullets': '총으로 계속 맞히면 출혈과 치유 감소가 걸립니다.',
     Decay: '체력이 많을수록 크게 깎여 회복으로 버티는 적을 갉아먹습니다.',
@@ -155,19 +191,55 @@
     'Spirit Shredder': '총으로 맞힌 적의 마법 저항을 깎아 능력 피해가 들어갑니다.',
     'Crippling Headshot': '헤드샷을 맞히면 적의 저항과 회복이 함께 줄어듭니다.'
   };
-  const HOW_VS = {
+  const HOW_EN = {
+    Healbane: 'Enemies hit by your Spirit damage get less healing and stop holding out.',
+    'Toxic Bullets': 'Keep shooting to apply bleed and anti-heal.',
+    Decay: 'Drains more from high-health targets, wearing down enemies who heal.',
+    'Metal Skin': 'Turn it on when they focus you with guns to take no bullet damage.',
+    'Bullet Resilience': 'Take less bullet damage, more so below half health.',
+    'Return Fire': 'Automatically fires bullets back at whoever shoots you.',
+    'Plated Armor': 'Blocks some incoming bullets, on-hit effects included.',
+    'Spirit Resilience': 'Take less ability damage so one combo does not kill you.',
+    'Spirit Shielding': 'An ability burst gives you a barrier that soaks one burst.',
+    Witchmail: 'The harder abilities hit you, the faster yours come back to hit back.',
+    Counterspell: 'Blocks one enemy ability. Time it for an ultimate or CC.',
+    'Debuff Reducer': 'Stuns, silences and slows end sooner, so you die locked down less.',
+    'Dispel Magic': 'Clears debuffs and heals so you get out of CC.',
+    Unstoppable: 'Immune to stun, silence and root while active. Turn it on before you get hit.',
+    Knockdown: 'Stuns after a short delay, stopping a diver in place.',
+    'Slowing Hex': 'Slows and blocks movement abilities so divers and runners cannot get away.',
+    'Silence Wave': 'Hit enemies briefly cannot use abilities, cutting off engages and ultimates.',
+    'Armor Piercer': 'Some bullets ignore bullet resist and get through defense items.',
+    'Spirit Burn': 'Ability bursts add an explosion and burn that melt gun-tanky enemies.',
+    'Escalating Exposure': 'The more abilities you land, the more Spirit damage that enemy takes.',
+    'Spirit Shredder': 'Shooting an enemy lowers their Spirit resist so abilities land harder.',
+    'Crippling Headshot': 'Headshots cut the enemy resists and healing together.'
+  };
+  const HOW_VS_KO = {
     immune: {
       'Silence Wave': '면역이 끝난 직후 맞혀 다시 버티기 전에 능력을 막으세요.',
       Knockdown: '면역이 끝난 걸 보고 걸어야 기절이 들어갑니다.'
     },
     spiritDefense: { 'Toxic Bullets': '총탄 출혈이라 마법 저항과 상관없이 체력을 깎습니다.' }
   };
+  const HOW_VS_EN = {
+    immune: {
+      'Silence Wave': 'Land it right as immunity ends, before they can hold out again.',
+      Knockdown: 'Cast it after immunity ends or the stun will not land.'
+    },
+    spiritDefense: { 'Toxic Bullets': 'Bullet bleed drains health whatever their Spirit resist.' }
+  };
+  // Read in the display language (HOW.Healbane, HOW_VS.immune.Knockdown).
+  const HOW = localized(HOW_KO, HOW_EN),
+    HOW_VS = Object.fromEntries(Object.keys(HOW_VS_KO).map(k => [k, localized(HOW_VS_KO[k], HOW_VS_EN[k])]));
 
   function lookup(catalog, ko) {
     const byId = new Map(catalog.map(i => [i.id, i])),
       byName = new Map(catalog.map(i => [i.name, i])),
       koById = new Map((ko || []).map(i => [i.id, i]));
-    const koName = item => koById.get(item?.id)?.ko || item?.name || '';
+    // Item name in the display language (the Korean client's name in Korean).
+    const koName = item =>
+      I18N && item?.id != null ? I18N.item(item.id, catalog, ko) || item?.name || '' : koById.get(item?.id)?.ko || item?.name || '';
     return { byId, byName, koById, koName };
   }
   // Classify a set of items: build direction by cost share per slot, plus threat groups.
@@ -188,10 +260,10 @@
           : 'hybrid';
     const label =
       build === 'hybrid'
-        ? '무기·마법 혼합'
+        ? L('무기·마법 혼합', 'Weapon · Spirit mix')
         : build.includes('+')
-          ? `${SLOT_KO[top[0][0]]} + 생명`
-          : `${SLOT_KO[build]} 빌드`;
+          ? L(`${SLOT_KO[top[0][0]]} + 생명`, `${SLOT_EN[top[0][0]]} + Vitality`)
+          : L(`${SLOT_KO[build]} 빌드`, `${SLOT_EN[build]} build`);
     const threats = [];
     for (const [key, t] of Object.entries(THREATS)) {
       const hits = owned.filter(i => t.items.includes(i.name));
@@ -207,12 +279,12 @@
       .filter(([name]) => byName.has(name))
       .sort((a, b) => b[1] - a[1])
       .slice(0, 4)
-      .map(([name]) => ({ name, ko: koName(byName.get(name)), desc: koById.get(byName.get(name).id)?.desc || '' }));
+      .map(([name]) => ({ name, ko: koName(byName.get(name)), desc: only(koById.get(byName.get(name).id)?.desc || '') }));
     const key = owned
       .filter(i => i.tier >= 3)
       .sort((a, b) => b.tier - a.tier || (b.cost || 0) - (a.cost || 0))
       .slice(0, 4)
-      .map(i => ({ id: i.id, name: i.name, ko: koName(i), desc: koById.get(i.id)?.desc || '', tier: i.tier }));
+      .map(i => ({ id: i.id, name: i.name, ko: koName(i), desc: only(koById.get(i.id)?.desc || ''), tier: i.tier }));
     return { share, build, label, threats, counters, key };
   }
   // Without seen items: the hero's usual core items from public stats, read the same way.
@@ -222,5 +294,5 @@
     const result = inferBuild(t.coreItems, catalog, ko);
     return result && { ...result, expected: true, curve: t.curve };
   }
-  return { THREATS, HOW, HOW_VS, SLOT_KO, inferBuild, expectedBuild };
+  return { THREATS, HOW, HOW_VS, SLOT_KO, SLOT_EN, inferBuild, expectedBuild };
 });

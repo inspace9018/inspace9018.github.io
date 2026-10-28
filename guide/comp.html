@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>데드락 조합 분석 · 팀 상성 | Lookout</title>
     <meta name="description" content="데드락 우리 팀과 상대 팀 조합의 장단점, 전략 제안, 남은 픽 추천." />
-    <meta property="og:title" content="데드락 조합 분석 · 팀 상성" />
+    <meta property="og:title" content="데드락 조합 분석 · 팀 상성 | Lookout" />
     <meta property="og:description" content="데드락 우리 팀과 상대 팀 조합의 장단점, 전략 제안, 남은 픽 추천." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://obeloworks.com/guide/comp.html" />
@@ -14,15 +14,16 @@
     <meta name="theme-color" content="#101315" />
     <link rel="canonical" href="https://obeloworks.com/guide/comp.html" />
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="lib/tokens.css" />
-    <link rel="stylesheet" href="lib/desktop.css" />
-    <link rel="stylesheet" href="lib/intel-ui.css" />
-    <link rel="stylesheet" href="lib/opgg.css" />
-    <link rel="stylesheet" href="lib/strategy.css" />
-    <link rel="stylesheet" href="lib/lane-ui.css" />
-    <link rel="stylesheet" href="lib/route-guide.css" />
-    <link rel="stylesheet" href="lib/map-atlas.css" />
-    <link rel="stylesheet" href="guide.css" />
+    <link rel="stylesheet" href="../guide/lib/tokens.css" />
+    <link rel="stylesheet" href="../guide/lib/desktop.css" />
+    <link rel="stylesheet" href="../guide/lib/intel-ui.css" />
+    <link rel="stylesheet" href="../guide/lib/opgg.css" />
+    <link rel="stylesheet" href="../guide/lib/strategy.css" />
+    <link rel="stylesheet" href="../guide/lib/lane-ui.css" />
+    <link rel="stylesheet" href="../guide/lib/route-guide.css" />
+    <link rel="stylesheet" href="../guide/lib/map-atlas.css" />
+    <link rel="stylesheet" href="../guide/guide.css" />
+    <script defer src="lib/i18n.js"></script>
     <script defer src="lib/game-data.js"></script>
     <script defer src="lib/item-catalog.js"></script>
     <script defer src="lib/map-objectives.js"></script>
@@ -53,25 +54,43 @@
     <script defer src="https://js.rev.iq/obeloworks.com"></script>
   </head>
   <body data-page="comp">
-    <header class="top">
-      <a class="brand" href="../"><img src="../favicon.svg" alt="" width="26" height="26" />Lookout</a>
-      <nav class="tabs" aria-label="메뉴"><a href="./">공략</a><a href="heroes.html">영웅</a><a href="comp.html" aria-current="page">조합 분석</a><a href="map.html">지도</a><a href="routes.html">라인 동선</a></nav>
-      <a class="get" href="https://github.com/inspace9018/lookout-releases/releases/latest">무료 다운로드</a>
-    </header>
-    <main id="app">
-      <noscript><p>조합 분석 내용은 자바스크립트로 그립니다. 브라우저에서 자바스크립트를 켜 주세요.</p></noscript>
-    </main>
-    <aside class="ad-side" aria-label="광고">
-      <small>광고</small>
-      <div class="ad-slot">
-        <a class="ad-house" href="https://github.com/inspace9018/lookout-releases/releases/latest"><b>Lookout 무료 오버레이</b><span>경기 중 적 궁극기, 정글 리스폰, 라인 동선을 게임 위에 표시합니다.</span><em>무료 다운로드</em></a>
-        <div id="ad" data-ad="right-rail-1" data-ad-size="300x250"></div>
+    <aside class="side">
+      <a class="brand" href="../"><img src="../favicon.svg" alt="" width="26" height="26" /><b>Lookout</b></a>
+      <nav class="menu" aria-label="메뉴"><a href="../" class="nav-get"><b>다운로드</b><small>무료 · Windows 오버레이</small></a><a href="../guide/"><b>공략</b><small>영혼 · 라인전 · 정글</small></a><a href="../guide/heroes.html"><b>영웅</b><small>티어 · 아이템 빌드</small></a><a href="../guide/comp.html" aria-current="page"><b>조합 분석</b><small>팀 상성 · 남은 픽</small></a><a href="../guide/map.html"><b>지도</b><small>캠프 · 상자 · 상점 위치</small></a><a href="../guide/routes.html"><b>라인 동선</b><small>웨이브 사이 정글 루트</small></a></nav>
+      <div class="side-foot">
+        <a class="side-get" href="https://github.com/inspace9018/lookout-releases/releases/latest/download/Lookout-Setup.exe">Windows용 무료 다운로드<small>Lookout <span data-version>0.1.6</span></small></a>
+        <div class="side-meta"><a href="https://github.com/inspace9018/lookout-releases/issues/new/choose">오류 제보</a><a href="../privacy.html">개인정보</a></div>
       </div>
     </aside>
-    <footer>
-      <span>© 2026 넥서스랩 (Nexus lab) · Valve와 관계없는 팬 제작 사이트</span>
-      <a href="https://github.com/inspace9018/lookout-releases/issues/new/choose">오류 제보</a>
-      <a href="../privacy.html">개인정보 처리방침</a>
-    </footer>
+    <div class="page">
+      <main id="app">
+        <noscript><p>조합 분석 내용은 자바스크립트로 그립니다. 브라우저에서 자바스크립트를 켜 주세요.</p></noscript>
+      </main>
+      <aside class="ad-side" aria-label="광고">
+        <small>광고</small>
+        <div class="ad-slot">
+          <a class="ad-house" href="../"><b>Lookout 무료 오버레이</b><span>경기 중 적 궁극기, 정글 리스폰, 라인 동선을 게임 위에 표시합니다.</span><em>무료 다운로드</em></a>
+          <div id="ad" data-ad="right-rail-1" data-ad-size="300x250"></div>
+        </div>
+      </aside>
+      <footer>
+        <span>© 2026 넥서스랩 (Nexus lab) · Valve와 관계없는 팬 제작 사이트</span>
+        <a href="https://github.com/inspace9018/lookout-releases/issues/new/choose">오류 제보</a>
+        <a href="../privacy.html">개인정보 처리방침</a>
+      </footer>
+    </div>
+    <script>
+      // The download buttons always get the newest installer; this writes that release's version and
+      // size next to them. Without an answer the version from the last site build stays.
+      fetch('https://api.github.com/repos/inspace9018/lookout-releases/releases/latest')
+        .then(r => (r.ok ? r.json() : null))
+        .then(r => {
+          const v = r && /^v?(\d+\.\d+\.\d+)$/.exec(r.tag_name || ''),
+            exe = r && (r.assets || []).find(a => a.name === 'Lookout-Setup.exe');
+          if (v) for (const e of document.querySelectorAll('[data-version]')) e.textContent = v[1];
+          if (exe) for (const e of document.querySelectorAll('[data-size]')) e.textContent = Math.round(exe.size / 1048576) + 'MB';
+        })
+        .catch(() => {});
+    </script>
   </body>
 </html>

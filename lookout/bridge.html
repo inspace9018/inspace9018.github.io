@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'unsafe-inline'; connect-src ws://127.0.0.1:47615 http://127.0.0.1:47615"
+    />
+    <title>LOOKOUT_INIT</title>
+  </head>
+  <body>
+    <script>
+      // Lookout HUD bridge. Deadlock's HUD (lookout_hud.js) loads this page in a hidden panel and
+      // puts each reading of the match in the URL fragment. A fragment change does not reload the
+      // page and is never sent to this server; the page passes it to the Lookout app on the same
+      // PC (127.0.0.1 only). Nothing is stored or sent anywhere else.
+      (function () {
+        'use strict';
+        var WS = 'ws://127.0.0.1:47615/hud',
+          POST = 'http://127.0.0.1:47615/hud',
+          socket = null,
+          waiting = null;
+        function connect() {
+          try {
+            socket = new WebSocket(WS);
+          } catch (e) {
+            socket = null;
+            return;
+          }
+          socket.onopen = function () {
+            if (waiting) socket.send(waiting);
+            waiting = null;
+          };
+          socket.onclose = function () {
+            socket = null;
+            setTimeout(connect, 3000);
+          };
+          socket.onerror = function () {};
+        }
+        function deliver(body) {
+          if (socket && socket.readyState === 1) return socket.send(body);
+          // The app is not listening yet: keep the newest reading for when it is, and try a plain POST.
+          waiting = body;
+          try {
+            fetch(POST, { method: 'POST', body: body, mode: 'no-cors', headers: { 'Content-Type': 'text/plain' } }).catch(function () {});
+          } catch (e) {}
+        }
+        window.addEventListener('hashchange', function () {
+          var raw = location.hash.slice(1);
+          if (!raw) return;
+          try {
+            deliver(decodeURIComponent(raw));
+          } catch (e) {}
+        });
+        connect();
+        document.title = 'LOOKOUT_READY:1';
+      })();
+    </script>
+  </body>
+</html>

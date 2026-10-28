@@ -27,6 +27,12 @@
     only(ko) {
       return lang === 'en' ? '' : ko;
     },
+    // Guide text kept in both languages (style / styleEn, tags / tagsEn): the English in English,
+    // or nothing (never the Korean) where no English was written.
+    pick(ko, en) {
+      if (lang !== 'en') return ko;
+      return en ?? (Array.isArray(ko) ? [] : ko && typeof ko === 'object' ? null : '');
+    },
     // A hero or ability record carrying both names ({ en, ko }).
     name(x, fallback = '') {
       return (lang === 'en' ? x?.en || x?.name : x?.ko || x?.en || x?.name) || fallback;

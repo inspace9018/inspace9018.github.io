@@ -9,7 +9,20 @@
   // Display language: ui/i18n.js (the global I18N in a window, required in node). Without it, Korean.
   const I18N = (typeof module === 'object' && module.exports ? require('./i18n.js') : globalThis.I18N) || null;
   const L = (ko, en) => (I18N ? I18N.L(ko, en) : ko),
-    only = ko => (I18N ? I18N.only(ko) : ko);
+    // Item text: the Korean client's (ITEM_KO desc), or the shop's own English description in English
+    // (only where the Korean has one, so both languages show the same items).
+    desc = (koText, item) =>
+      I18N
+        ? I18N.pick(
+            koText,
+            koText
+              ? String(item?.description || '')
+                  .replace(/\s+/g, ' ')
+                  .replace(/(?<=[a-z])\.(?=[A-Z0-9])/g, '. ')
+                  .trim()
+              : ''
+          )
+        : koText;
   // Getters that pick the language when read, so a language switch shows on the next render.
   const localized = (ko, en) => {
     const out = {};
@@ -279,12 +292,12 @@
       .filter(([name]) => byName.has(name))
       .sort((a, b) => b[1] - a[1])
       .slice(0, 4)
-      .map(([name]) => ({ name, ko: koName(byName.get(name)), desc: only(koById.get(byName.get(name).id)?.desc || '') }));
+      .map(([name]) => ({ name, ko: koName(byName.get(name)), desc: desc(koById.get(byName.get(name).id)?.desc || '', byName.get(name)) }));
     const key = owned
       .filter(i => i.tier >= 3)
       .sort((a, b) => b.tier - a.tier || (b.cost || 0) - (a.cost || 0))
       .slice(0, 4)
-      .map(i => ({ id: i.id, name: i.name, ko: koName(i), desc: only(koById.get(i.id)?.desc || ''), tier: i.tier }));
+      .map(i => ({ id: i.id, name: i.name, ko: koName(i), desc: desc(koById.get(i.id)?.desc || '', i), tier: i.tier }));
     return { share, build, label, threats, counters, key };
   }
   // Without seen items: the hero's usual core items from public stats, read the same way.

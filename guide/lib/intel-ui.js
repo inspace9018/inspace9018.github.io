@@ -19,6 +19,16 @@
   // Display names: heroes and abilities from their { en, ko } records, items by id.
   const heroName = (id, fallback = '') => I18N.name(guide(id), fallback);
   const itemName = id => I18N.item(id, window.ITEM_CATALOG, window.ITEM_KO);
+  // Hero guide text in the display language: the Korean field or its English twin (style / styleEn,
+  // tags / tagsEn, tip / tipEn), and nothing where no English was written (i18n.js pick).
+  const gt = (x, k) => I18N.pick(x?.[k], x?.[k + 'En']);
+  const tagSep = () => L('·', ' · ');
+  // The shop's English item description (ITEM_CATALOG) on one line, a space after each full stop.
+  const itemDescEn = it =>
+    String(it?.description || '')
+      .replace(/\s+/g, ' ')
+      .replace(/(?<=[a-z])\.(?=[A-Z0-9])/g, '. ')
+      .trim();
   const STRENGTH = tr(
     { strong: ['전선 강함', 'strong'], even: ['전선 보통', 'even'], weak: ['전선 약함', 'weak'] },
     { strong: ['Strong lane', 'strong'], even: ['Even lane', 'even'], weak: ['Weak lane', 'weak'] }
@@ -79,7 +89,7 @@
     const items = b.key
       .slice(0, detail ? 4 : 3)
       .map(
-        k => `<li><b>${esc(itemName(k.id))}</b>${detail && I18N.only(k.desc) ? ' · ' + esc(k.desc) : ''}</li>`
+        k => `<li><b>${esc(itemName(k.id))}</b>${detail && k.desc ? ' · ' + esc(k.desc) : ''}</li>`
       )
       .join('');
     return `<div class="iu-build"><p class="iu-line"><i>${b.expected ? L('예상 빌드', 'Expected build') : L('보유 아이템', 'Items held')}</i>${esc(b.label)}</p>${items ? `<ul class="iu-tips">${items}</ul>` : ''}${b.threats.length ? `<p class="iu-line"><i>${L('주의', 'Watch')}</i>${b.threats.map(t => esc(t.ko)).join(' · ')}</p>` : ''}${detail ? b.threats.map(t => `<p class="iu-note">${esc(t.ko)}: ${esc(t.tip)}</p>`).join('') : ''}${b.counters.length ? `<p class="iu-line"><i>${L('대응', 'Counter')}</i>${b.counters.map(c => esc(c.ko)).join(', ')}</p>` : ''}</div>`;
@@ -155,7 +165,7 @@
     const all = soulsMap(s),
       souls = as === 'enemy' && ultShown('all', [...all.keys()], h => all.get(h), s.live?.seconds) ? all.get(id) : null;
     return `<div class="ov-row ${as}">${portrait(id, base)}<div><b>${esc(I18N.name(g))}${lane ? ` <i>${L('전선', 'Lane')}</i>` : ''}${growthTag(id, souls, 'ov-ult')}</b><small>${esc(
-      [CURVE_SHORT[t?.curve], FIGHT_SHORT[t?.fight], I18N.only((g.tags || []).slice(0, 2).join('·'))]
+      [CURVE_SHORT[t?.curve], FIGHT_SHORT[t?.fight], (gt(g, 'tags') || []).slice(0, 2).join(tagSep())]
         .filter(Boolean)
         .join(' · ')
     )}</small></div><span class="ov-k">${
@@ -209,7 +219,7 @@
     return `${rows
       .map(
         g =>
-          `<div class="iu-pick-row">${portrait(g.id, base)}<div><b>${esc(I18N.name(g))}</b> <small>${esc(ROLE[g.role] || '')}</small>${typeChips(g.id)}${I18N.only(`<p class="iu-note">${esc(g.style || '')}${g.strengths?.[0] ? ' · 장점: ' + esc(g.strengths[0]) : ''}${g.weaknesses?.[0] ? ' · 약점: ' + esc(g.weaknesses[0]) : ''}</p>`)}</div></div>`
+          `<div class="iu-pick-row">${portrait(g.id, base)}<div><b>${esc(I18N.name(g))}</b> <small>${esc(ROLE[g.role] || '')}</small>${typeChips(g.id)}${I18N.lang === 'en' && !g.styleEn ? '' : `<p class="iu-note">${esc(gt(g, 'style') || '')}${gt(g, 'strengths')?.[0] ? L(' · 장점: ', ' · Strength: ') + esc(gt(g, 'strengths')[0]) : ''}${gt(g, 'weaknesses')?.[0] ? L(' · 약점: ', ' · Weakness: ') + esc(gt(g, 'weaknesses')[0]) : ''}</p>`}</div></div>`
       )
       .join('')}`;
   }
@@ -224,22 +234,24 @@
   function heroCard(id, base, { as = 'enemy', detail = false } = {}) {
     const g = guide(id);
     if (!g) return '';
-    const tips = as === 'enemy' ? g.vsTips : g.withTips;
-    // Strengths, weaknesses, tips and spikes are Korean guide text: left out in English.
-    return `<article class="iu-hero ${as}"><div class="iu-hero-head">${portrait(id, base)}<div><b>${esc(I18N.name(g))}</b>${badge(g)}<small>${esc(ROLE[g.role] || '')}${I18N.only(g.style ? ' · ' + esc(g.style) : '')}</small>${typeChips(id, { detail })}</div></div>${I18N.only(
-      detail
-        ? `<div class="iu-pros"><p><i>장점</i>${g.strengths.map(esc).join(' · ')}</p><p><i>약점</i>${g.weaknesses.map(esc).join(' · ')}</p></div>`
-        : `<p class="iu-line"><i>약점</i>${esc(g.weaknesses[0] || '')}</p>`
-    )}${I18N.only(
+    const tips = gt(g, as === 'enemy' ? 'vsTips' : 'withTips');
+    // Strengths, weaknesses, tips and spikes: hero guide text in the display language.
+    return `<article class="iu-hero ${as}"><div class="iu-hero-head">${portrait(id, base)}<div><b>${esc(I18N.name(g))}</b>${badge(g)}<small>${esc(ROLE[g.role] || '')}${gt(g, 'style') ? ' · ' + esc(gt(g, 'style')) : ''}</small>${typeChips(id, { detail })}</div></div>${
+      I18N.lang === 'en' && !g.weaknessesEn?.length
+        ? ''
+        : detail
+          ? `<div class="iu-pros"><p><i>${L('장점', 'Strengths')}</i>${gt(g, 'strengths').map(esc).join(' · ')}</p><p><i>${L('약점', 'Weaknesses')}</i>${gt(g, 'weaknesses').map(esc).join(' · ')}</p></div>`
+          : `<p class="iu-line"><i>${L('약점', 'Weakness')}</i>${esc(gt(g, 'weaknesses')[0] || '')}</p>`
+    }${
       tips?.length
         ? `<ul class="iu-tips">${tips
             .slice(0, detail ? 3 : 1)
             .map(t => `<li>${esc(t)}</li>`)
             .join('')}</ul>`
         : ''
-    )}${I18N.only(
-      detail && g.spikes ? `<p class="iu-note">파워 스파이크 · ${esc(g.spikes)}</p>` : ''
-    )}${detail && as === 'enemy' ? buildBlock(id, null, { detail: true }) : ''}</article>`;
+    }${
+      detail && gt(g, 'spikes') ? `<p class="iu-note">${L('파워 스파이크', 'Power spike')} · ${esc(gt(g, 'spikes'))}</p>` : ''
+    }${detail && as === 'enemy' ? buildBlock(id, null, { detail: true }) : ''}</article>`;
   }
   function skills(id, base, selected = 1) {
     const g = guide(id);
@@ -254,7 +266,7 @@
         ''
       )}</div><p class="iu-skill"><b>${esc(I18N.name(a))}</b>${I18N.only(a.ko && a.en ? ` <small>${esc(a.en)}</small>` : '')}<br>${esc(
       L(a.desc || '', a.descEn || '')
-    )}${I18N.only(a.tip ? `<br><i>대응</i> ${esc(a.tip)}` : '')}</p>`;
+    )}${gt(a, 'tip') ? `<br><i>${L('대응', 'Counter')}</i> ${esc(gt(a, 'tip'))}` : ''}</p>`;
   }
   // Lane matchup: the two lane opponents, the lane partner and pick chips when unknown.
   // `all` (the preparation panel) shows every lane opponent at once, without the tabs and the picker.
@@ -301,7 +313,7 @@
       : '';
     const partner = info.partner
       ? compact
-        ? `<p class="iu-line"><i>${L('파트너', 'Partner')}</i>${esc(heroName(info.partner))}${I18N.only(` · ${esc(guide(info.partner)?.withTips?.[0] || '')}`)}</p>`
+        ? `<p class="iu-line"><i>${L('파트너', 'Partner')}</i>${esc(heroName(info.partner))}${I18N.lang === 'en' && !guide(info.partner)?.withTipsEn?.[0] ? '' : ` · ${esc(gt(guide(info.partner), 'withTips')?.[0] || '')}`}</p>`
         : heroCard(info.partner, base, { as: 'ally' })
       : '';
     if (all) return lanePrep(s, base, { where, basis, opp, st });
@@ -322,8 +334,8 @@
       partner = guide(s.intel?.lane?.partner);
     const plan = [
       card?.plan || '',
-      I18N.only(mine?.plan?.early ? `${mine.ko}: ${mine.plan.early}` : ''),
-      I18N.only(partner?.withTips?.[0] ? `파트너: ${partner.withTips[0]}` : ''),
+      gt(mine, 'plan')?.early ? `${I18N.name(mine)}: ${gt(mine, 'plan').early}` : '',
+      gt(partner, 'withTips')?.[0] ? `${L('파트너', 'Partner')}: ${gt(partner, 'withTips')[0]}` : '',
       st
         ? L(
             `이 2:2 조합 승률 ${Math.round(st.winRate * 100)}% (${st.matches}판)`,
@@ -436,11 +448,13 @@
       brief = window.ITEM_BRIEF || {},
       owned = new Set(s.live?.context?.items || []),
       koName = it => itemName(it.id);
-    // ITEM_BRIEF is in the display language; the ITEM_KO description is Korean only.
+    // ITEM_BRIEF is in the display language; otherwise the ITEM_KO description, or the shop's English.
     const what = it => {
       if (brief[it.id]) return brief[it.id];
-      const d = I18N.only(koById.get(it.id)?.desc || '').split('.')[0];
-      return d.length > 30 ? d.slice(0, 29) + '…' : d;
+      const ko = koById.get(it.id)?.desc || '',
+        d = I18N.pick(ko, ko ? itemDescEn(it) : '').split('.')[0],
+        max = I18N.lang === 'en' ? 48 : 30;
+      return d.length > max ? d.slice(0, max - 1) + '…' : d;
     };
     const row = (it, why, how) =>
       `<div class="sh-item"><img src="${base}${esc(it.file)}" alt=""><b>${esc(koName(it))}</b>${why ? `<small class="sh-why">${esc(why)}</small>` : ''}${how || what(it) ? `<small class="sh-how">${esc(how || what(it))}</small>` : ''}</div>`;
@@ -638,7 +652,7 @@
             'sk' + i,
             `<p class="tv-skill${a.slot === 4 ? ' ult' : ''}"><img src="${base}assets/abilities/${id}-${a.slot}.png" alt=""><b>${esc(
               I18N.name(a)
-            )}</b><span>${esc(I18N.only(a.short || a.brief || ''))}</span></p>`
+            )}</b><span>${esc(gt(a, 'short') || gt(a, 'brief') || '')}</span></p>`
           )
         )
         .join('');
@@ -649,9 +663,9 @@
         // (Ours keep the two rows empty, so every row stays level across the board.)
         row('items', items) +
         row('answer', answer ? `<small class="tv-answer"><i>${L('대응', 'Counter')}</i>${esc(answer)}</small>` : '')
-      }${row('concept', I18N.only(`<p class="tv-concept">${esc((g?.tags || []).slice(0, 2).join('·'))}</p>`))}${row(
+      }${row('concept', I18N.lang === 'en' && !g?.tagsEn?.length ? '' : `<p class="tv-concept">${esc((gt(g, 'tags') || []).slice(0, 2).join(tagSep()))}</p>`)}${row(
         'core',
-        I18N.only(g?.core?.[0] ? `<p class="tv-core">${esc(g.core[0])}</p>` : '')
+        gt(g, 'core')?.[0] ? `<p class="tv-core">${esc(gt(g, 'core')[0])}</p>` : ''
       )}${skills}</div>`;
     };
     // One plain plate per team behind its columns (placed to fit them after rendering), with the
@@ -723,8 +737,8 @@
       phase === 'unknown'
         ? `<h4>${L('경기 시간 확인 중', 'Reading match time')}</h4>`
         : phase === 'early'
-          ? `<h4>${L('라인전', 'Laning')}${lane?.lane?.name ? ' · ' + esc(lane.lane.name) : ''}</h4>${I18N.only(g?.plan?.early ? `<p class="tv-p">${esc(g.plan.early)}</p>` : '')}`
-          : `<h4>${L(`운영 · ${phase === 'mid' ? '중반' : '후반'}`, phase === 'mid' ? 'Mid game' : 'Late game')}</h4>${I18N.only(g?.plan?.[phase] ? `<p class="tv-p">${esc(g.plan[phase])}</p>` : '')}`;
+          ? `<h4>${L('라인전', 'Laning')}${lane?.lane?.name ? ' · ' + esc(lane.lane.name) : ''}</h4>${gt(g, 'plan')?.early ? `<p class="tv-p">${esc(gt(g, 'plan').early)}</p>` : ''}`
+          : `<h4>${L(`운영 · ${phase === 'mid' ? '중반' : '후반'}`, phase === 'mid' ? 'Mid game' : 'Late game')}</h4>${gt(g, 'plan')?.[phase] ? `<p class="tv-p">${esc(gt(g, 'plan')[phase])}</p>` : ''}`;
     // What to do now, in full (the advice, why, what it is based on).
     const now = (s.coach || [])
       .filter(
@@ -917,19 +931,20 @@
       : '';
     const range = RANGE_TYPE[gunRange(id)];
     // How the hero is played: its core moves (data/hero-core-play.json), then phase by phase.
-    // (Korean guide text: none in English, and the section goes with it.)
-    const core = I18N.only((g.core || []).map(x => `<p class="core">${esc(x)}</p>`).join('')),
-      phases = g.plan && I18N.lang !== 'en'
+    // (Guide text in the display language; with no English, the section goes.)
+    const gp = gt(g, 'plan'),
+      core = (gt(g, 'core') || []).map(x => `<p class="core">${esc(x)}</p>`).join(''),
+      phases = gp
         ? [
-            ['early', '라인전'],
-            ['mid', '중반'],
-            ['late', '후반']
+            ['early', L('라인전', 'Laning')],
+            ['mid', L('중반', 'Mid')],
+            ['late', L('후반', 'Late')]
           ]
-            .filter(([k]) => g.plan[k])
-            .map(([k, ko]) => `<p><i>${ko}</i>${esc(g.plan[k])}</p>`)
+            .filter(([k]) => gp[k])
+            .map(([k, ko]) => `<p><i>${ko}</i>${esc(gp[k])}</p>`)
             .join('')
         : '';
-    const plan = core || phases ? `<section class="hv-plan"><h4>핵심 운용</h4>${core}${phases}</section>` : '';
+    const plan = core || phases ? `<section class="hv-plan"><h4>${L('핵심 운용', 'Core play')}</h4>${core}${phases}</section>` : '';
     // Tier, win and pick rate here too, so they show even when the portrait grid is not read.
     const w = t?.winRate?.overall,
       rank =
@@ -964,13 +979,13 @@
       ' <small>' +
       esc(ROLE_FULL[g.role] || '') +
       '</small></h3>' +
-      I18N.only('<p class="hv-concept">' + esc(g.style || '') + '</p>');
+      (I18N.lang === 'en' && !g.styleEn ? '' : '<p class="hv-concept">' + esc(gt(g, 'style') || '') + '</p>');
     if (s.settings?.selectDetail === false)
       return (
         '<div class="hv hv-summary"><section class="hv-id">' +
         name +
         '</section>' +
-        I18N.only('<section class="hv-summary-core"><h4>핵심 운용</h4>' + core + '</section>') +
+        (I18N.lang === 'en' && !core ? '' : '<section class="hv-summary-core"><h4>' + L('핵심 운용', 'Core play') + '</h4>' + core + '</section>') +
         '<section class="hv-summary-meta"><h4>' +
         L('난이도 · 역할', 'Difficulty · role') +
         '</h4><p>' +
@@ -997,13 +1012,17 @@
       '</h4>' +
       skills +
       '</section>' +
-      I18N.only(
-        '<section class="hv-pros"><h4 class="good">강점</h4><ul>' +
-          list(g.strengths) +
-          '</ul></section><section class="hv-cons"><h4 class="bad">약점</h4><ul>' +
-          list(g.weaknesses) +
-          '</ul></section>'
-      ) +
+      (I18N.lang === 'en' && !g.strengthsEn?.length
+        ? ''
+        : '<section class="hv-pros"><h4 class="good">' +
+          L('강점', 'Strengths') +
+          '</h4><ul>' +
+          list(gt(g, 'strengths')) +
+          '</ul></section><section class="hv-cons"><h4 class="bad">' +
+          L('약점', 'Weaknesses') +
+          '</h4><ul>' +
+          list(gt(g, 'weaknesses')) +
+          '</ul></section>') +
       '<section class="hv-build"><h4>' +
       L('빌드 중점 · 인기 빌드', 'Build focus · popular build') +
       '</h4>' +
@@ -1388,10 +1407,11 @@
           ? `<span class="pt-k"><em>${esc(threat.ko)}</em>${answer ? `<small class="pt-answer"><i>${L('대응', 'Counter')}</i> ${esc(answer)}</small>` : ''}</span>`
           : '';
       }
-      // A lane opponent also says what to watch out for against it (Korean guide text).
-      const warn = I18N.only(
-        enemy && near.has(id) && g.vsTips?.[0] ? `<p class="hm-line warn"><i>주의</i>${esc(g.vsTips[0])}</p>` : ''
-      );
+      // A lane opponent also says what to watch out for against it (hero guide text).
+      const warn =
+        enemy && near.has(id) && gt(g, 'vsTips')?.[0]
+          ? `<p class="hm-line warn"><i>${L('주의', 'Watch')}</i>${esc(gt(g, 'vsTips')[0])}</p>`
+          : '';
       return heroMini(id, base, {
         side,
         near: near.has(id),
@@ -1444,17 +1464,17 @@
   ) {
     const g = guide(id);
     if (!g) return '';
-    // Concept, core play, ability blurbs and tips are Korean guide text: left out in English.
-    const idea = I18N.only(g.style || (g.tags || []).join('·')),
-      core = I18N.lang === 'en' ? [] : (g.core || []).slice(0, near ? 3 : 1),
-      blurb = a => I18N.only(a.short || a.brief || '');
+    // Concept, core play, ability blurbs and tips: hero guide text in the display language.
+    const idea = gt(g, 'style') || (gt(g, 'tags') || []).join(tagSep()),
+      core = (gt(g, 'core') || []).slice(0, near ? 3 : 1),
+      blurb = a => gt(a, 'short') || gt(a, 'brief') || '';
     const skills = (g.abilities || [])
       .slice(0, 4)
       .map(
         a =>
           `<li class="${a.slot === 4 ? 'ult' : ''}"><img src="${base}assets/abilities/${id}-${a.slot}.png" alt=""><p><b>${esc(
             I18N.name(a)
-          )}</b> ${column ? `<small class="hm-effect">${esc(blurb(a))}</small>` : esc(blurb(a))}${I18N.only(!column && tips && a.tip ? `<span><i>대응</i> ${esc(a.tip)}</span>` : '')}</p></li>`
+          )}</b> ${column ? `<small class="hm-effect">${esc(blurb(a))}</small>` : esc(blurb(a))}${!column && tips && gt(a, 'tip') ? `<span><i>${L('대응', 'Counter')}</i> ${esc(gt(a, 'tip'))}</span>` : ''}</p></li>`
       )
       .join('');
     if (column)
@@ -1467,7 +1487,9 @@
   }
   // Tips that hold for every hero: Deadlock-only mechanics players often miss (deadlock.wiki
   // Mechanics, Movement, Souls, Unsecured, Trooper and Sinner's Sacrifice pages, 2026-10), in the
-  // game's own Korean terms (data/ko-terms.json), shown between the hero's own.
+  // game's own Korean terms (data/ko-terms.json), shown between the hero's own. The 투자 tips: every
+  // hero's cost_bonuses (deadlock-api heroes, 2026-10) and a DC 데드락 갤 guide (no=133606). The 불안정한
+  // 균열 tips: patch notes 2026-06-30, 07-09 and 09-16 (site/patch-notes/ko.json).
   const GAME_TIPS = [
     '활주(슬라이딩)하는 동안은 탄약이 줄지 않습니다. 미끄러지면서 쏘면 재장전 없이 계속 사격합니다.',
     '방어(패링, F)에 성공하면 상대가 기절하고 2.75초간 모든 피해를 25% 더 받습니다.',
@@ -1494,28 +1516,68 @@
     '증기 배출구 안에선 밖에서 보이지 않고 체력 재생이 조금 오릅니다.',
     '보라색 안개 지역에선 보이지도 들리지도 않지만 활력(스태미나)이 계속 줄어듭니다.',
     '기지 가디언을 부수면 그 전선의 우리 집라인이 훨씬 빨라집니다.',
-    '영혼 단지를 배달하면 배달한 사람이 영혼과 영구 능력치 4개를 받습니다. 영혼은 구슬로 떨어지니 쏘거나 근거리 공격으로 바로 확보하세요. 아군이 챙기면 배달한 사람과 나눠 갖습니다.'
+    '영혼 단지를 배달하면 배달한 사람이 영혼과 영구 능력치 4개를 받습니다. 영혼은 구슬로 떨어지니 쏘거나 근거리 공격으로 바로 확보하세요. 아군이 챙기면 배달한 사람과 나눠 갖습니다.',
+    '무기·생명·마법 투자는 한 갈래에 아이템 4,800 소울어치를 갖추는 순간 크게 뜁니다(무기 투자: 무기 피해 증가 18% → 46%). 주력 갈래를 먼저 4,800까지 채우세요.',
+    '투자 보너스는 갈래마다 28,800 소울에서 "최대!"가 됩니다. 그 뒤로 그 갈래 아이템은 아이템 자체 효과만 더해 줍니다.',
+    '불안정한 균열을 확보하면 그 자리에서 균열 트루퍼 5명이 내려갑니다(뒤처진 팀이면 최대 14명). 체력·피해가 2배 이상인 대신 영혼은 주지 않으니, 확보한 팀은 같이 밀고 들어가세요.',
+    '불안정한 균열 구역 안에 있으면 미니맵에 위치가 드러납니다. 구역 밖에서 모였다가 한꺼번에 들어가세요.',
+    '뒤처진 팀은 불안정한 균열 구역 안에서 저항 보너스를 받습니다. 순자산이 15% 뒤처지면 최대치이고, 첫 균열 약 20%에서 30분 40%까지 커집니다. 질수록 균열에서 싸우세요.'
+  ];
+  // The same tips in the game's English terms, for the English overlay (same order).
+  const GAME_TIPS_EN = [
+    "Sliding doesn't use ammo. Shoot while you slide to keep firing without a reload.",
+    'A successful Parry (F) stuns the enemy, and they take 25% more damage from everything for 2.75s.',
+    "Parry's cooldown is refunded only when you block a hero's melee. Don't waste it on Troopers or Guardians.",
+    'Jump right after a dash, as the Stamina bar turns blue, for a long dash-jump.',
+    'Press crouch twice in the air to down dash (0.5 Stamina).',
+    'Your first wall jump per jump costs no Stamina. Each one after that costs 0.5.',
+    "Hold crouch while you Mantle and you'll Slide as soon as you're up, without losing speed.",
+    'The losing team gets up to 26% more Souls from Troopers, neutrals and objectives. When behind, farm.',
+    "Killing an enemy stronger than your team's average pays up to more than double the bounty.",
+    'After 10 min, a hero far ahead waits up to 22s longer to respawn. The further ahead, the more careful.',
+    "If nobody shoots a floating Soul orb, it goes to a nearby ally after 1s. With no one nearby, it's lost.",
+    "Finish Troopers with melee and no Soul orb pops up, so the enemy can't deny it.",
+    'Two players in one lane each get 54% of the Trooper Souls. Three get 36% each.',
+    "Souls from the jungle, crates and Sinner's Sacrifice come in as Unsecured Souls and take a few seconds to secure. Die before that and they drop for the enemy.",
+    'Dropped Soul orbs are absorbed only within 18m. Kill Troopers with abilities from far away and you miss half.',
+    "Sinner's Sacrifice lights come back on one by one once nearly all are out. Finish it with heavy melee when all are lit for 4 permanent stat boosts.",
+    'Power-ups (every 5 min from 5:00) are claimed with heavy melee and last 160s.',
+    'Each enemy Walker you destroy opens a Flex Slot.',
+    'Heroes who hit a Walker in its last 20s split 40% of its Souls; the other 60% goes evenly to the whole team.',
+    "If you can take a Walker alone, it's often worth it even if you die. After 15 to 20 min, careful: you may give up the Mid-Boss meanwhile.",
+    'Golden Statues (50% chance to spawn) give a permanent stat boost when broken. They add up, so take every one you see.',
+    'When a rift fight runs past 60s, Souls start floating up. From then on, shoot to secure yours and deny theirs.',
+    "Inside a steam vent you can't be seen from outside, and your health regen goes up a little.",
+    "In purple fog you can't be seen or heard, but your Stamina keeps draining.",
+    'Destroying a Base Guardian makes your Zipline in that lane much faster.',
+    'Delivering the Soul Urn gives the carrier Souls and 4 permanent stat boosts. The Souls drop as orbs: shoot or melee them right away. Allies who grab them share with the carrier.',
+    'Weapon, Vitality and Spirit Investment jump once you hold 4,800 Souls of items in one category (Weapon Investment: weapon damage 18% → 46%). Fill your main category to 4,800 first.',
+    'Investment reaches "Max!" at 28,800 Souls in a category. After that, items in it add only their own effects.',
+    'Securing the Unstable Rift sends 5 Rift Troopers down from it (up to 14 if your team is behind). They have double or more health and damage but give no Souls, so push in with them.',
+    'Anyone inside the Unstable Rift zone shows on the minimap. Group up outside it, then go in together.',
+    'The team behind gets a resist bonus inside the Unstable Rift zone. It is full at 15% net worth behind and grows from about 20% at the first Rift to 40% at 30 min. The further behind, the more the Rift is worth fighting.'
   ];
   // A tip that changes every 7 s, taking turns: the hero's own (plan, spikes, match statistics,
   // skill order), then a game mechanic. `phase` keeps only that phase's plan line; `max` drops long ones.
   function tipFor(heroId, { phase, max = 200 } = {}) {
-    // The tips are Korean text, not translated yet: no tip in English.
-    if (I18N.lang === 'en') return null;
+    // English tips run about 1.9 times the Korean length in the same width.
+    const en = I18N.lang === 'en',
+      limit = en ? Math.round(max * 1.9) : max;
     const k = Math.floor(Date.now() / 7000),
-      plans = { early: '라인전:', mid: '중반:', late: '후반:' },
-      own = (window.HERO_TIPS?.[heroId] || []).filter(
+      plans = en ? { early: 'Laning:', mid: 'Mid game:', late: 'Late game:' } : { early: '라인전:', mid: '중반:', late: '후반:' },
+      own = ((en ? window.HERO_TIPS_EN : window.HERO_TIPS)?.[heroId] || []).filter(
         t =>
-          t.length <= max && !(phase && Object.entries(plans).some(([p, label]) => p !== phase && t.startsWith(label)))
+          t.length <= limit && !(phase && Object.entries(plans).some(([p, label]) => p !== phase && t.startsWith(label)))
       ),
-      general = GAME_TIPS.filter(t => t.length <= max);
+      general = (en ? GAME_TIPS_EN : GAME_TIPS).filter(t => t.length <= limit);
     // Each list steps through its own order (a stride coprime to its length), so every tip comes up.
     const pick = xs => xs[(Math.floor(k / 2) * 7919) % xs.length];
     if (own.length && (k % 2 === 0 || !general.length)) {
       const t = pick(own),
         at = t.indexOf(': ');
-      return { head: at > 0 ? t.slice(0, at) : '팁', text: at > 0 ? t.slice(at + 2) : t };
+      return { head: at > 0 ? t.slice(0, at) : L('팁', 'Tip'), text: at > 0 ? t.slice(at + 2) : t };
     }
-    return general.length ? { head: '게임 팁', text: pick(general) } : null;
+    return general.length ? { head: L('게임 팁', 'Game tip'), text: pick(general) } : null;
   }
   // A lane opponent's ultimate coming in: when its net worth first passes the unlock, an alert for
   // a while. Enemies outside my lane are left out, and an ultimate already in when first seen is
@@ -1613,7 +1675,7 @@
         cls: 'rift',
         time: `~${clock(r.to)}`,
         when: r.state === 'overdue' ? L('확인 필요', 'Check') : L(`${left(r.to)} 안에`, `within ${left(r.to)}`),
-        what: L('공허의 균열', 'Unstable Rift')
+        what: L('불안정한 균열', 'Unstable Rift')
       });
     // The soonest row is highlighted, the rift too when it comes first.
     return `<div class="fg-spawns" data-pv="spawns">${rows
@@ -1772,7 +1834,7 @@
         camp = s.jungle.camps.find(c => c.id === first.id),
         kind = L(
           { weak: '소형', medium: '중형', strong: '대형', vault: '금고' },
-          { weak: 'Small camp', medium: 'Medium camp', strong: 'Large camp', vault: 'Vault' }
+          { weak: 'Small camp', medium: 'Medium camp', strong: 'Large camp', vault: "Sinner's Sacrifice" }
         )[first.kind];
       row(
         L('추천 캠프', 'Next camp'),

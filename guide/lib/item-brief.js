@@ -2,8 +2,8 @@
 // too long for the narrow column beside the shop, and some are empty.
 (function () {
 const I18N = window.I18N;
-// Getters, so a language switch shows on the next render: ITEM_BRIEF is translated, ITEM_USE is
-// Korean-only prose for now (empty in English, so its block is left out).
+// Getters, so a language switch shows on the next render: ITEM_BRIEF and ITEM_USE read the
+// Korean or the English beside it (BRIEF_EN, USE_EN).
 const localized = (ko, text) => {
   const out = {};
   for (const id of Object.keys(ko)) Object.defineProperty(out, id, { enumerable: true, get: () => text(id) });
@@ -282,5 +282,26 @@ const USE_KO = {
   3403085434: '추격·도주·전선 이동 때 사용 → 이동 속도 + 둔화 저항.',
   3731635960: '둔화·침묵·지속 피해 같은 약화가 걸린 직후 사용 → 정화 + 회복 + 이동 속도. 기절·수면 중에는 못 씀.'
 };
-window.ITEM_USE = localized(USE_KO, id => (I18N ? I18N.only(USE_KO[id]) : USE_KO[id]));
+const USE_EN = {
+  630839635: 'Use right after an imbued ability → cast the same ability once more. Save it for kills and team fights, not wave clear.',
+  677738769: 'Use right after spending your key abilities and ultimate → every cooldown resets for a second combo. 300s cooldown, so once per team fight.',
+  709540378: 'Use on the biggest nearby neutral or Trooper every cooldown (270s). The buff lasts long, so use it ahead of fights and objectives.',
+  989206714: 'Toggle: turn it on when a fight starts and off as soon as it ends. It drains health while on, so turn it off when low.',
+  1055679805: 'Turn it on right as a fight starts and go all in. Bonus ammo goes past your magazine size, so use it on a full magazine, not right before a reload.',
+  1254091416: 'Stuns after 2s. Use it the moment they start a channeled ultimate, or aim at their escape path. Lasts longer on airborne enemies.',
+  1672893796: 'Use the moment big damage comes in (an enemy ultimate, focus fire). Used early, the barrier is gone fast.',
+  1797283378: 'Turn it on right before your ability combo → Spirit Power and Spirit Lifesteal for the whole combo.',
+  1804594021: "Heal a low-health ally, and pull them out when they're in danger. Use it on yourself when alone.",
+  1813726886: "Use on an enemy about to escape or chase with a movement ability → silences movement items and abilities, plus a slow. Doesn't stop Stamina dashes.",
+  1932939246: 'At the start of a fight, throw it where enemies are grouped and shoot into it → they take damage with Bullet Resist reduced. Half as effective on Troopers.',
+  2059712766: 'Stacks build each time an enemy ability is used nearby. With full stacks and low health, use it → heal and refill Stamina to get away.',
+  2108215830: 'Use when pushing a wave (double effect on Troopers) or to start a fight or chase → Move Speed and fire rate for nearby allies too.',
+  2407781327: 'Turn it on at the front of a team fight → hold with bigger size and resists while slowing nearby enemies. For engaging and blocking paths.',
+  2417568017: 'Cast on an ally diving in (or yourself) → Spirit and Debuff Resist, shorter debuffs, and max-health damage to nearby enemies.',
+  3270001687: "Teleport forward to get out of gunfire or to go in for the kill. It grants Bullet Resist, so it's best against gunners.",
+  3357231760: "Can't be used while stunned, so turn it on when you see an enemy CC ultimate wind up. Also use it so your own ultimate isn't interrupted.",
+  3403085434: 'Use when chasing, escaping or rotating lanes → Move Speed and slow resist.',
+  3731635960: "Use right after a debuff like a slow, silence or damage over time lands → cleanse, heal and Move Speed. Can't be used while stunned or asleep."
+};
+window.ITEM_USE = localized(USE_KO, id => (I18N ? I18N.L(USE_KO[id], USE_EN[id]) : USE_KO[id]));
 })();

@@ -23,10 +23,10 @@ jobs:
 
       - name: Fetch RevIQ's list
         run: |
-          curl -fsSL --retry 3 --max-time 30 https://rev.iq/inspace9018.github.io/ads.txt -o /tmp/ads.txt
+          curl -fsSL --retry 3 --max-time 30 https://rev.iq/obeloworks.com/ads.txt -o /tmp/ads.txt
           # Only take a real list: our seller line and owner domain must be in it, and it can't be tiny
-          grep -q '^rev\.iq, kKJjA4IXdqzJcaSiGHv2tQzmC3U, DIRECT' /tmp/ads.txt
-          grep -q '^ownerdomain=inspace9018\.github\.io' /tmp/ads.txt
+          grep -q '^rev\.iq, 54tf_WytWFk-IrpERQHJ32MV8BE, DIRECT' /tmp/ads.txt
+          grep -q '^ownerdomain=obeloworks.com' /tmp/ads.txt
           test "$(wc -l < /tmp/ads.txt)" -ge 100
           tr -d '\r' < /tmp/ads.txt > ads.txt
 

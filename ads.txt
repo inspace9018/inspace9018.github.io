@@ -5,9 +5,9 @@
 # Version reviq-v1.1
 # Last Updated: October 26, 2026
 
-ownerdomain=inspace9018.github.io
+ownerdomain=obeloworks.com
 
-rev.iq, kKJjA4IXdqzJcaSiGHv2tQzmC3U, DIRECT
+rev.iq, 54tf_WytWFk-IrpERQHJ32MV8BE, DIRECT
 google.com, pub-6729046591418183, DIRECT, f08c47fec0942fa0
 google.com, pub-8106464143521063, DIRECT, f08c47fec0942fa0
 

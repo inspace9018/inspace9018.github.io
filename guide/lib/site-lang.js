@@ -44,6 +44,9 @@
     for (const e of document.querySelectorAll('[data-t]')) if (text(e.dataset.t) != null) e.innerHTML = text(e.dataset.t);
     for (const e of document.querySelectorAll('[data-t-alt]')) if (text(e.dataset.tAlt) != null) e.alt = text(e.dataset.tAlt);
     for (const e of document.querySelectorAll('[data-t-label]')) if (text(e.dataset.tLabel) != null) e.setAttribute('aria-label', text(e.dataset.tLabel));
+    // The overlay screenshots in this language: img/<lang>/ beside the Korean ones in img/.
+    for (const e of document.querySelectorAll('img[src^="img/overlay-"]')) e.src = 'img/' + lang + '/' + e.getAttribute('src').slice(4);
+    for (const e of document.querySelectorAll('a[href^="img/overlay-"]')) e.href = 'img/' + lang + '/' + e.getAttribute('href').slice(4);
     const key = document.body.dataset.title,
       title = text('title.' + key),
       desc = text('desc.' + key);

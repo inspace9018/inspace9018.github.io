@@ -334,7 +334,7 @@ footer a {
 }
 .dl-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
   gap: 32px;
   align-items: center;
   padding: 32px;
@@ -382,11 +382,42 @@ footer a {
   margin-top: 12px;
   font-size: 13px;
 }
-.dl-shot {
+.dl-shot img {
+  display: block;
   width: 100%;
   height: auto;
   border-radius: 8px;
   border: 1px solid var(--line);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+/* 경기 중에 보이는 것: the left panel close up, then Tab and hero select (16:9) a bit wider. */
+.dl-gallery {
+  display: grid;
+  grid-template-columns: minmax(0, 0.62fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+.dl-gallery figure {
+  margin: 0;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--panel);
+}
+.dl-gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+.dl-gallery figcaption {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 13.5px;
+}
+.dl-gallery figcaption b {
+  display: block;
+  color: var(--text);
+  font-size: 15px;
 }
 .dl-steps {
   display: grid;
@@ -426,10 +457,7 @@ footer a {
   font-size: 19px;
 }
 .dl-features {
-  display: grid;
-  grid-template-columns: 300px minmax(0, 1fr);
-  gap: 16px;
-  align-items: start;
+  margin-top: 12px;
 }
 .dl-features figure {
   margin: 0;
@@ -507,15 +535,15 @@ footer a {
     grid-template-columns: 1fr;
     padding: 22px 18px;
   }
-  .dl-shot {
-    max-width: 320px;
-  }
   .dl .dl-button {
     width: 100%;
     box-sizing: border-box;
   }
   .dl-steps,
-  .dl-features {
+  .dl-gallery {
     grid-template-columns: 1fr;
+  }
+  .dl-gallery figure:first-child img {
+    max-width: 320px;
   }
 }

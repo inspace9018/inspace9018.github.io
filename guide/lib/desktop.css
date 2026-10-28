@@ -375,6 +375,10 @@ kbd {
   font-size: 12px;
   margin-top: 4px;
 }
+/* Buttons beside a long explanation keep their width instead of wrapping letter by letter. */
+.setting > .inline {
+  flex: none;
+}
 .setting input[type='range'] {
   width: 150px;
   accent-color: var(--accent);
@@ -1199,4 +1203,109 @@ table.history tr.loss td:nth-child(3) {
   margin: 0 0 4px;
   font-size: 13px;
   line-height: 1.5;
+}
+/* First run (desktop.js onboardView): two questions over the dashboard. */
+.onboard {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+}
+.onboard-card {
+  width: min(640px, 100%);
+  margin: 0;
+}
+.onboard-kicker {
+  margin: 0 0 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.onboard-choices {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+.onboard-choice {
+  display: grid;
+  gap: 4px;
+  text-align: left;
+  padding: 14px 16px;
+}
+.onboard-choice b {
+  font-size: 15px;
+}
+.onboard-choice span {
+  font-size: 12.5px;
+  font-weight: 400;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+.onboard-choice:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+/* A finished change under the menu (desktop.js noticeBox): the update box in green. */
+.side-update.side-notice {
+  border-color: color-mix(in srgb, var(--green-500) 55%, var(--line));
+  background: color-mix(in srgb, var(--green-500) 10%, var(--panel));
+}
+/* Under way (desktop.js progressBox): neutral, with a small spinner. */
+.side-update.side-progress {
+  border-color: var(--n-500);
+  background: var(--n-200);
+}
+.side-progress b {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.side-progress .spin {
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--n-500);
+  border-top-color: var(--text);
+  border-radius: 50%;
+  animation: side-spin 0.9s linear infinite;
+}
+@keyframes side-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .side-progress .spin {
+    animation: none;
+  }
+}
+/* With several boxes under the menu, the menu scrolls instead of squeezing its items together. */
+.side nav > button {
+  flex-shrink: 0;
+}
+.side-notice button {
+  min-height: 28px;
+  padding: 3px 10px;
+}
+/* 게임 연결: what is on now, above the tabs (desktop.js connectionPage), and a dot per tab. */
+.link-state {
+  margin: -6px 0 12px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.link-state b {
+  color: var(--text);
+}
+.connection-tabs .link-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 5px;
+  border-radius: 50%;
+  vertical-align: 1px;
+  background: var(--n-500);
+}
+.connection-tabs .link-dot.on {
+  background: var(--green-500);
 }

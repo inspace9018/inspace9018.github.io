@@ -125,6 +125,24 @@ body {
 .dl-button:hover {
   filter: brightness(1.08);
 }
+.side-lang {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 4px;
+  font-size: 11.5px;
+  color: var(--muted);
+}
+.side-lang select {
+  min-width: 0;
+  padding: 3px 6px;
+  border: 1px solid var(--n-200);
+  border-radius: 5px;
+  background: var(--n-100, transparent);
+  color: var(--text);
+  font: inherit;
+}
 .side-meta {
   display: flex;
   justify-content: space-between;
@@ -260,6 +278,7 @@ footer a {
     font-size: 13px;
   }
   .side-get small,
+  .side-lang > span,
   .side-meta {
     display: none;
   }

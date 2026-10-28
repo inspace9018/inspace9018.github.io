@@ -19,8 +19,8 @@ window.MapAtlas = (() => {
   // Display language (ui/i18n.js); Korean when it is not loaded. Tables keep the Korean beside the
   // English and are read when the map is built or a card opens.
   const L = (ko, en) => (window.I18N ? window.I18N.L(ko, en) : ko),
-    english = () => window.I18N?.lang === 'en',
-    lang = () => (english() ? 'en' : 'ko');
+    english = () => !!window.I18N?.foreign,
+    lang = () => window.I18N?.lang || 'ko';
   // Search: English ignores case; Korean matches as typed.
   const has = (s, q) => (english() ? s.toLowerCase().includes(q.toLowerCase()) : s.includes(q));
   const TEAM = { 0: '히든 킹(아래쪽 기지)', 1: '아치마더(위쪽 기지)' },
@@ -145,9 +145,9 @@ window.MapAtlas = (() => {
   // A building with slot machines in English: its name from its id (ui/jungle-ui.js), counts and note.
   const buildingEn = b => {
     const n = b.vaults.length,
-      note = NOTE_EN[b.id];
-    return `<p><b>${esc(window.jungleUI?.name ? window.jungleUI.name({ id: b.id }) : b.id)}</b> · ${n} Sinner's Sacrifice${n === 1 ? '' : 's'}${
-      b.bells ? ` · ${b.bells} bell${b.bells === 1 ? '' : 's'}` : ''
+      note = window.I18N ? I18N.tr(NOTE_EN[b.id]) : NOTE_EN[b.id];
+    return `<p><b>${esc(window.jungleUI?.name ? window.jungleUI.name({ id: b.id }) : b.id)}</b> · ${(I18N.foreign ? I18N.count(n, '', "Sinner's Sacrifice") : `영혼 슬롯머신 ${n}개`)}${
+      b.bells ? ` · ${(I18N.foreign ? I18N.count(b.bells, '', 'bell') : `종 ${b.bells}개`)}` : ''
     }.${note ? ' ' + esc(note) : ''}</p>`;
   };
   // Display name and group of a kind (the Korean `name` and `group` stay the keys).

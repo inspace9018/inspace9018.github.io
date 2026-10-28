@@ -73,7 +73,12 @@
       text: "Take the Power-up, then come back by the Sinner's Sacrifice and crates."
     }
   };
-  const plan = k => (window.I18N?.lang === 'en' ? PLAN_EN : PLAN_KO)[k];
+  // Chinese and Russian translate the English plan's text fields (i18n.js).
+  const plan = k => {
+    if (!window.I18N?.foreign) return PLAN_KO[k];
+    const p = PLAN_EN[k];
+    return p && Object.fromEntries(Object.entries(p).map(([f, v]) => [f, I18N.tr(v)]));
+  };
   const WAVE = 30;
 
   // Team and band of the match: the minimap's turn and the lane my marker stays in.
@@ -92,8 +97,8 @@
     const gold = s.statues || 0,
       wood = s.crates - gold;
     return [
-      wood ? L(`상자 ${wood}개`, `${wood} crate${wood === 1 ? '' : 's'}`) : '',
-      gold ? L(`황금 조각상 ${gold}개`, `${gold} Golden Statue${gold === 1 ? '' : 's'}`) : ''
+      wood ? (I18N.foreign ? I18N.count(wood, '', 'crate') : `상자 ${wood}개`) : '',
+      gold ? (I18N.foreign ? I18N.count(gold, '', 'Golden Statue') : `황금 조각상 ${gold}개`) : ''
     ]
       .filter(Boolean)
       .join(' · ');

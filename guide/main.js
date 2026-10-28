@@ -43,42 +43,46 @@
   let routePick = { team: null, band: null, plan: null };
 
   function compPage() {
-    const list = window.HERO_GUIDE || [],
-      a = Comp.analyze(comp.us, comp.them, list, window.HERO_TYPES || []);
+    const list = window.HERO_GUIDE || [];
+    const a = Comp.analyze(comp.us, comp.them, list, window.HERO_TYPES || []);
     const slots = side =>
       Array.from({ length: 6 }, (_, i) => {
         const id = comp[side][i],
           g = id && IntelUI.guide(id);
         return g
-          ? `<button class="comp-slot filled" data-comp-remove="${side}:${id}" title="빼기"><img src="assets/portraits/${id}-small.png" alt=""><span>${esc(g.ko)}</span></button>`
+          ? `<button class="comp-slot filled" data-comp-remove="${side}:${id}" title="${L('빼기', 'Remove')}"><img src="assets/portraits/${id}-small.png" alt=""><span>${esc(I18N.name(g))}</span></button>`
           : `<button class="comp-slot" data-comp-side="${side}">+</button>`;
       }).join('');
     const teamCard = (title, t) =>
-      `<section class="card"><div class="card-head"><h2>${title}</h2><span class="label">${t.ids.length ? esc(t.style) : '영웅을 고르세요'}</span></div>${
+      `<section class="card"><div class="card-head"><h2>${title}</h2><span class="label">${t.ids.length ? esc(t.style) : L('영웅을 고르세요', 'Pick heroes')}</span></div>${
         t.ids.length
           ? `<div class="comp-traits">${Object.entries(Comp.TRAITS)
-              .map(([k, v]) => `<span class="iu-chip">${v.ko} ${t.counts[k]}</span>`)
-              .join('')}</div><p class="iu-line"><i>장점</i>${t.strengths.map(esc).join(' ') || '두드러진 장점 없음'}</p><p class="iu-line"><i>약점</i>${
-              t.weaknesses.map(esc).join(' ') || (t.ids.length < 4 ? '4명 이상 고르면 약점을 판단합니다' : '두드러진 약점 없음')
+              .map(([k, v]) => `<span class="iu-chip">${L(v.ko, v.en)} ${t.counts[k]}</span>`)
+              .join(
+                ''
+              )}</div><p class="iu-line"><i>${L('장점', 'Strengths')}</i>${t.strengths.map(esc).join(' ') || L('두드러진 장점 없음', 'No standout strengths')}</p><p class="iu-line"><i>${L('약점', 'Weaknesses')}</i>${
+              t.weaknesses.map(esc).join(' ') ||
+              (t.ids.length < 4 ? L('4명 이상 고르면 약점을 판단합니다', 'Pick 4 or more to judge weaknesses') : L('두드러진 약점 없음', 'No standout weaknesses'))
             }</p>`
           : ''
       }</section>`;
     const taken = new Set([...comp.us, ...comp.them]);
     const strategy = a.strategy.length
       ? `<ul class="iu-tips">${a.strategy.map(t => `<li>${esc(t)}</li>`).join('')}</ul>`
-      : '<p class="iu-empty">양 팀을 한 명 이상 고르면 전략을 제안합니다.</p>';
+      : `<p class="iu-empty">${L('양 팀을 한 명 이상 고르면 전략을 제안합니다.', 'Pick at least one hero per team for a strategy.')}</p>`;
     const picks = a.suggestions.length
-      ? `<section class="card"><div class="card-head"><h2>남은 픽 추천</h2><span class="label">우리 팀 빈자리 기준</span></div>${a.suggestions
+      ? `<section class="card"><div class="card-head"><h2>${L('남은 픽 추천', 'Suggested picks')}</h2><span class="label">${L('우리 팀 빈자리 기준', 'For our open slots')}</span></div>${a.suggestions
           .map(
             x =>
-              `<div class="comp-suggest"><img src="assets/portraits/${x.id}-small.png" alt=""><div><b>${esc(x.ko)}</b><small>${esc(x.why.join(' · ') || '조합 균형')}</small></div><button data-comp-pick="${x.id}">추가</button></div>`
+              `<div class="comp-suggest"><img src="assets/portraits/${x.id}-small.png" alt=""><div><b>${esc(I18N.name(IntelUI.guide(x.id)) || x.ko)}</b><small>${esc(x.why.join(' · ') || L('조합 균형', 'Team balance'))}</small></div><button data-comp-pick="${x.id}">${L('추가', 'Add')}</button></div>`
           )
           .join('')}</section>`
       : '';
-    return `${heading('조합 분석', '우리 팀과 상대 팀 조합의 장단점, 전략, 남은 픽 추천', '<div class="inline"><button data-comp-clear>비우기</button></div>')}<div class="comp-teams"><div class="comp-row ${compSide === 'us' ? 'active' : ''}"><button class="comp-label" data-comp-side="us">우리 팀</button>${slots('us')}</div><div class="comp-row them ${compSide === 'them' ? 'active' : ''}"><button class="comp-label" data-comp-side="them">상대 팀</button>${slots('them')}</div></div><p class="note">${compSide === 'us' ? '우리 팀' : '상대 팀'}에 추가 중 · 아래 영웅을 누르세요. 채워진 슬롯을 누르면 뺍니다.</p><div class="guide-top heroes">${[...list]
-      .sort((x, y) => x.ko.localeCompare(y.ko, 'ko'))
-      .map(h => `<button data-comp-add="${h.id}" ${taken.has(h.id) ? 'disabled' : ''}>${esc(h.ko)}</button>`)
-      .join('')}</div><div class="grid intel">${teamCard('우리 조합', a.us)}${teamCard('상대 조합', a.them)}<section class="card"><div class="card-head"><h2>전략 제안</h2><span class="label">상성 기준</span></div>${strategy}</section>${picks}</div><p class="note">영웅 가이드의 성향·장단점으로 계산한 참고용 분석입니다. 승률 통계가 아닙니다.</p>`;
+    return `${heading(L('조합 분석', 'Team comp'), L('우리 팀과 상대 팀 조합의 장단점, 전략, 남은 픽 추천', 'Strengths and weaknesses of both teams, a strategy, and picks for open slots'), `<div class="inline"><button data-comp-clear>${L('비우기', 'Clear')}</button></div>`)}<div class="comp-teams"><div class="comp-row ${compSide === 'us' ? 'active' : ''}"><button class="comp-label" data-comp-side="us">${L('우리 팀', 'Our team')}</button>${slots('us')}</div><div class="comp-row them ${compSide === 'them' ? 'active' : ''}"><button class="comp-label" data-comp-side="them">${L('상대 팀', 'Enemy team')}</button>${slots('them')}</div></div><p class="note">${L(`${compSide === 'us' ? '우리 팀' : '상대 팀'}에 추가 중 · 아래 영웅을 누르세요. 채워진 슬롯을 누르면 뺍니다.`, `Adding to ${compSide === 'us' ? 'our team' : 'the enemy team'} · click a hero below. Click a filled slot to remove it.`)}</p><div class="guide-top heroes">${list
+      .map(h => `<button data-comp-add="${h.id}" ${taken.has(h.id) ? 'disabled' : ''}>${esc(I18N.name(h))}</button>`)
+      .join(
+        ''
+      )}</div><div class="grid intel">${teamCard(L('우리 조합', 'Our comp'), a.us)}${teamCard(L('상대 조합', 'Enemy comp'), a.them)}<section class="card"><div class="card-head"><h2>${L('전략 제안', 'Strategy')}</h2><span class="label">${L('상성 기준', 'By matchup')}</span></div>${strategy}</section>${picks}</div><p class="note">${L('영웅 가이드의 성향·장단점으로 계산한 참고용 분석입니다. 승률 통계가 아닙니다.', 'A rough read from the hero guides’ styles, strengths and weaknesses. Not win-rate stats.')}</p>`;
   }
 
   const draw = {
@@ -91,7 +95,7 @@
   function render() {
     app.innerHTML = draw[page]();
     if (page === 'map') MapAtlas.mount();
-    if (page === 'index') app.querySelector('.page-heading h1').textContent = '데드락 공략';
+    if (page === 'index') app.querySelector('.page-heading h1').textContent = L('데드락 공략', 'Deadlock guide');
     // Buttons that open another app page become links to the matching web page, or to the download.
     for (const b of app.querySelectorAll('button[data-page]')) {
       const a = document.createElement('a'),
@@ -138,8 +142,8 @@
     else if (d.heroSort) heroSort = d.heroSort;
     else if (d.copy != null) {
       copyText(d.copy).then(ok => {
-        b.textContent = ok ? '복사됨' : '복사 실패';
-        setTimeout(() => (b.textContent = '복사'), 1200);
+        b.textContent = ok ? L('복사됨', 'Copied') : L('복사 실패', 'Copy failed');
+        setTimeout(() => (b.textContent = L('복사', 'Copy')), 1200);
       });
       return;
     } else if (d.routeTeam !== undefined) routePick = { ...routePick, team: +d.routeTeam };

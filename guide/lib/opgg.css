@@ -933,7 +933,6 @@ header .status {
 .ib-material-for { display: block; margin-top: 3px; color: var(--purple-300); font-size: 10px; line-height: 1.4; }
 .ib-purchase-note { margin: 7px 0 0; font-size: 11px; line-height: 1.5; color: var(--muted); }
 .ib-phase-order { display: block; margin-top: 6px; font-size: 11px; font-style: normal; color: var(--blue-300); }
-.ib-sh-cat li[value]::before { content: attr(value); }
 .ib-item {
   display: flex;
   flex-direction: column;
@@ -1377,7 +1376,50 @@ header .status {
   justify-content: space-between;
   gap: 12px;
 }
-.ib-sheet-btn {
+/* Item builds fold to one line on the hero page; a click opens them (opgg.js itemBuilds). */
+.op-ib-folded {
+  padding: 0;
+}
+.ib-open {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 14px 16px;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-radius: inherit;
+}
+.ib-open:hover {
+  background: var(--panel-2);
+}
+.ib-open > span:first-child {
+  display: grid;
+  gap: 2px;
+  flex: none;
+}
+.ib-open small {
+  font-size: 12px;
+  color: var(--muted);
+}
+.ib-open-names {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 0;
+  flex: 1;
+}
+.ib-open-names em {
+  padding: 3px 9px;
+  font-size: 12px;
+  font-style: normal;
+  background: var(--panel-2);
+  border-radius: 999px;
+}
+.ib-open-go,
+.ib-fold {
+  flex: none;
   padding: 6px 12px;
   font-size: 12.5px;
   font-weight: 600;
@@ -1385,164 +1427,4 @@ header .status {
   background: var(--blue-bg);
   border: 1px solid var(--blue-700);
   border-radius: 4px;
-}
-.ib-sheet-btn.on {
-  color: var(--n-800);
-  background: var(--panel-2);
-  border-color: var(--n-300);
-}
-.ib-sh-intro,
-.ib-sh-hint {
-  margin: 0 0 8px !important;
-  font-size: 12px !important;
-  color: var(--muted);
-}
-.ib-sh-cols {
-  display: grid;
-  grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
-  gap: 14px;
-  align-items: start;
-}
-.ib-sh-field,
-.ib-sh-cat {
-  padding: 10px 12px;
-  margin-bottom: 10px;
-  background: var(--panel-2);
-  border-radius: 4px;
-}
-.ib-sh-label,
-.ib-sh-cat-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
-  font-size: 13px;
-}
-.ib-copy {
-  flex: none;
-  height: 20px;
-  min-height: 0;
-  line-height: 18px;
-  padding: 0 7px;
-  font-size: 11px;
-  color: var(--blue-300);
-  background: none;
-  border: 1px solid var(--blue-700);
-  border-radius: 3px;
-}
-.ib-sh-val {
-  margin: 0;
-  font-size: 12.5px;
-  line-height: 1.55;
-  white-space: pre-wrap;
-  font-family: inherit;
-  color: var(--n-800);
-}
-.ib-sh-tags {
-  display: flex;
-  gap: 6px;
-  margin: 0;
-}
-.ib-sh-tags span {
-  padding: 3px 10px;
-  font-size: 12px;
-  background: var(--blue-bg);
-  border: 1px solid var(--blue-700);
-  border-radius: 999px;
-}
-.ib-sh-clicks {
-  display: grid;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
-  gap: 4px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.ib-sh-clicks li {
-  display: grid;
-  justify-items: center;
-  padding: 4px 0;
-  background: var(--panel);
-  border-radius: 3px;
-}
-.ib-sh-clicks img {
-  width: 24px;
-  height: 24px;
-}
-.ib-sh-clicks b {
-  font-size: 12px;
-}
-.ib-sh-clicks small {
-  font-size: 10.5px;
-  color: var(--muted);
-}
-.ib-sh-opt {
-  margin-left: auto;
-  font-size: 11.5px;
-  color: var(--muted);
-}
-.ib-sh-opt.on {
-  color: var(--amber-300);
-}
-.ib-sh-cat-desc {
-  margin: 0 0 6px !important;
-  font-size: 12px !important;
-  color: var(--muted);
-}
-.ib-sh-cat ol {
-  display: grid;
-  gap: 4px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  counter-reset: sh;
-}
-.ib-sh-cat li {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px 8px;
-  font-size: 12.5px;
-  counter-increment: sh;
-}
-.ib-sh-cat li::before {
-  content: counter(sh);
-  min-width: 14px;
-  font-size: 11px;
-  color: var(--muted);
-  text-align: right;
-}
-.ib-sh-cat li > img {
-  width: 26px;
-  height: 26px;
-  border-radius: 3px;
-}
-.ib-sh-name {
-  font-weight: 600;
-}
-.ib-sh-imb {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 1px 6px;
-  font-size: 11.5px;
-  color: var(--purple-300);
-  background: var(--purple-900);
-  border-radius: 3px;
-}
-.ib-sh-imb img {
-  width: 16px;
-  height: 16px;
-}
-.ib-sh-imb small {
-  color: var(--muted);
-}
-.ib-sh-memo {
-  font-size: 11.5px;
-  color: var(--muted);
-}
-@media (max-width: 1350px) {
-  .ib-sh-cols {
-    grid-template-columns: 1fr;
-  }
 }

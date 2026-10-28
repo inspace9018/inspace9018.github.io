@@ -14,6 +14,7 @@
     <meta name="theme-color" content="#101315" />
     <link rel="canonical" href="https://obeloworks.com/" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <script src="guide/lib/site-lang.js"></script>
     <link rel="stylesheet" href="guide/lib/tokens.css" />
     <link rel="stylesheet" href="guide/lib/desktop.css" />
     <link rel="stylesheet" href="guide/lib/intel-ui.css" />
@@ -25,88 +26,91 @@
     <link rel="stylesheet" href="guide/guide.css" />
     <script defer src="https://js.rev.iq/obeloworks.com"></script>
   </head>
-  <body data-page="download">
+  <body data-title="front" data-page="download">
     <aside class="side">
       <a class="brand" href="./"><img src="favicon.svg" alt="" width="26" height="26" /><b>Lookout</b></a>
-      <nav class="menu" aria-label="메뉴"><a href="./" aria-current="page" class="nav-get"><b>다운로드</b><small>무료 · Windows 오버레이</small></a><a href="guide/"><b>공략</b><small>영혼 · 라인전 · 정글</small></a><a href="guide/heroes.html"><b>영웅</b><small>티어 · 아이템 빌드</small></a><a href="guide/comp.html"><b>조합 분석</b><small>팀 상성 · 남은 픽</small></a><a href="guide/map.html"><b>지도</b><small>캠프 · 상자 · 상점 위치</small></a><a href="guide/routes.html"><b>라인 동선</b><small>웨이브 사이 정글 루트</small></a></nav>
+      <nav class="menu" aria-label="메뉴" data-t-label="menu"><a href="./" aria-current="page" class="nav-get"><b data-t="nav.download">다운로드</b><small data-t="nav.download.sub">무료 · Windows 오버레이</small></a><a href="guide/"><b data-t="nav.guide">공략</b><small data-t="nav.guide.sub">영혼 · 라인전 · 정글</small></a><a href="guide/heroes.html"><b data-t="nav.heroes">영웅</b><small data-t="nav.heroes.sub">티어 · 아이템 빌드</small></a><a href="guide/comp.html"><b data-t="nav.comp">조합 분석</b><small data-t="nav.comp.sub">팀 상성 · 남은 픽</small></a><a href="guide/map.html"><b data-t="nav.map">지도</b><small data-t="nav.map.sub">캠프 · 상자 · 상점 위치</small></a><a href="guide/routes.html"><b data-t="nav.routes">라인 동선</b><small data-t="nav.routes.sub">웨이브 사이 정글 루트</small></a></nav>
       <div class="side-foot">
-        <a class="side-get" href="https://github.com/inspace9018/lookout-releases/releases/latest/download/Lookout-Setup.exe">Windows용 무료 다운로드<small>Lookout <span data-version>0.1.7</span></small></a>
-        <div class="side-meta"><a href="https://github.com/inspace9018/lookout-releases/issues/new/choose">오류 제보</a><a href="privacy.html">개인정보</a></div>
+        <a class="side-get" href="https://github.com/inspace9018/lookout-releases/releases/latest/download/Lookout-Setup.exe"><span data-t="side.get">Windows용 무료 다운로드</span><small>Lookout <span data-version>0.1.10</span></small></a>
+        <label class="side-lang"><span data-t="side.lang">언어</span><select data-lang><option value="ko">한국어</option><option value="en">English</option><option value="zh">简体中文</option><option value="ru">Русский</option></select></label>
+        <div class="side-meta"><a href="https://github.com/inspace9018/lookout-releases/issues/new/choose" data-t="side.bug">오류 제보</a><a href="privacy.html" data-t="side.privacy">개인정보</a></div>
       </div>
     </aside>
     <div class="page">
       <main class="dl">
         <section class="dl-hero">
           <div class="dl-copy">
-            <span class="dl-kicker">Deadlock 오버레이 · 무료</span>
-            <h1>Deadlock을 하면서 옆에 두는 작은 메모장</h1>
-            <p>게임 화면을 읽어서 지금 챙길 것만 왼쪽에 조용히 띄웁니다. 정글이 언제 다시 생기는지, 웨이브를 민 뒤 어디를 돌고 올지, 상대 궁극기가 열렸는지.</p>
+            <span class="dl-kicker" data-t="dl.kicker">Deadlock 오버레이 · 무료</span>
+            <h1 data-t="dl.h1">Deadlock을 하면서 옆에 두는 작은 메모장</h1>
+            <p data-t="dl.lead">게임 화면을 읽어서 지금 챙길 것만 왼쪽에 조용히 띄웁니다. 정글이 언제 다시 생기는지, 웨이브를 민 뒤 어디를 돌고 올지, 상대 궁극기가 열렸는지.</p>
             <div class="dl-actions">
-              <a class="dl-button" href="https://github.com/inspace9018/lookout-releases/releases/latest/download/Lookout-Setup.exe">Windows용 무료 다운로드</a>
-              <span class="dl-meta">버전 <b data-version>0.1.7</b> · 설치 파일 <span data-size>약 150MB</span> · <a href="https://github.com/inspace9018/lookout-releases/releases/latest">바뀐 점</a></span>
+              <a class="dl-button" href="https://github.com/inspace9018/lookout-releases/releases/latest/download/Lookout-Setup.exe" data-t="dl.button">Windows용 무료 다운로드</a>
+              <span class="dl-meta" data-t="dl.meta">버전 <b data-version>0.1.10</b> · 설치 파일 <span data-size>약 150MB</span> · <a href="https://github.com/inspace9018/lookout-releases/releases/latest">바뀐 점</a></span>
             </div>
-            <p class="dl-req">Windows 전용 · 게임은 창 모드 또는 테두리 없는 창 모드</p>
+            <p class="dl-req" data-t="dl.req">Windows 전용 · 게임은 창 모드 또는 테두리 없는 창 모드</p>
           </div>
-          <a class="dl-shot" href="img/overlay-play.jpg"><img src="img/overlay-play.jpg" alt="경기 중 화면: 왼쪽 패널, 위쪽 알림, 미니맵 정글 타이머" width="1600" height="900" /></a>
+          <a class="dl-shot" href="img/overlay-play.jpg"><img src="img/overlay-play.jpg" alt="경기 중 화면: 왼쪽 패널, 위쪽 알림, 미니맵 정글 타이머" data-t-alt="dl.shot.alt" width="1600" height="900" /></a>
         </section>
-        <section class="dl-steps" aria-label="설치 순서">
-          <div><b>1</b><p><strong>설치 파일 실행</strong>받은 Lookout-Setup.exe를 실행합니다. 새 버전은 앱이 알아서 받아 둡니다.</p></div>
-          <div><b>2</b><p><strong>게임 화면 모드</strong>Deadlock을 창 모드나 테두리 없는 창 모드로 켭니다.</p></div>
-          <div><b>3</b><p><strong>경기 시작</strong>경기에 들어가면 오버레이가 뜹니다. Alt+Q로 패널을 엽니다.</p></div>
+        <section class="dl-steps" aria-label="설치 순서" data-t-label="dl.steps">
+          <div><b>1</b><p data-t="dl.step1"><strong>설치 파일 실행</strong>받은 Lookout-Setup.exe를 실행합니다. 새 버전은 앱이 알아서 받아 둡니다.</p></div>
+          <div><b>2</b><p data-t="dl.step2"><strong>게임 화면 모드</strong>Deadlock을 창 모드나 테두리 없는 창 모드로 켭니다.</p></div>
+          <div><b>3</b><p data-t="dl.step3"><strong>경기 시작</strong>경기에 들어가면 오버레이가 뜹니다. Alt+Q로 패널을 엽니다.</p></div>
         </section>
-        <h2 class="dl-h">경기 중에 보이는 것</h2>
+        <h2 class="dl-h" data-t="dl.h.ingame">경기 중에 보이는 것</h2>
         <section class="dl-gallery">
           <figure>
-            <a href="img/overlay-list.jpg"><img src="img/overlay-list.jpg" alt="왼쪽 패널: 정글 재생성 시간, 레벨업까지 남은 영혼, 양 팀 조합" width="420" height="420" loading="lazy" /></a>
-            <figcaption><b>왼쪽 패널</b>정글 캠프 재생성 시간, 레벨업까지 남은 영혼과 다음 레벨 궁극기, 양 팀 조합.</figcaption>
+            <a href="img/overlay-list.jpg"><img src="img/overlay-list.jpg" alt="왼쪽 패널: 정글 재생성 시간, 레벨업까지 남은 영혼, 양 팀 조합" data-t-alt="dl.list.alt" width="420" height="420" loading="lazy" /></a>
+            <figcaption data-t="dl.list.cap"><b>왼쪽 패널</b>정글 캠프 재생성 시간, 레벨업까지 남은 영혼과 다음 레벨 궁극기, 양 팀 조합.</figcaption>
           </figure>
           <figure>
-            <a href="img/overlay-tab.jpg"><img src="img/overlay-tab.jpg" alt="Tab 화면: 영웅마다 정리한 상대 정보와 팀 상성" width="1600" height="900" loading="lazy" /></a>
-            <figcaption><b>Tab 화면</b>Tab을 누르면 적마다 궁극기 해금 여부, 팀 상성.</figcaption>
+            <a href="img/overlay-tab.jpg"><img src="img/overlay-tab.jpg" alt="Tab 화면: 영웅마다 정리한 상대 정보와 팀 상성" data-t-alt="dl.tab.alt" width="1600" height="900" loading="lazy" /></a>
+            <figcaption data-t="dl.tab.cap"><b>Tab 화면</b>Tab을 누르면 적마다 궁극기 해금 여부, 팀 상성.</figcaption>
           </figure>
           <figure>
-            <a href="img/overlay-select.jpg"><img src="img/overlay-select.jpg" alt="영웅 선택 화면: 초상화마다 승률과 픽률, 고른 영웅 정보" width="1600" height="900" loading="lazy" /></a>
-            <figcaption><b>영웅 선택</b>초상화마다 승률 · 픽률, 고른 영웅의 강점 · 약점.</figcaption>
+            <a href="img/overlay-select.jpg"><img src="img/overlay-select.jpg" alt="영웅 선택 화면: 초상화마다 승률과 픽률, 고른 영웅 정보" data-t-alt="dl.select.alt" width="1600" height="900" loading="lazy" /></a>
+            <figcaption data-t="dl.select.cap"><b>영웅 선택</b>초상화마다 승률 · 픽률, 고른 영웅의 강점 · 약점.</figcaption>
           </figure>
         </section>
         <section class="dl-features">
           <div class="dl-more">
-            <b>라인 동선</b>
-            <p>Alt+Q 패널의 동선 탭. 내 전선과 팀에 맞춘 한 바퀴. 가는 길(A)과 오는 길(B)에 챙길 상자, 걸리는 시간까지.</p>
-            <b>그 밖에</b>
+            <b data-t="dl.routes.h">라인 동선</b>
+            <p data-t="dl.routes.p">Alt+Q 패널의 동선 탭. 내 전선과 팀에 맞춘 한 바퀴. 가는 길(A)과 오는 길(B)에 챙길 상자, 걸리는 시간까지.</p>
+            <b data-t="dl.more.h">그 밖에</b>
             <ul>
-              <li>미니맵 위 정글 캠프 리스폰 타이머와 층 표시</li>
-              <li>Tab을 누르면 적마다 궁극기 해금 여부, 팀 상성</li>
-              <li>상점을 열면 이번 적 팀을 상대로 살 만한 아이템</li>
-              <li>영웅 선택 화면에서 초상화마다 승률 · 픽률</li>
-              <li>2:00 소형 캠프처럼 생성 30초 전 시간 알림</li>
-              <li>레벨업까지 남은 영혼과 트루퍼 수, 다음 레벨에 궁극기가 열리는지</li>
-              <li>대시보드에서 Deadlock 패치노트를 한국어로</li>
+              <li data-t="dl.more.1">미니맵 위 정글 캠프 리스폰 타이머와 층 표시</li>
+              <li data-t="dl.more.2">Tab을 누르면 적마다 궁극기 해금 여부, 팀 상성</li>
+              <li data-t="dl.more.3">상점을 열면 이번 적 팀을 상대로 살 만한 아이템</li>
+              <li data-t="dl.more.4">영웅 선택 화면에서 초상화마다 승률 · 픽률</li>
+              <li data-t="dl.more.5">2:00 소형 캠프처럼 생성 30초 전 시간 알림</li>
+              <li data-t="dl.more.6">레벨업까지 남은 영혼과 트루퍼 수, 다음 레벨에 궁극기가 열리는지</li>
+              <li data-t="dl.more.7">대시보드에서 Deadlock 패치노트를 한국어로</li>
             </ul>
           </div>
         </section>
-        <h2 class="dl-h">설치 없이 브라우저에서</h2>
-        <section class="dl-pages"><a href="guide/"><b>공략</b><span>영혼 · 라인전 · 정글</span></a><a href="guide/heroes.html"><b>영웅</b><span>티어 · 아이템 빌드</span></a><a href="guide/comp.html"><b>조합 분석</b><span>팀 상성 · 남은 픽</span></a><a href="guide/map.html"><b>지도</b><span>캠프 · 상자 · 상점 위치</span></a><a href="guide/routes.html"><b>라인 동선</b><span>웨이브 사이 정글 루트</span></a></section>
-        <p class="dl-note">
+        <h2 class="dl-h" data-t="dl.h.web">설치 없이 브라우저에서</h2>
+        <section class="dl-pages"><a href="guide/"><b data-t="nav.guide">공략</b><span data-t="nav.guide.sub">영혼 · 라인전 · 정글</span></a><a href="guide/heroes.html"><b data-t="nav.heroes">영웅</b><span data-t="nav.heroes.sub">티어 · 아이템 빌드</span></a><a href="guide/comp.html"><b data-t="nav.comp">조합 분석</b><span data-t="nav.comp.sub">팀 상성 · 남은 픽</span></a><a href="guide/map.html"><b data-t="nav.map">지도</b><span data-t="nav.map.sub">캠프 · 상자 · 상점 위치</span></a><a href="guide/routes.html"><b data-t="nav.routes">라인 동선</b><span data-t="nav.routes.sub">웨이브 사이 정글 루트</span></a></section>
+        <p class="dl-note" data-t="dl.note">
           기본은 화면 인식이라 게임 파일을 건드리지 않습니다. 화면에 보이는 것만 이 PC 안에서 읽고, 게임 화면은 밖으로 보내지 않습니다.
           더 정확하게 쓰고 싶으면 '게임 HUD 연동'을 따로 켤 수 있습니다. 게임 폴더에 모드 파일 1개를 넣고 gameinfo.gi에 3줄을 더하며(먼저 백업), 대시보드에서 언제든 뺄 수 있습니다.
           어느 쪽도 게임 메모리를 읽지 않습니다. Valve와 관계없는 팬 제작 도구입니다.
         </p>
       </main>
-      <aside class="ad-side" aria-label="광고">
-        <small>광고</small>
+      <aside class="ad-side" aria-label="광고" data-t-label="ad">
+        <small data-t="ad">광고</small>
         <div class="ad-slot">
-          <a class="ad-house" href="./"><b>Lookout 무료 오버레이</b><span>경기 중 적 궁극기, 정글 리스폰, 라인 동선을 게임 위에 표시합니다.</span><em>무료 다운로드</em></a>
+          <a class="ad-house" href="./"><b data-t="ad.house.title">Lookout 무료 오버레이</b><span data-t="ad.house.text">경기 중 적 궁극기, 정글 리스폰, 라인 동선을 게임 위에 표시합니다.</span><em data-t="ad.house.cta">무료 다운로드</em></a>
           <div id="ad" data-ad="right-rail-1" data-ad-size="300x250"></div>
         </div>
       </aside>
       <footer>
-        <span>© 2026 넥서스랩 (Nexus lab) · Valve와 관계없는 팬 제작 사이트</span>
-        <a href="https://github.com/inspace9018/lookout-releases/issues/new/choose">오류 제보</a>
-        <a href="privacy.html">개인정보 처리방침</a>
+        <span data-t="foot.note">© 2026 넥서스랩 (Nexus lab) · Valve와 관계없는 팬 제작 사이트</span>
+        <a href="https://github.com/inspace9018/lookout-releases/issues/new/choose" data-t="side.bug">오류 제보</a>
+        <a href="privacy.html" data-t="foot.privacy">개인정보 처리방침</a>
       </footer>
     </div>
     <script>
+      // The page in the visitor's language (lib/site-lang.js), before the release check below.
+      window.SITE_TEXT?.();
       // The download buttons always get the newest installer; this writes that release's version and
       // size next to them. Without an answer the version from the last site build stays.
       fetch('https://api.github.com/repos/inspace9018/lookout-releases/releases/latest')
@@ -115,7 +119,7 @@
           const v = r && /^v?(\d+\.\d+\.\d+)$/.exec(r.tag_name || ''),
             exe = r && (r.assets || []).find(a => a.name === 'Lookout-Setup.exe');
           if (v) for (const e of document.querySelectorAll('[data-version]')) e.textContent = v[1];
-          if (exe) for (const e of document.querySelectorAll('[data-size]')) e.textContent = Math.round(exe.size / 1048576) + 'MB';
+          if (exe) for (const e of document.querySelectorAll('[data-size]')) e.textContent = Math.round(exe.size / 1048576) + (window.SITE_LANG === 'ru' ? ' МБ' : 'MB');
         })
         .catch(() => {});
     </script>

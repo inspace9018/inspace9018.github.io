@@ -15,7 +15,19 @@
   };
   // A label table in both languages (i18n.js): each read takes the current language's entry, so a
   // language switch shows on the next render. Works for objects and arrays alike.
-  const tr = (ko, en) => new Proxy(ko, { get: (o, k) => (I18N.lang === 'en' && k in en ? en : o)[k] });
+  const tr = (ko, en) => new Proxy(ko, { get: (o, k) => (I18N.foreign && k in en ? same(o[k], en[k]) : o[k]) });
+  // English of a table entry in the display language, except what the Korean table has too in the same
+  // place: keys and class names (['early', '초반'] / ['early', 'Early'], ['Strong lane', 'strong']).
+  const same = (ko, en) =>
+    typeof en === 'string'
+      ? en === ko
+        ? en
+        : I18N.tr(en)
+      : Array.isArray(en)
+        ? en.map((x, i) => same(ko?.[i], x))
+        : en && typeof en === 'object'
+          ? Object.fromEntries(Object.entries(en).map(([k, x]) => [k, same(ko?.[k], x)]))
+          : en;
   // Display names: heroes and abilities from their { en, ko } records, items by id.
   const heroName = (id, fallback = '') => I18N.name(guide(id), fallback);
   const itemName = id => I18N.item(id, window.ITEM_CATALOG, window.ITEM_KO);
@@ -389,7 +401,7 @@
     const rift = row(
       L('불안정한 균열', 'Unstable Rift'),
       riftBand(r),
-      `${L('경기 시계 기준 생성 범위', 'Spawn window by match clock')} · ${r.state === 'overdue' ? L('경과 · 생성 확인 필요', 'Passed · check spawn') : r.basis}`
+      `${L('경기 시계 기준 생성 범위', 'Spawn window by match clock')} · ${r.basis}`
     );
     const urn = row(
       L('영혼 단지', 'Soul Urn'),
@@ -453,7 +465,7 @@
       if (brief[it.id]) return brief[it.id];
       const ko = koById.get(it.id)?.desc || '',
         d = I18N.pick(ko, ko ? itemDescEn(it) : '').split('.')[0],
-        max = I18N.lang === 'en' ? 48 : 30;
+        max = I18N.lang === 'en' || I18N.lang === 'ru' ? 48 : 30;
       return d.length > max ? d.slice(0, max - 1) + '…' : d;
     };
     const row = (it, why, how) =>
@@ -767,13 +779,17 @@
               : ''
           }${tm.tips.map(t => `<p class="tv-p tv-vs-tip">${esc(t)}</p>`).join('')}`
         : '';
-    const left = `<aside class="bd-panel tv-left figma-board-left ${phase === 'early' ? 'laning' : 'post'}" data-pv="boardPanel">${phase === 'early' ? now + mine : ''}${versus}${spawnBands(s)}</aside>`;
+    const left = `<aside class="bd-panel tv-left figma-board-left ${phase === 'early' ? 'laning' : 'post'}" data-pv="boardPanel">${phase === 'early' ? now + mine : ''}${versus}${spawnBands(s)}${soulsBox(s)}</aside>`;
+    // The comeback summary: a panel of its own at the top centre, in the gap between the two teams'
+    // columns under the kill count (the left panel has no room above the game's stat block).
+    const comeback = comebackBox(s),
+      top = comeback ? `<aside class="bd-panel figma-board-top" data-pv="topBar">${comeback}</aside>` : '';
     // With the panel kept open on the left (preparation, Alt Q), the board's own panel would cover it.
     // After the laning phase the Tab board keeps the farming box where the game view has it (Figma 10:4708).
     const farming = phase === 'early' ? '' : farmingBox(s);
     return `<div class="tv-tags">${strips}${tags}</div>${
       s.compactAt?.kind === 'detail' || !shown(s, 'boardPanel') ? '' : left
-    }${farming ? `<div class="figma-game post">${farming}</div>` : ''}`;
+    }${s.compactAt?.kind === 'detail' ? '' : top}${farming ? `<div class="figma-game post">${farming}</div>` : ''}`;
   }
   // Hero select: what the hovered hero is, in a few short rows (the strip under the hero grid).
   // Gun range class from the weapon's damage falloff (deadlock-api weapon data); snipers by hand.
@@ -840,7 +856,7 @@
       .map(x => x.trim())
       .filter(Boolean);
     // (The lead-in test reads Korean; the game's English descriptions are kept whole.)
-    if (parts.length > 1 && I18N.lang !== 'en' && !EFFECT.test(parts[0])) parts.shift();
+    if (parts.length > 1 && I18N.lang === 'ko' && !EFFECT.test(parts[0])) parts.shift();
     let out = '';
     for (const p of parts) {
       if (out && (out + ' ' + p).length > 140) break;
@@ -1166,7 +1182,8 @@
   const GRID_KO = (a, b) => a.ko.localeCompare(b.ko, 'ko'),
     GRID_EN = (a, b) =>
       a.en.replace(/^The /, '').toLowerCase().localeCompare(b.en.replace(/^The /, '').toLowerCase());
-  const gridOrders = () => (I18N.lang === 'en' ? [GRID_EN, GRID_KO] : [GRID_KO, GRID_EN]);
+  const GRID_HERE = (a, b) => I18N.name(a).localeCompare(I18N.name(b), I18N.lang);
+  const gridOrders = () => (I18N.lang === 'ko' ? [GRID_KO, GRID_EN] : I18N.lang === 'en' ? [GRID_EN, GRID_KO] : [GRID_HERE, GRID_EN]);
   function gridPairs(heroes, cells) {
     const order = new Map(heroes.map((h, k) => [h.id, k])),
       sure = cells
@@ -1245,7 +1262,8 @@
   const urnText = u =>
     `${clock(u.remaining)} ${URN_LANE[u.lane] || ''}→${URN_LANE[u.lane === 'yellow' ? 'green' : 'yellow']}`;
   // Rifts have a spawn window; its earliest bound must not look like a guaranteed countdown.
-  const riftBand = r => `${clock(r.from)}~${clock(r.to)}${r.state === 'overdue' ? L(' 확인', ' check') : ''}`;
+  // ≈ once a rift was missed: the window is then counted from an unseen one.
+  const riftBand = r => `${r.missed ? '≈' : ''}${clock(r.from)}~${clock(r.to)}`;
   const campClockText = c =>
     c.remainingRange ? c.remainingRange.map(clock).join('~') : (c.automatic ? '≈' : '') + clock(c.remaining);
   const CURVE_SHORT = tr(
@@ -1561,7 +1579,7 @@
   // skill order), then a game mechanic. `phase` keeps only that phase's plan line; `max` drops long ones.
   function tipFor(heroId, { phase, max = 200 } = {}) {
     // English tips run about 1.9 times the Korean length in the same width.
-    const en = I18N.lang === 'en',
+    const en = I18N.foreign,
       limit = en ? Math.round(max * 1.9) : max;
     const k = Math.floor(Date.now() / 7000),
       plans = en ? { early: 'Laning:', mid: 'Mid game:', late: 'Late game:' } : { early: '라인전:', mid: '중반:', late: '후반:' },
@@ -1573,11 +1591,13 @@
     // Each list steps through its own order (a stride coprime to its length), so every tip comes up.
     const pick = xs => xs[(Math.floor(k / 2) * 7919) % xs.length];
     if (own.length && (k % 2 === 0 || !general.length)) {
-      const t = pick(own),
-        at = t.indexOf(': ');
-      return { head: at > 0 ? t.slice(0, at) : L('팁', 'Tip'), text: at > 0 ? t.slice(at + 2) : t };
+      // Chinese uses a full-width colon after the label.
+      const t = I18N.tr(pick(own)),
+        m = /: |：/.exec(t),
+        at = m ? m.index : -1;
+      return { head: at > 0 ? t.slice(0, at) : L('팁', 'Tip'), text: at > 0 ? t.slice(at + m[0].length) : t };
     }
-    return general.length ? { head: L('게임 팁', 'Game tip'), text: pick(general) } : null;
+    return general.length ? { head: L('게임 팁', 'Game tip'), text: I18N.tr(pick(general)) } : null;
   }
   // A lane opponent's ultimate coming in: when its net worth first passes the unlock, an alert for
   // a while. Enemies outside my lane are left out, and an ultimate already in when first seen is
@@ -1656,35 +1676,96 @@
     for (const [t, what] of SPAWNS) add(t, what);
     for (let t = Math.max(900, (Math.floor(secs / 300) + 1) * 300); t <= secs + 600; t += 300)
       add(t, L('기운의 파편', 'Power-up'));
-    if (o?.urn) for (const t of [o.urn.at, o.urn.at + o.rules.urn.interval]) add(t, L('영혼 단지', 'Soul Urn'));
-    const left = t => clock(Math.max(0, t - Math.floor(secs)));
-    const rows = [...due]
-      .sort((a, b) => a[0] - b[0])
-      .slice(0, 2)
-      .map(([at, what]) => ({
-        at,
-        cls: '',
-        time: clock(at),
-        when: L(`${left(at)} 뒤`, `in ${left(at)}`),
-        what: what.join(' · ')
-      }));
+    // The HUD's top bar says which way the next urn runs (top-bar.cjs). That urn gets a row of its
+    // own, so the lane names fit on one line next to whatever else spawns then.
+    const urn = s.topBar?.urn,
+      way = urn && URN_LANE[urn.from] && URN_LANE[urn.to] ? '\u0001' : '',
+      wayHtml = way
+        ? ` <i class="urn-way"><span class="${urn.from}">${esc(URN_LANE[urn.from])}</span>→<span class="${urn.to}">${esc(URN_LANE[urn.to])}</span></i>`
+        : '',
+      out = way && !(urn.remaining > 0),
+      urnAt = o?.urn ? o.urn.at : urn?.remaining > 0 ? Math.round(secs + urn.remaining) : null,
+      ownRow = way && !out && urnAt > secs;
+    if (urnAt && !ownRow) add(urnAt, L('영혼 단지', 'Soul Urn'));
+    if (o?.urn) add(o.urn.at + o.rules.urn.interval, L('영혼 단지', 'Soul Urn'));
+    const left = t => clock(Math.max(0, t - Math.floor(secs))),
+      row = (at, what) => ({ at, cls: '', time: clock(at), when: L(`${left(at)} 뒤`, `in ${left(at)}`), what });
+    const rows = [...[...due].map(([at, what]) => row(at, what.join(' · '))), ...(ownRow ? [row(urnAt, L('영혼 단지', 'Soul Urn') + way)] : [])]
+      .sort((a, b) => a.at - b.at)
+      .slice(0, out ? 1 : 2);
     const r = o?.rift;
     if (r)
       rows.push({
         at: r.to,
         cls: 'rift',
         time: `~${clock(r.to)}`,
-        when: r.state === 'overdue' ? L('확인 필요', 'Check') : L(`${left(r.to)} 안에`, `within ${left(r.to)}`),
+        when: L(`${left(r.to)} 안에`, `within ${left(r.to)}`),
         what: L('불안정한 균열', 'Unstable Rift')
       });
+    // An urn already out: its way on a row of its own, first, in place of the second spawn row.
+    if (out) rows.push({ at: secs, cls: 'urn', time: L('지금', 'Now'), when: '', what: L('영혼 단지', 'Soul Urn') + way });
     // The soonest row is highlighted, the rift too when it comes first.
     return `<div class="fg-spawns" data-pv="spawns">${rows
       .sort((a, b) => a.at - b.at)
       .map(
         (x, i) =>
-          `<div class="${[x.cls, i === 0 && 'next'].filter(Boolean).join(' ')}"><time>${esc(x.time)}</time><span>${esc(x.when)}</span><b>${esc(x.what)}</b></div>`
+          `<div class="${[x.cls, i === 0 && 'next'].filter(Boolean).join(' ')}"><time>${esc(x.time)}</time><span>${esc(x.when)}</span><b>${esc(x.what).replace('\u0001', wayHtml)}</b></div>`
       )
       .join('')}</div>`;
+  }
+  // The team soul gap and the trailing team's comeback bonus (top-bar.cjs), in a box of its own under
+  // the next-spawn panel (or where that panel would be when it is off), so it never covers the panel.
+  // Approximate: the top bar's totals are rounded to 1k.
+  function soulsBox(s) {
+    const g = shown(s, 'topBar') ? s.topBar?.souls : null;
+    if (!g) return '';
+    const k = n => (n < 1000 ? String(n) : `${(n / 1000).toFixed(n < 100000 ? 1 : 0).replace(/\.0$/, '')}K`),
+      bonus = g.behind ? Math.round(g.comeback * 100) : 0;
+    return !g.behind
+      ? `<div class="fg-souls" data-pv="topBar">${L('영혼 거의 동률', 'Souls about even')}</div>`
+      : `<div class="fg-souls ${g.behind === 'us' ? 'behind' : 'ahead'}" data-pv="topBar">${L('영혼', 'Souls')} <b>≈${g.behind === 'us' ? '−' : '+'}${k(Math.abs(g.gap))}</b> (${Math.max(1, Math.round(g.share * 100))}%)${
+          bonus ? ` · <em>${g.behind === 'us' ? L(`역전 보너스 ≈${bonus}%`, `Comeback bonus ≈${bonus}%`) : L(`적 역전 보너스 ≈${bonus}%`, `Enemy comeback ≈${bonus}%`)}</em>` : ''
+        }</div>`;
+  }
+  // Holding Tab: what the comeback rules give right now, at the top centre (deadlock.wiki Souls and Soul
+  // Urn, patch notes 06-30 to 09-16-2026). The trailing team's rift and urn bonuses scale with
+  // `comeback` (full at 15% behind); the resist cap is 10% + 1%/min up to 40% at 30:00; Rift Troopers
+  // go from 5 to 14; the urn runner sprints up to +5 m/s; the claiming timer and the rift and urn soul
+  // bonuses scale too, with no published numbers. The kill and catch-up rules apply either way.
+  function comebackBox(s) {
+    const g = shown(s, 'topBar') ? s.topBar?.souls : null;
+    if (!g) return '';
+    const mins = Math.max(0, (s.live?.seconds || 0) / 60),
+      c = g.behind ? g.comeback : 0,
+      them = g.behind === 'them',
+      pct = Math.round(c * 100);
+    // Head: whose bonus and how much of the full one, with a bar. Then a grid of what it gives now:
+    // resist (bullet and spirit in the rift zone, 35 m; debuff resist too on the urn runner), Rift
+    // Troopers, the claiming timer (no published values), the urn runner's sprint, and the extra souls
+    // from farming and objectives (plus a comeback share of the rift and urn rewards).
+    const head = !c
+      ? `<header><b>${L('역전 보너스 없음', 'No comeback bonus')}</b><em>${L('거의 동률', 'About even')}</em></header>`
+      : `<header><b>${them ? L('적 역전 보너스', 'Enemy comeback bonus') : L('우리 역전 보너스', 'Our comeback bonus')}</b><em>≈${pct}%</em></header><i class="cb-bar"><i style="width:${pct}%"></i></i>`;
+    let grid = '';
+    if (c) {
+      const resist = Math.round(c * Math.min(40, 10 + mins)),
+        cell = (label, value, sub = '') => `<div><small>${label}</small><b>${value}</b>${sub ? `<small>${sub}</small>` : ''}</div>`;
+      grid = `<div class="cb-grid">${[
+        cell(L('균열 저항', 'Rift resist'), `≈${resist}%`),
+        cell(L('균열 트루퍼', 'Rift troopers'), L(`${Math.round(5 + c * 9)}명`, String(Math.round(5 + c * 9)))),
+        cell(L('균열 점령', 'Rift claim'), L('유리', 'Faster')),
+        cell(L('단지 질주', 'Urn sprint'), `+${(c * 5).toFixed(1).replace(/\.0$/, '')}<i>m/s</i>`),
+        cell(L('단지 저항', 'Urn resist'), `≈${resist}%`, L('디버프 포함', 'debuff too')),
+        cell(L('추가 영혼', 'Extra souls'), g.income ? `+${g.income}%` : '—', L('균열·단지도', 'rift/urn too'))
+      ].join('')}</div>`;
+    }
+    // Always on, either way: kills on richer heroes, the team's two poorest, and what any urn runner gets.
+    const rule = (k, v) => `<p><b>${k}</b>${v}</p>`;
+    return `<section class="fg-comeback ${c ? (them ? 'ahead' : 'behind') : ''}">${head}${grid}<div class="cb-rules">${[
+      rule(L('처치', 'Kills'), L('부자 영웅 +127% · 부활 +6~22초', 'richer: +127% · respawn +6-22 s')),
+      rule(L('하위 2명', '2 poorest'), L('팀 수입 2.5·1.5% + 역전 영혼 70%', 'team income 2.5/1.5% + 70% comeback')),
+      rule(L('단지 운반', 'Urn runner'), L('이동 +2 · 대시 +10% · 둔화 저항 100%', 'move +2 · dash +10% · slow resist 100%'))
+    ].join('')}</div></section>`;
   }
   // The farming priority and a game tip, bottom centre left (Figma Frame 23 on every in-game screen,
   // the late Tab board included).
@@ -1737,7 +1818,7 @@
                 if (!n) return '';
                 const text = L(
                   `레벨업까지 ${n.need.toLocaleString('en-US')}${t ? ` (${t}트루퍼)` : ''}`,
-                  `${n.need.toLocaleString('en-US')} to level up${t ? ` (${t} troopers)` : ''}`
+                  `${n.need.toLocaleString('en-US')} to level up${t ? ` (${I18N.count(t, '트루퍼', 'trooper')})` : ''}`
                 );
                 // The ultimate in small yellow type under the amount, on every row it applies to.
                 return n.ult
@@ -1746,8 +1827,9 @@
               })
               .join('')
           : '',
-      farming = farmingBox(s);
-    return `<div class="figma-game ${early ? 'laning' : 'post'}"><aside class="fg-summary" data-figma="${early ? '42:159' : '64:172'}">${camps}${ults ? `<div class="fg-ults" data-pv="ults">${ults}</div>` : ''}${shown(s, 'pregame') ? `<div class="fg-teams" data-pv="pregame">${compactTeams(s)}</div>` : ''}</aside><section class="fg-spawn-panel" data-figma="41:4">${spawnBands(s)}</section>${farming}</div>`;
+      farming = farmingBox(s),
+      soulsTag = soulsBox(s);
+    return `<div class="figma-game ${early ? 'laning' : 'post'}"><aside class="fg-summary" data-figma="${early ? '42:159' : '64:172'}">${camps}${ults ? `<div class="fg-ults" data-pv="ults">${ults}</div>` : ''}${shown(s, 'pregame') ? `<div class="fg-teams" data-pv="pregame">${compactTeams(s)}</div>` : ''}</aside><div class="fg-spawn-stack">${shown(s, 'spawns') ? `<section class="fg-spawn-panel" data-figma="41:4">${spawnBands(s)}</section>` : ''}${soulsTag ? `<section class="fg-souls-box">${soulsTag}</section>` : ''}</div>${farming}</div>`;
   }
   function brief(s) {
     const rows = [],

@@ -60,7 +60,8 @@ window.jungleUI = (() => {
   };
   // Display language (ui/i18n.js); Korean when it is not loaded.
   const L = (ko, en) => (window.I18N ? window.I18N.L(ko, en) : ko),
-    english = () => window.I18N?.lang === 'en';
+    english = () => !!window.I18N?.foreign,
+    tr = t => (window.I18N ? window.I18N.tr(t) : t);
   const WORDS_EN = {
     chinatown: 'Chinatown',
     dock: 'Dock',
@@ -120,16 +121,16 @@ window.jungleUI = (() => {
   function idName(id) {
     const en = english(),
       bare = id.replace(/_camp$|_neutrals$/g, '');
-    if (en && ID_EN[bare]) return ID_EN[bare];
+    if (en && ID_EN[bare]) return tr(ID_EN[bare]);
     return id
       .replace(/_camp$|_neutrals$/g, '')
       .split('_')
       .map(w =>
         en
-          ? WORDS_EN[w] || (/^vault/.test(w) ? ('Vault ' + w.replace('vault', '')).trim() : w)
+          ? tr(WORDS_EN[w]) || (/^vault/.test(w) ? (tr('Vault') + ' ' + w.replace('vault', '')).trim() : w)
           : words[w] || (/^vault/.test(w) ? '금고 ' + w.replace('vault', '') : w)
       )
-      .join(' ');
+      .join(en && window.I18N?.lang === 'zh' ? '' : ' ');
   }
   function name(c) {
     return idName(c.id);
@@ -240,12 +241,12 @@ window.jungleUI = (() => {
     const o = objectives(),
       n = b.vaults.length,
       count = [
-        L(`영혼 슬롯머신 ${n}개`, `${n} Sinner's Sacrifice${n === 1 ? '' : 's'}`),
-        b.bells ? L(`종 ${b.bells}개`, `${b.bells} bell${b.bells === 1 ? '' : 's'}`) : ''
+        (I18N.foreign ? I18N.count(n, '', "Sinner's Sacrifice") : `영혼 슬롯머신 ${n}개`),
+        b.bells ? (I18N.foreign ? I18N.count(b.bells, '', 'bell') : `종 ${b.bells}개`) : ''
       ]
         .filter(Boolean)
         .join(' · '),
-      note = english() ? NOTE_EN[b.note] || '' : b.note,
+      note = english() ? tr(NOTE_EN[b.note]) || '' : b.note,
       hp = num(o.health.vault || 500),
       souls = o.vaultSouls || 155;
     return `<img src="${esc(b.image)}" alt=""><b>${esc(english() ? idName(b.id) : b.name)}</b><em>${esc(count)}</em>${

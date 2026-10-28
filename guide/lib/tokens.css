@@ -117,3 +117,15 @@
   --c-ally: var(--ally);
   --c-ok: var(--good);
 }
+
+/* Chinese (html lang zh-CN, i18n.js): a Simplified Chinese face first, as the Korean faces lack many
+   hanzi. More specific than the windows' own --font (body.ov, hud-label body, minimap :root). */
+:root:lang(zh-CN),
+:lang(zh-CN) body,
+:lang(zh-CN) body.ov {
+  --font: 'Microsoft YaHei UI', 'Microsoft YaHei', 'Segoe UI', sans-serif;
+}
+/* keep-all keeps Korean words whole; Chinese has no spaces, so it would never wrap. */
+html:lang(zh-CN) * {
+  word-break: normal !important;
+}

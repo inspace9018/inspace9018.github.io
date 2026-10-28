@@ -24,9 +24,41 @@
     FIGHT = lookup(FIGHT_KO, FIGHT_EN),
     ROLE = lookup(ROLE_KO, ROLE_EN);
   // Hero guide prose: the Korean field, or in English its *En field (hidden when there is none).
-  const tx = (o, k) => (I18N.lang === 'en' ? o?.[k + 'En'] : o?.[k]);
+  const tx = (o, k) => (I18N.foreign ? I18N.tr(o?.[k + 'En']) : o?.[k]);
   const heroName = g => I18N.name(g);
   const itemName = id => I18N.item(id, window.ITEM_CATALOG, window.ITEM_KO);
+  // Item build names come from the build export in Korean ("능력 · 신비의 숨결": a style, then its key
+  // items joined by ·). In other languages the style is translated and each item gets its own name.
+  const BUILD_STYLE_EN = {
+    능력: 'Spirit',
+    '총·능력': 'Gun + Spirit',
+    화상: 'Burn',
+    궁극기: 'Ultimate',
+    정석: 'Standard',
+    '능력 섞기': 'Mixed abilities',
+    생존: 'Survival',
+    무기: 'Weapon',
+    혼합: 'Hybrid',
+    '한타 유지': 'Teamfight sustain',
+    '저체력 교전': 'Low-HP fights',
+    사격: 'Shooting',
+    견제: 'Poke',
+    '근접 결투': 'Melee duel',
+    연사: 'Rapid fire',
+    추천: 'Recommended',
+    화염: 'Fire'
+  };
+  let itemByKo = null;
+  const buildName = b => {
+    if (I18N.lang === 'ko') return b.name;
+    itemByKo ||= new Map((window.ITEM_KO || []).map(x => [x.ko, x.id]));
+    return b.name
+      .split(' · ')
+      .map((p, i) => (i ? p.split('·').map(q => (itemByKo.has(q) ? itemName(itemByKo.get(q)) : q)).join(' + ') : I18N.tr(BUILD_STYLE_EN[p] || p)))
+      .join(' · ');
+  };
+  // The build export's sentences (line, points, reasons) are Korean only: left out in other languages.
+  const koOnly = s => (/[가-힣]/.test(s || '') ? I18N.only(s) : s);
   const PHASE_EN = { early: 'Early', mid: 'Mid', late: 'Late' };
   const phaseLabel = p => L(p.label, PHASE_EN[p.key] || p.label);
   const phaseWhen = p => L(p.when, String(p.when || '').replace(/분/g, ' min'));
@@ -273,9 +305,11 @@
     win: (a, b) => (type(b.id)?.winRate?.overall || 0) - (type(a.id)?.winRate?.overall || 0),
     pick: (a, b) => (pickRate(b.id) || 0) - (pickRate(a.id) || 0),
     name: (a, b) =>
-      I18N.lang === 'en'
-        ? a.en.replace(/^The /, '').localeCompare(b.en.replace(/^The /, ''), 'en')
-        : a.ko.localeCompare(b.ko, 'ko')
+      I18N.lang === 'ko'
+        ? a.ko.localeCompare(b.ko, 'ko')
+        : I18N.lang === 'en'
+          ? a.en.replace(/^The /, '').localeCompare(b.en.replace(/^The /, ''), 'en')
+          : I18N.name(a).localeCompare(I18N.name(b), I18N.lang)
   };
   function heroTable(selected, query, sort) {
     const q = query.trim().toLowerCase(),
@@ -348,18 +382,18 @@
     const ko = itemName(x.id),
       info = window.HERO_ITEM_BUILDS.items[x.id] || {},
       active = (info.tt || []).find(t => t.k === 'active'),
-      use = active && window.ITEM_USE?.[x.id],
+      use = active && koOnly(window.ITEM_USE?.[x.id]),
       adj = x.s ? `<em class="${x.s.rel >= 1 ? 'up' : x.s.rel <= -1 ? 'down' : ''}">${signed(x.s.rel)}%p</em>` : '<em>—</em>';
     const effects = (info.tt || [])
-      .filter(t => t.k !== 'base' && t.text)
+      .filter(t => t.k !== 'base' && koOnly(t.text))
       .map(t => `<p><b>${t.k === 'active' ? `${L('사용', 'Active')}${t.cd ? ` · ${esc(t.cd)}` : ''}` : L('지속', 'Passive')}</b>${esc(t.text)}</p>`)
       .join('');
-    const tip = `<span class="ib-tip" role="tooltip"><b>${esc(ko)}</b><small>${esc(window.ITEM_BRIEF?.[x.id] || info.head || '')} · ${num(it.cost)} ${L('영혼', 'Souls')}</small>${effects}${
+    const tip = `<span class="ib-tip" role="tooltip"><b>${esc(ko)}</b><small>${[esc(koOnly(window.ITEM_BRIEF?.[x.id] || info.head || '')), `${num(it.cost)} ${L('영혼', 'Souls')}`].filter(Boolean).join(' · ')}</small>${effects}${
       use ? `<p class="use"><b>${L('사용법', 'How to use')}</b>${esc(use)}</p>` : ''
     }</span>`;
     return `<button type="button" class="ib-item ${SLOT_CLS[it.slot] || ''}${sel === key ? ' on' : ''}" data-ib-item="${esc(key)}"><span class="ib-ico"><img src="${esc(it.file)}" alt="">${
       n ? `<i>${n}</i>` : ''
-    }${active ? `<u>${L('사용', 'Active')}</u>` : ''}</span><small>${esc(ko)}</small>${x.materialFor ? `<span class="ib-material-for">${L('재료', 'For')} → ${esc(itemName(x.materialFor)||L('상위 아이템', 'upgrade'))}</span>` : ''}${kind === 'skip' ? '' : adj}${x.why[0] ? `<span class="ib-role">${esc(x.why[0])}</span>` : ''}${tip}</button>`;
+    }${active ? `<u>${L('사용', 'Active')}</u>` : ''}</span><small>${esc(ko)}</small>${x.materialFor ? `<span class="ib-material-for">${L('재료', 'For')} → ${esc(itemName(x.materialFor)||L('상위 아이템', 'upgrade'))}</span>` : ''}${kind === 'skip' ? '' : adj}${koOnly(x.why[0]) ? `<span class="ib-role">${esc(x.why[0])}</span>` : ''}${tip}</button>`;
   }
   function ibDetail(x, kind, b, heroKo) {
     const it = items().get(x.id),
@@ -369,12 +403,13 @@
     const tt = (info.tt || [])
       .map(t => {
         const stats = t.stats
+          .filter(([l]) => koOnly(l))
           .map(([l, v, sc]) => `<span>${esc(l)} <b>${esc(v)}</b>${sc ? ` <i>(${esc(sc)})</i>` : ''}</span>`)
           .join('');
         return t.k === 'base'
           ? `<div class="ib-tt base"><h5>${L('기본 능력치', 'Base stats')}</h5><p class="ib-stats">${stats}</p></div>`
           : `<div class="ib-tt ${t.k}"><h5>${t.k === 'active' ? L('사용 효과', 'Active') : L('지속 효과', 'Passive')}${t.cd ? `<span>${L('쿨다운', 'Cooldown')} ${esc(t.cd)}</span>` : ''}</h5>${
-              t.text ? `<p>${esc(t.text)}</p>` : ''
+              koOnly(t.text) ? `<p>${esc(t.text)}</p>` : ''
             }${stats ? `<p class="ib-stats">${stats}</p>` : ''}</div>`;
       })
       .join('');
@@ -393,13 +428,11 @@
           .map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`)
           .join('')
       : '';
-    return `<div class="ib-detail"><div class="ib-detail-head"><span class="ib-ico big ${SLOT_CLS[it?.slot] || ''}"><img src="${esc(it?.file || '')}" alt=""></span><div><h4>${esc(ko)} <span class="ib-kind ${kind}">${IB_KIND[kind]}</span></h4><p>${esc(
-      info.head || ''
-    )} · <span class="soul">${num(it?.cost)} ${L('영혼', 'Souls')}</span></p></div></div>${x.if ? `<p class="ib-if"><b>${L('언제', 'When')}</b>${esc(x.if)}</p>` : ''}${
-      window.ITEM_USE?.[x.id] && (info.tt || []).some(t => t.k === 'active') ? `<p class="ib-if use"><b>${L('사용법', 'How to use')}</b>${esc(window.ITEM_USE[x.id])}</p>` : ''
+    return `<div class="ib-detail"><div class="ib-detail-head"><span class="ib-ico big ${SLOT_CLS[it?.slot] || ''}"><img src="${esc(it?.file || '')}" alt=""></span><div><h4>${esc(ko)} <span class="ib-kind ${kind}">${IB_KIND[kind]}</span></h4><p>${koOnly(info.head) ? `${esc(info.head)} · ` : ''}<span class="soul">${num(it?.cost)} ${L('영혼', 'Souls')}</span></p></div></div>${koOnly(x.if) ? `<p class="ib-if"><b>${L('언제', 'When')}</b>${esc(x.if)}</p>` : ''}${
+      koOnly(window.ITEM_USE?.[x.id]) && (info.tt || []).some(t => t.k === 'active') ? `<p class="ib-if use"><b>${L('사용법', 'How to use')}</b>${esc(window.ITEM_USE[x.id])}</p>` : ''
     }${x.purchaseOrder?`<p class="ib-if ib-purchase-position"><b>${L('구매 순서','Buy order')}</b>${L(`${{early:'초반',mid:'중반',late:'후반'}[x.phase]} ${x.phaseOrder}번째 · 전체 ${x.purchaseOrder}번`,`${PHASE_EN[x.phase]} #${x.phaseOrder} · #${x.purchaseOrder} overall`)}</p>`:''}${kind==='skip'?'':ibRecipes([x],b)}<div class="ib-detail-body"><div class="ib-tts">${tt}</div><div class="ib-why">${
-      x.why.length ? `<h5>${kind === 'skip' ? L('빼는 이유', 'Why skip it') : L('이유', 'Why')}</h5><ul>${x.why.map(w => `<li>${esc(w)}</li>`).join('')}</ul>` : ''
-    }${rows ? `<h5>${L(`${esc(b.name)} 빌드 통계`, `${esc(b.name)} build stats`)}</h5><dl class="ib-nums">${rows}</dl>` : ''}</div></div></div>`;
+      x.why.filter(koOnly).length ? `<h5>${kind === 'skip' ? L('빼는 이유', 'Why skip it') : L('이유', 'Why')}</h5><ul>${x.why.filter(koOnly).map(w => `<li>${esc(w)}</li>`).join('')}</ul>` : ''
+    }${rows ? `<h5>${L(`${esc(b.name)} 빌드 통계`, `${esc(buildName(b))} build stats`)}</h5><dl class="ib-nums">${rows}</dl>` : ''}</div></div></div>`;
   }
   // Ability point order for the build: one column per step (4 unlocks + 3 upgrades each), the level is the
   // earliest one that step is possible at, and the bottom row is how many players at that point chose it.
@@ -445,107 +478,6 @@
         : ''
     }</p>${splits.length ? `<p class="ib-order-note">${L('갈리는 곳', 'Where it splits')}: ${splits.join(' / ')}</p>` : ''}</div>`;
   }
-  // The build laid out like the game's 빌드 편집 screen, top to bottom, so it can be typed in by hand: name,
-  // description and tags, then one card per 카테고리 (name, 설명, 선택 사항, items in order with 보강 대상 and a
-  // short 메모), then the 능력 포인트 순서 clicks. Copy buttons put a field's text on the clipboard.
-  function ibSheet(id, b, heroKo) {
-    const abil = window.IntelUI.guide(id)?.abilities || [],
-      aname = slot => `${slot}. ${I18N.name(abil[slot - 1])}`,
-      D = window.HERO_ITEM_BUILDS;
-    const copy = text => `<button type="button" class="ib-copy" data-copy="${esc(text)}">${L('복사', 'Copy')}</button>`;
-    const field = (label, text, multi) =>
-      `<div class="ib-sh-field"><div class="ib-sh-label"><b>${label}</b>${copy(text)}</div><${multi ? 'pre' : 'p'} class="ib-sh-val">${esc(text)}</${multi ? 'pre' : 'p'}></div>`;
-    const name = L(`${b.rank}위 · ${heroKo} ${b.name}`, `#${b.rank} · ${heroKo} ${b.name}`);
-    const desc = [
-      b.line,
-      L(`순위: ${D.heroes[id].builds.length}개 빌드 중 ${b.rank}위 (판수·승률 기준)`, `Rank: ${b.rank} of ${D.heroes[id].builds.length} builds (games and win rate)`),
-      ...b.points.map(([k, v]) => `${k}: ${v}`),
-      b.phases.map(p=>L(`${p.label} ${p.orderStart}~${p.orderEnd}번`,`${phaseLabel(p)} #${p.orderStart}~${p.orderEnd}`)).join(' → '),
-      b.skip.length ? `${L('비추천', 'Not recommended')}: ${b.skip.map(x => L(itemKo().get(x.id) || items().get(x.id)?.name, itemName(x.id))).join(', ')}` : '',
-      L(
-        `통계: 최근 ${D.days}일 ${num(b.n)}판 · 승률 ${b.win.toFixed(1)}% · 같은 길이 경기 대비 ${signed(b.adj)}%p (deadlock-api, ${D.updated})`,
-        `Stats: last ${D.days} days, ${num(b.n)} games · win rate ${b.win.toFixed(1)}% · vs games of the same length ${signed(b.adj)}%p (deadlock-api, ${D.updated})`
-      )
-    ]
-      .filter(Boolean)
-      .join('\n');
-    const cats = [];
-    const finish = b.finish;
-    const memo = x => {
-      if(x.materialFor)return L(`조합 재료 · ${itemName(x.materialFor)} 구매 전 준비 · 이미 보유했다면 생략`,`Component · get it before ${itemName(x.materialFor)} · skip if you already have it`);
-      const sale = finish?.sell.find(y => y.id === x.id);
-      if (sale) return sale.why[0] + (sale.before ? L(` · ${itemName(sale.before)} 구매 전`, ` · before buying ${itemName(sale.before)}`) : '');
-      const parts=D.items[x.id]?.parts||[];
-      return parts.length ? L(`${parts.map(itemName).join(' + ')}에서 업그레이드 · 재료와 중복 보유하지 않음`,`Upgrades from ${parts.map(itemName).join(' + ')} · don't hold it with its components`) : '';
-    };
-    b.phases.forEach(p => {
-      if (p.core.length)
-        cats.push({
-          name: L(`${p.label} 핵심`, `${phaseLabel(p)} core`),
-          desc: L(
-            `${p.when} · 전체 ${p.orderStart}~${p.orderEnd}번 순서대로 · 재료 포함${p.note ? ' · '+p.note : ''} · 보유한 재료는 생략, 슬롯이 부족하면 상위 아이템을 바로 구매`,
-            `${phaseWhen(p)} · #${p.orderStart}~${p.orderEnd} overall, in order · components included${p.note ? ' · '+p.note : ''} · skip components you have; if short on slots, buy the upgrade directly`
-          ),
-          items: (p.purchases||p.core).map(x=>[x,memo(x)])
-        });
-      if (p.situ.length) cats.push({ name: L(`${p.label} 상황별`, `${phaseLabel(p)} situational`), desc: L('필요할 때만', 'Only when needed'), opt: true, items: p.situ.map(x => [x, x.if || '']) });
-    });
-    if (finish)
-      cats.push({
-        name: L('완성 12칸 · 참고', 'Final 12 slots · reference'),
-        desc: L(
-          '추가 구매 목록 아님. 후반 핵심 구매·임시 아이템 판매 후 남길 12개. 기본 9칸 + 워커 해금 3칸 기준.',
-          'Not more items to buy. The 12 to keep after the late core buys and selling temporary items. 9 base slots + 3 unlocked by Walkers.'
-        ),
-        opt: true,
-        items: finish.items.map(x => [x, L('최종 유지 · 이미 보유했다면 추가 구매하지 않음', "Keep to the end · don't buy it again if you have it")])
-      });
-    if (b.counters.length) cats.push({ name: L('상황 대비', 'Counters'), desc: L('상대 조합을 보고 필요할 때만', 'Only when the enemy lineup calls for it'), opt: true, items: b.counters.flatMap(g => g.items.map(x => [x, g.if])) });
-    const imbue = x => {
-      const m = x.imb;
-      if (!m) return '';
-      const [a, c] = m.pick;
-      return `<span class="ib-sh-imb">${L('보강', 'Imbue')} <img src="assets/abilities/${id}-${a.slot}.png" alt=""><b>${esc(aname(a.slot))}</b> <small>${L(
-        `인기 빌드 ${m.of}개 중 ${a.n}개`,
-        `${a.n} of ${m.of} popular builds`
-      )}${c ? ` · ${esc(aname(c.slot))} ${c.n}${L('개', '')}` : ''}${m.scope === 'hero' ? L(' · 이 영웅 전체 빌드 기준', " · across all this hero's builds") : ''}</small></span>`;
-    };
-    const catCards = cats
-      .map(
-        (c, i) =>
-          `<div class="ib-sh-cat"><div class="ib-sh-cat-head"><b>${i + 1}. ${esc(c.name)}</b>${copy(c.name)}<span class="ib-sh-opt ${c.opt ? 'on' : ''}">${L(`선택 사항 ${
-            c.opt ? '체크' : '해제'
-          }`, `Optional: ${c.opt ? 'on' : 'off'}`)}</span></div><p class="ib-sh-cat-desc">${L('설명', 'Description')}: ${esc(c.desc)} ${copy(c.desc)}</p><ol>${c.items
-            .map(([x, memo]) => {
-              const it = items().get(x.id);
-              if (!it) return '';
-              return `<li${x.purchaseOrder?` value="${x.purchaseOrder}"`:''}><img src="${esc(it.file)}" alt="" class="${SLOT_CLS[it.slot] || ''}"><span class="ib-sh-name">${esc(itemName(x.id))}</span>${imbue(x)}${
-                memo ? `<span class="ib-sh-memo">${L('메모', 'Item Notes')}: ${esc(memo)} ${copy(memo)}</span>` : ''
-              }</li>`;
-            })
-            .join('')}</ol></div>`
-      )
-      .join('');
-    const steps = b.order || [];
-    const clicks = steps
-      .map((s, i) => `<li title="${L(`레벨 ${s.level} · ${s.tier ? s.tier + '단계 강화' : '해금'}`, `Level ${s.level} · ${s.tier ? 'upgrade ' + s.tier : 'unlock'}`)}"><img src="assets/abilities/${id}-${s.slot}.png" alt=""><b>${s.slot}</b><small>${i + 1}</small></li>`)
-      .join('');
-    return `<div class="ib-sheet"><p class="ib-sh-intro">${L(
-      '게임의 빌드 편집 화면에 위에서부터 그대로 옮기면 됩니다. 복사를 누르면 그 칸에 붙여 넣을 글이 복사됩니다. 아이템은 상점에서 카테고리로 끌어다 놓고, 보강 아이템은 표시된 능력을 고릅니다.',
-      "Copy this into the game's Edit Build screen from top to bottom. Copy puts the text for that field on the clipboard. Drag items from the shop into each category, and for imbue items pick the ability shown."
-    )}</p><div class="ib-sh-cols"><div class="ib-sh-left">${field(
-      L('빌드 이름', 'Build Name'),
-      name
-    )}${field(L('빌드 설명', 'Build Description'), desc, true)}<div class="ib-sh-field"><div class="ib-sh-label"><b>${L('태그 지정', 'Assign Tags')}</b></div><p class="ib-sh-tags">${(b.tags || [])
-      .map(t => `<span>${esc(t)}</span>`)
-      .join('')}</p></div><div class="ib-sh-field"><div class="ib-sh-label"><b>${L('능력 포인트 순서', 'Ability Point Order')}</b></div><p class="ib-sh-hint">${L(
-      `편집을 누르고 아래 번호 순서대로 능력을 클릭 (${steps.length}번)`,
-      `Press Edit, then click the abilities in the numbered order below (${steps.length} clicks)`
-    )}</p><ol class="ib-sh-clicks">${clicks}</ol></div></div><div class="ib-sh-right"><p class="ib-sh-hint">${L(
-      `카테고리 추가 → 이름·설명 입력 → 아이템 넣기를 ${cats.length}번 반복`,
-      `Add Category → enter the name and description → add the items; repeat ${cats.length} times`
-    )}</p>${catCards}</div></div></div>`;
-  }
   // How export_dash.py ranks a hero's builds (rank_builds): the lead over games of the same length, counted by
   // n / (n + n0) so a build with few games needs a bigger lead.
   function rankRule() {
@@ -559,13 +491,19 @@
     const f = b.finish;
     if (!f) return '';
     const name = itemName;
-    const sales = f.sell.map(x=>`<li><b>${esc(name(x.id))}</b><span>${esc(x.why[0])}${x.before ? L(' · '+esc(name(x.before))+' 구매 전', ' · before buying '+esc(name(x.before))) : ''}</span></li>`).join('');
+    const sales = f.sell.map(x=>`<li><b>${esc(name(x.id))}</b><span>${esc(koOnly(x.why[0]))}${x.before ? L(' · '+esc(name(x.before))+' 구매 전', ' · before buying '+esc(name(x.before))) : ''}</span></li>`).join('');
     const upgrades = f.upgrades.map(x=>`<li>${x.from.map(id=>esc(name(id))).join(' + ')} <span aria-label="${L('업그레이드','upgrades to')}">→</span> <b>${esc(name(x.to))}</b></li>`).join('');
     return `<section class="ib-finish" aria-label="${L('최종 아이템 완성안','Final item build')}"><div class="ib-finish-head"><div><h4>${L('후반 핵심까지 구매한 완성안','Final build, late core bought')}</h4><p>${L(`기본 ${f.base}칸 + 추가 ${f.extra}칸 해금 기준 · 아이콘 숫자는 전체 구매 번호`,`${f.base} base slots + ${f.extra} unlocked slots · icon numbers are the overall buy order`)}</p></div><b class="ib-finish-count">${L(`${f.items.length} / ${f.capacity}칸`,`${f.items.length} / ${f.capacity} slots`)}</b></div><div class="ib-finish-grid">${f.items.map((x,i)=>`<div class="ib-finish-slot${i>=f.base?' extra':''}">${ibTile(x,'finish',`finish:0:${i}`,sel,x.purchaseOrder||i+1)}${i>=f.base?`<small class="ib-extra-label">${L('추가 슬롯','Extra slot')}</small>`:''}</div>`).join('')}</div><p class="ib-finish-note">${L('워커를 파괴해 추가 슬롯을 열어야 12개를 모두 보유할 수 있습니다. 상황별·상황 대비 아이템은 이 구성에서 교체하며, 13번째로 더 사지 않습니다.','Destroy Walkers to unlock the extra slots and hold all 12. Situational and counter items replace items in this set; they are not a 13th buy.')}</p>${sales?`<div class="ib-finish-sales"><h5>${L('후반에 정리할 임시 아이템','Temporary items to sell late')}</h5><ul>${sales}</ul></div>`:''}${upgrades?`<details class="ib-finish-upgrades"><summary>${L(`재료가 합쳐지는 업그레이드 ${f.upgrades.length}개`,`${f.upgrades.length} upgrades that merge components`)}</summary><ul>${upgrades}</ul></details>`:''}</section>`;
   }
   function itemBuilds(id, view = {}) {
     const H = window.HERO_ITEM_BUILDS?.heroes?.[id];
     if (!H) return '';
+    // Folded until clicked: one line with the builds' names, so the hero page opens on its guide.
+    if (!view.ib)
+      return `<section class="op-box op-ib op-ib-folded"><button type="button" class="ib-open" data-ib-open="on"><span><b>${L('아이템 빌드', 'Item builds')}</b><small>${L(
+        `빌드 ${H.builds.length}개 · 최근 ${window.HERO_ITEM_BUILDS.days}일 ${num(H.n)}판`,
+        `${H.builds.length} builds · ${num(H.n)} games in the last ${window.HERO_ITEM_BUILDS.days} days`
+      )}</small></span><span class="ib-open-names">${H.builds.map(x => `<em>${esc(buildName(x))}</em>`).join('')}</span><span class="ib-open-go">${L('열기', 'Open')}</span></button></section>`;
     const b = H.builds.find(x => x.id === view.build) || H.builds[0],
       heroKo = I18N.name(window.IntelUI.guide(id));
     // Every tile has a key (kind:phase:index) so the same item can sit in two places.
@@ -587,7 +525,7 @@
         ? `<div class="ib-tabs" role="tablist" aria-label="${L('빌드 선택', 'Choose a build')}">${H.builds
             .map(
               x =>
-                `<button type="button" role="tab" aria-selected="${x === b}" class="${x === b ? 'on' : ''}" data-hero-build="${esc(x.id)}"><b>${L(`${x.rank}위`, `#${x.rank}`)} ${esc(x.name)}</b><small>${L('승률', 'Win rate')} ${x.win.toFixed(1)}% · ${games(x.n)}</small></button>`
+                `<button type="button" role="tab" aria-selected="${x === b}" class="${x === b ? 'on' : ''}" data-hero-build="${esc(x.id)}"><b>${L(`${x.rank}위`, `#${x.rank}`)} ${esc(buildName(x))}</b><small>${L('승률', 'Win rate')} ${x.win.toFixed(1)}% · ${games(x.n)}</small></button>`
             )
             .join('')}</div>`
         : '';
@@ -598,13 +536,13 @@
             p.situ.length
               ? `<div class="ib-ph-situ"><p class="ib-label opt">${L('상황별', 'Situational')}</p><div class="ib-row">${p.situ.map((x, i) => ibTile(x, 'situ', `situ:${p.key}:${i}`, sel)).join('')}</div></div>`
               : ''
-          }</div>${p.note ? `<p class="ib-note">${esc(p.note)}</p>` : ''}</div>`
+          }</div>${koOnly(p.note) ? `<p class="ib-note">${esc(p.note)}</p>` : ''}</div>`
       )
       .join('');
     const counters = b.counters
       .map(
         (g, j) =>
-          `<div class="ib-threat"><span>${esc(g.if)}</span><div class="ib-row">${g.items.map((x, i) => ibTile(x, 'counter', `counter:${j}:${i}`, sel)).join('')}</div></div>`
+          `<div class="ib-threat">${koOnly(g.if) ? `<span>${esc(g.if)}</span>` : ''}<div class="ib-row">${g.items.map((x, i) => ibTile(x, 'counter', `counter:${j}:${i}`, sel)).join('')}</div></div>`
       )
       .join('');
     const skip = b.skip.map((x, i) => ibTile(x, 'skip', `skip:0:${i}`, sel)).join('');
@@ -623,16 +561,15 @@
     return `<section class="op-box op-ib"><div class="op-box-head"><h3>${L(
       `아이템 빌드 <small>최근 ${window.HERO_ITEM_BUILDS.days}일 ${esc(heroKo)} ${num(H.n)}판 · 평균 승률 ${H.win.toFixed(1)}%</small>`,
       `Item builds <small>last ${window.HERO_ITEM_BUILDS.days} days, ${num(H.n)} ${esc(heroKo)} games · average win rate ${H.win.toFixed(1)}%</small>`
-    )}</h3><button type="button" class="ib-sheet-btn${view.sheet ? ' on' : ''}" data-ib-sheet="${
-      view.sheet ? 'off' : 'on'
-    }">${view.sheet ? L('통계 보기', 'Show stats') : L('게임에 올리기', 'Add to game')}</button></div>${tabs}<div class="ib-concept"><p>${esc(b.line)}</p><dl>${b.points
+    )}</h3><button type="button" class="ib-fold" data-ib-open="off">${L('접기', 'Fold')}</button></div>${tabs}<div class="ib-concept">${koOnly(b.line) ? `<p>${esc(b.line)}</p>` : ''}<dl>${b.points
+      .filter(([k, v]) => koOnly(k) && koOnly(v))
       .map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`)
       .join('')}</dl><p class="ib-build-nums"><span title="${esc(rankRule())}">${L(`순위 ${b.rank} / ${H.builds.length}`, `Rank ${b.rank} / ${H.builds.length}`)}</span><span>${L(
       `이 빌드 <b>${num(b.n)}판</b> (${esc(heroKo)} 경기의 ${b.share.toFixed(1)}%)`,
       `This build <b>${num(b.n)} games</b> (${b.share.toFixed(1)}% of ${esc(heroKo)} games)`
     )}</span><span>${L('승률', 'Win rate')} <b>${b.win.toFixed(
       1
-    )}%</b></span><span>${L('같은 길이 경기 대비', 'vs games of the same length')} <b class="${b.adj >= 1 ? 'up' : b.adj <= -1 ? 'down' : ''}">${signed(b.adj)}%p</b></span></p></div>${view.sheet ? ibSheet(id, b, heroKo) : statsView()}</section>`;
+    )}%</b></span><span>${L('같은 길이 경기 대비', 'vs games of the same length')} <b class="${b.adj >= 1 ? 'up' : b.adj <= -1 ? 'down' : ''}">${signed(b.adj)}%p</b></span></p></div>${statsView()}</section>`;
   }
   function heroPage(id, view) {
     const g = window.IntelUI.guide(id),
@@ -665,7 +602,7 @@
         )
       : '';
     // English: hero guide prose from its *En fields; a block with no English is left out.
-    const en = I18N.lang === 'en',
+    const en = I18N.foreign,
       none = v => en && !(Array.isArray(v) ? v.length : v),
       li = xs => (xs || []).map(x => `<li>${esc(x)}</li>`).join(''),
       style = tx(g, 'style'),

@@ -941,16 +941,26 @@ ${list
     if (!h) return '';
     const items = new Map((window.ITEM_KO || []).map(i => [i.id, i])),
       cat = new Map((window.ITEM_CATALOG || []).map(i => [i.id, i]));
-    const en = window.I18N?.lang === 'en';
-    const name = it => (en ? cat.get(it)?.name || it : items.get(it)?.ko || cat.get(it)?.name || it),
+    const en = !!window.I18N?.foreign;
+    const name = it => (en ? I18N.item(it, window.ITEM_CATALOG) || cat.get(it)?.name || it : items.get(it)?.ko || cat.get(it)?.name || it),
       icon = it => (cat.get(it)?.file ? `<img src="${cat.get(it).file}" alt="">` : '');
     const phase = (order, from, to) => order.filter(o => o.t >= from && o.t < to);
-    const SLOT = en
-      ? { weapon: ['Weapon', 'w'], spirit: ['Spirit', 's'], vitality: ['Vitality', 'v'] }
-      : { weapon: ['무기', 'w'], spirit: ['능력', 's'], vitality: ['생존', 'v'] };
-    // Style names come from tools/build-archetypes.cjs in Korean ("무기·마법 혼합", "능력 중심").
+    const SLOT = { weapon: [L('무기', 'Weapon'), 'w'], spirit: [L('능력', 'Spirit'), 's'], vitality: [L('생존', 'Vitality'), 'v'] };
+    // Style names come from tools/build-archetypes.cjs in Korean ("무기·마법 혼합", "능력 중심"); a new one
+    // missing here is spelled out from its words.
+    const STYLE_EN = {
+      '무기·마법 혼합': 'Weapon · Spirit mix',
+      '능력·무기 혼합': 'Spirit · Weapon mix',
+      '무기·생존 혼합': 'Weapon · Vitality mix',
+      '생존·무기 혼합': 'Vitality · Weapon mix',
+      '능력·생존 혼합': 'Spirit · Vitality mix',
+      '능력 중심': 'Spirit-focused',
+      '무기 중심': 'Weapon-focused',
+      '생존 중심': 'Vitality-focused'
+    };
     const WORD = { 무기: 'Weapon', 마법: 'Spirit', 능력: 'Spirit', 생존: 'Vitality' };
-    const style = s => (en ? s.replace(/무기|마법|능력|생존/g, w => WORD[w]).replace(/·(\S+) 혼합$/, ' · $1 mix').replace(/ 중심$/, '-focused') : s);
+    const style = s =>
+      en ? I18N.tr(STYLE_EN[s] || s.replace(/무기|마법|능력|생존/g, w => WORD[w]).replace(/·(\S+) 혼합$/, ' · $1 mix').replace(/ 중심$/, '-focused')) : s;
     // Where each style leans compared with the hero's other styles (e.g. Seven: gun vs ultimate builds).
     const mean = s => h.groups.reduce((a, x) => a + (x.split[s] || 0), 0) / h.groups.length;
     const lean = grp => {

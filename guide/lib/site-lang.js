@@ -1,7 +1,8 @@
 'use strict';
 // Written by lane-electron/tools/build-site-guide.cjs from tools/site-text.cjs. Edit there, not here.
-// The site's language: ?lang=, then the one picked before in this browser, then the browser's own
-// languages; English when none of them is Korean, Chinese or Russian. The pages are written in Korean;
+// The site's language: ?lang=, then the one picked before in this browser, then the visitor's country
+// from the browser's time zone (Korea, China / Hong Kong / Macau / Taiwan, Russia / Belarus; nothing is
+// sent anywhere), then the browser's own languages; English otherwise. The pages are written in Korean;
 // for Chinese and Russian this loads the app's dictionary (i18n-zh.js, i18n-ru.js) before the page code
 // runs, and SITE_TEXT() swaps the menu, footer and front page text for the table below.
 (function () {
@@ -14,6 +15,18 @@
     if (LANGS.includes(asked)) localStorage.setItem('lookout-lang', asked);
     saved = localStorage.getItem('lookout-lang');
   } catch {}
+  const ZONES = {
+    ko: ['Asia/Seoul'],
+    zh: ['Asia/Shanghai', 'Asia/Chongqing', 'Asia/Chungking', 'Asia/Harbin', 'Asia/Urumqi', 'Asia/Kashgar', 'PRC', 'Asia/Hong_Kong', 'Asia/Macau', 'Asia/Taipei'],
+    ru: ['Europe/Moscow', 'Europe/Kaliningrad', 'Europe/Samara', 'Europe/Volgograd', 'Europe/Saratov', 'Europe/Ulyanovsk', 'Europe/Astrakhan', 'Europe/Kirov', 'Europe/Minsk', 'Asia/Yekaterinburg', 'Asia/Omsk', 'Asia/Novosibirsk', 'Asia/Barnaul', 'Asia/Tomsk', 'Asia/Novokuznetsk', 'Asia/Krasnoyarsk', 'Asia/Irkutsk', 'Asia/Chita', 'Asia/Yakutsk', 'Asia/Khandyga', 'Asia/Vladivostok', 'Asia/Ust-Nera', 'Asia/Magadan', 'Asia/Sakhalin', 'Asia/Srednekolymsk', 'Asia/Kamchatka', 'Asia/Anadyr', 'W-SU']
+  };
+  const country = () => {
+    let zone = '';
+    try {
+      zone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+    } catch {}
+    return Object.keys(ZONES).find(l => ZONES[l].includes(zone)) || null;
+  };
   const browser = () => {
     for (const l of navigator.languages || [navigator.language || '']) {
       const m = /^(ko|en|zh|ru)\b/i.exec(l);
@@ -21,7 +34,7 @@
     }
     return 'en';
   };
-  const lang = LANGS.includes(asked) ? asked : LANGS.includes(saved) ? saved : browser(),
+  const lang = LANGS.includes(asked) ? asked : LANGS.includes(saved) ? saved : country() || browser(),
     at = LANGS.indexOf(lang) - 1;
   window.SITE_LANG = lang;
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;

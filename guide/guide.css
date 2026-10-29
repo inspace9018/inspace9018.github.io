@@ -224,6 +224,15 @@ main {
   width: 300px;
   height: 250px;
 }
+/* RevIQ's 300x600 under it: no room is kept until an ad is in it. */
+.ad-tall {
+  height: 600px;
+  margin-top: 12px;
+}
+.ad-tall:not(:has(iframe)) {
+  height: 0;
+  margin: 0;
+}
 @media (min-width: 1760px) {
   body {
     padding-right: 332px;
@@ -232,6 +241,8 @@ main {
     position: fixed;
     top: 16px;
     right: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
     margin: 0;
   }
 }

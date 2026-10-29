@@ -3,9 +3,10 @@
 # advertising technology. Contact us at demand@rev.iq
 
 # Version reviq-v1.1
-# Last Updated: October 26, 2026
+# Last Updated: October 29, 2026
 
 ownerdomain=obeloworks.com
+managerdomain=rev.iq
 
 rev.iq, 54tf_WytWFk-IrpERQHJ32MV8BE, DIRECT
 google.com, pub-6729046591418183, DIRECT, f08c47fec0942fa0

@@ -340,6 +340,55 @@ main {
 .shortcut:last-child {
   border: 0;
 }
+/* 설정 → 단축키 (desktop.js hotkeyEditor): each key is a button that takes the next key pressed. */
+.hk-card .card-head {
+  margin-bottom: 0;
+}
+.hk-card .card-head button {
+  min-height: 30px;
+  padding: 4px 10px;
+  font-size: 12px;
+}
+.hk-note {
+  margin: 6px 0 4px;
+}
+.hk-row {
+  gap: 12px;
+}
+.hk-row > span {
+  display: flex;
+  flex-direction: column;
+}
+.hk-busy {
+  font-style: normal;
+  font-size: 12px;
+  color: var(--warning);
+}
+.hk-key {
+  min-width: 112px;
+  min-height: 32px;
+  padding: 4px 10px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  background: var(--n-300);
+  white-space: nowrap;
+}
+.hk-key.off {
+  color: var(--muted);
+}
+.hk-key.capturing {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+.hk-msg {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.hk-msg.error {
+  color: var(--red);
+}
 kbd {
   background: var(--n-300);
   border: 1px solid var(--n-500);
@@ -378,6 +427,161 @@ kbd {
 /* Buttons beside a long explanation keep their width instead of wrapping letter by letter. */
 .setting > .inline {
   flex: none;
+}
+/* 화면 인식 부하 (desktop.js readLoadChart), pinned above the overlay preview: a stacked bar a screen,
+   the whole track being the whole CPU (the total supply). Blue is the reading that always runs, teal
+   a read kept on by a switch (validated pair on the card surface), striped blue Lookout's windows,
+   grey the game and other programs; a read switched off is a dashed outline, the bare track is free.
+   Names and values are in the legend and the line under each bar. */
+.read-load {
+  margin-bottom: 8px;
+  --rl-base: #2f6fd0;
+  --rl-on: #2fa88c;
+}
+.rl-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+.rl-head span {
+  margin-left: auto;
+  color: var(--n-700);
+  font-size: 11px;
+}
+.rl-row {
+  display: grid;
+  grid-template-columns: 64px 1fr 48px;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  font-size: 12px;
+}
+.rl-track {
+  display: flex;
+  gap: 2px;
+  height: 12px;
+  border-radius: 4px;
+  background: var(--n-200);
+}
+.rl-seg {
+  display: block;
+  height: 100%;
+  min-width: 3px;
+  transition: width 0.2s ease;
+}
+.rl-seg:first-child {
+  border-radius: 4px 0 0 4px;
+}
+.rl-seg:last-child {
+  border-radius: 0 4px 4px 0;
+}
+.rl-seg:only-child {
+  border-radius: 4px;
+}
+i.rl-base {
+  background: var(--rl-base);
+}
+i.rl-on {
+  background: var(--rl-on);
+}
+i.rl-rest {
+  background: repeating-linear-gradient(135deg, var(--rl-base) 0 3px, transparent 3px 6px);
+}
+i.rl-other {
+  background: var(--n-600);
+}
+.rl-legend i.rl-free {
+  background: var(--n-200);
+  border: 1px solid var(--n-400);
+}
+i.rl-off {
+  border: 1px dashed var(--n-600);
+  background: transparent;
+}
+.rl-val {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.rl-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--n-800);
+}
+.rl-legend i {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+  border-radius: 2px;
+  vertical-align: -1px;
+}
+.rl-groups {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--n-800);
+}
+.rl-groups > b {
+  margin-right: 4px;
+  font-size: 12px;
+  color: var(--n-900);
+}
+.rl-groups .rl-all {
+  margin-left: auto;
+  padding: 2px 10px;
+  min-height: 0;
+  font-size: 12px;
+}
+.rl-groups i {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+  border-radius: 2px;
+}
+.rl-groups .rl-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 0;
+  padding: 1px 8px;
+  border: 1px solid var(--n-400);
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+.rl-groups .rl-chip:hover {
+  border-color: var(--n-600);
+}
+.rl-groups .rl-chip-off {
+  color: var(--n-600);
+  text-decoration: line-through;
+}
+.rl-sum {
+  margin: 2px 0 0 72px;
+  font-size: 11px;
+  color: var(--n-700);
+}
+.rl-sum b {
+  color: var(--n-900);
+  font-variant-numeric: tabular-nums;
+}
+.rl-sum small {
+  color: var(--n-600);
+}
+.rl-legend .rl-note {
+  color: var(--n-600);
 }
 .setting input[type='range'] {
   width: 150px;

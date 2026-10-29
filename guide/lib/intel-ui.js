@@ -7,6 +7,8 @@
       /[&<>"']/g,
       c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]
     );
+  // A shortcut's key (ui/hotkeys.js) beside its button; nothing when that shortcut is off.
+  const kbd = id => (window.Hotkeys?.key(id) ? ` <kbd>${Hotkeys.key(id)}</kbd>` : '');
   const guide = id => (window.HERO_GUIDE || []).find(g => g.id === id) || null;
   const clock = s => {
     if (!Number.isFinite(s)) return '—';
@@ -396,7 +398,9 @@
             L('생존', 'Alive'),
             m.deaths
               ? L(`${clock(m.respawnAt)}에 재생성됨 (추정)`, `Respawned at ${clock(m.respawnAt)} (est.)`)
-              : L('처치되면 Alt+B', 'Alt+B when killed')
+              : window.Hotkeys?.key('midboss')
+                ? L(`처치되면 ${Hotkeys.key('midboss')}`, `${Hotkeys.key('midboss')} when killed`)
+                : L('처치되면 기록', 'Log it when killed')
           );
     const rift = row(
       L('불안정한 균열', 'Unstable Rift'),
@@ -416,7 +420,7 @@
         )
       : '';
     const actions = buttons
-      ? `<div class="iu-actions"><button data-objective="midboss">${L('보스 처치 기록', 'Log Mid-Boss kill')} <kbd>Alt B</kbd></button><button data-objective="rift">${L('균열 기록', 'Log rift')} <kbd>Alt R</kbd></button><button data-objective-undo="midboss" class="ghost">${L('보스 기록 취소', 'Undo Mid-Boss')}</button><button data-objective-undo="rift" class="ghost">${L('균열 기록 취소', 'Undo rift')}</button></div>`
+      ? `<div class="iu-actions"><button data-objective="midboss">${L('보스 처치 기록', 'Log Mid-Boss kill')}${kbd('midboss')}</button><button data-objective="rift">${L('균열 기록', 'Log rift')}${kbd('rift')}</button><button data-objective-undo="midboss" class="ghost">${L('보스 기록 취소', 'Undo Mid-Boss')}</button><button data-objective-undo="rift" class="ghost">${L('균열 기록 취소', 'Undo rift')}</button></div>`
       : '';
     return `${mb}${rejuv}${rift}${urn}${actions}`;
   }
@@ -970,6 +974,12 @@
       tierRow = Number.isFinite(w)
         ? `<p class="hv-row hv-tier"><i>${L('티어', 'Tier')}</i><span><em><span class="sel-rank t${tierOf(w)}"><b>${tierOf(w)}</b></span><span class="hv-tier-name">${L(`${tierOf(w)}티어`, `Tier ${tierOf(w)}`)}${rank ? `<small>${L(`승률 ${rank}위 / ${(window.HERO_TYPES || []).length}`, `#${rank} win rate of ${(window.HERO_TYPES || []).length}`)}</small>` : ''}</span></em><em>${L('승률', 'Win')} ${pct1(w)}%</em><em>${L('픽률', 'Pick')} ${pct1(pickRates().get(id))}%</em></span></p>`
         : '';
+    // The same for Street Brawl (online stats since the last patch), under it: which mode is about to
+    // be played is not known here.
+    const bh = s.brawl?.stats?.heroes?.[id],
+      brawlRow = bh
+        ? `<p class="hv-row hv-tier hv-brawl"><i>${L('난투', 'Brawl')}</i><span><em><span class="sel-rank t${bh.tier}"><b>${bh.tier}</b></span><span class="hv-tier-name">${L(`${bh.tier}티어`, `Tier ${bh.tier}`)}<small>${L(`${bh.rank}위 / ${s.brawl.stats.count}`, `#${bh.rank} of ${s.brawl.stats.count}`)}</small></span></em><em>${L('승률', 'Win')} ${pct1(bh.winRate)}%</em><em>${L('픽률', 'Pick')} ${pct1(bh.pickRate)}%</em></span></p>`
+        : '';
     // Under the name: tier, how the hero plays (curve, difficulty, lane, gun or spirit) and its gun.
     const lv = levelOf(g.id, g),
       plays = [
@@ -1021,6 +1031,7 @@
       '<div class="hv hv-full"><section class="hv-id">' +
       name +
       tierRow +
+      brawlRow +
       playRow +
       gunRow +
       '</section><section class="hv-skills"><h4>' +
@@ -1625,7 +1636,8 @@
   const tipRow = (tip, cls) => (tip ? `<p class="${cls}"><small>${esc(tip.head)}</small>${esc(tip.text)}</p>` : '');
   // The parts of the overlay the settings can switch off (model.cjs `show`); each part carries its
   // key in data-pv, which the settings page's preview (preview.html) uses to point at it.
-  const shown = (s, key) => s.settings?.show?.[key] !== false;
+  // In a Street Brawl the normal-match parts step aside (brawl-mode.cjs BRAWL_OFF).
+  const shown = (s, key) => s.settings?.show?.[key] !== false && !(s.brawl?.on && s.brawl.off?.includes(key));
   // The live layout follows the editable Figma frames. Keep the legacy brief() available to the
   // dashboard; game panels have independent anchors so tips cannot move the camp/ultimate rows.
   function compactTeams(s) {
@@ -1676,9 +1688,15 @@
     for (const [t, what] of SPAWNS) add(t, what);
     for (let t = Math.max(900, (Math.floor(secs / 300) + 1) * 300); t <= secs + 600; t += 300)
       add(t, L('기운의 파편', 'Power-up'));
-    // The HUD's top bar says which way the next urn runs (top-bar.cjs). That urn gets a row of its
-    // own, so the lane names fit on one line next to whatever else spawns then.
-    const urn = s.topBar?.urn,
+    // Which way the next urn runs: the HUD's top bar (top-bar.cjs, around a spawn), else the urn
+    // schedule (objectives.cjs, the same rule). That urn gets a row of its own, so the lane names fit
+    // on one line next to whatever else spawns then. The only place the way shows (2026-10-29: the
+    // label under the top bar was folded into this row).
+    const urn =
+        s.topBar?.urn ||
+        (o?.urn?.remaining > 0 && URN_LANE[o.urn.lane]
+          ? { from: o.urn.lane, to: o.urn.lane === 'yellow' ? 'green' : 'yellow', remaining: o.urn.remaining }
+          : null),
       way = urn && URN_LANE[urn.from] && URN_LANE[urn.to] ? '\u0001' : '',
       wayHtml = way
         ? ` <i class="urn-way"><span class="${urn.from}">${esc(URN_LANE[urn.from])}</span>→<span class="${urn.to}">${esc(URN_LANE[urn.to])}</span></i>`
@@ -1781,6 +1799,60 @@
     if (!shown(s, 'route') && !tip) return '';
     return `<section class="fg-farming" data-figma="42:148">${shown(s, 'route') ? `<div data-pv="route"><small>${L('파밍 우선순위', 'Farming priority')}</small><b>${esc(priority)}</b></div>` : ''}${tip ? `<div data-pv="tip"><small>${esc(tip.head)}</small><p>${esc(tip.text)}</p></div>` : ''}</section>`;
   }
+  // Street Brawl: my hero's tier in the mode and the items most taken with it (picked from the draft
+  // at each round's start), with how often and how they win. Nothing until the stats are in.
+  function brawlBox(s) {
+    const id = s.live?.local?.heroId,
+      h = s.brawl?.on && Number.isInteger(id) ? s.brawl.stats?.heroes?.[id] : null;
+    if (!h) return '';
+    const catalog = window.ITEM_CATALOG || [],
+      items = (s.brawl.stats.mine || [])
+        .slice(0, 6)
+        .map(i => ({ ...i, it: catalog.find(c => c.id === i.id) }))
+        .filter(i => i.it)
+        .map(
+          i =>
+            `<div class="fg-brawl-item"><span class="sel-rank t${i.tier}"><b>${i.tier}</b></span><img src="ui/${esc(i.it.file)}" alt=""><b>${esc(itemName(i.id))}</b><span>${pct1(i.winRate, 0)}%<small>${L(`선택 ${pct1(i.pickRate, 0)}%`, `taken ${pct1(i.pickRate, 0)}%`)}</small></span></div>`
+        )
+        .join('');
+    return `<div class="fg-brawl" data-pv="brawl"><div class="fg-row"><b>${esc(L(`난투 · ${heroName(id)}`, `Brawl · ${heroName(id)}`))}</b><span>${L(`${h.tier}티어 · 승률 ${pct1(h.winRate)}%`, `Tier ${h.tier} · ${pct1(h.winRate)}% win`)}</span></div>${
+      items ? `<p class="fg-brawl-h">${L('자주 고르는 아이템 · 승률', 'Most taken items · win rate')}</p>${items}` : ''
+    }</div>`;
+  }
+  // Street Brawl item draft: a bar on each offered item with its pick-rate tier (S to D), the item and
+  // its one-line summary (ui/item-brief.js), and its pick rank among my hero's items; numbers from few
+  // games or from every hero are flagged (no pick is marked best: the user asked for none, 2026-10-29). Where: above each
+  // item's ring, in screen heights: x from the middle, the ring's top from the screen's (the recorded
+  // draft, data/brawl-draft, and a 2026-10-29 match where the middle ring sat higher). The bar stands
+  // on it.
+  const DRAFT_PLACE = { left: [-0.4, 0.455], center: [0, 0.255], right: [0.395, 0.47] };
+  const TIER_LETTER = ['S', 'A', 'B', 'C', 'D'];
+  const draftFlag = c =>
+    !c.tier
+      ? L('기록 없음', 'No games')
+      : c.scope === 'all'
+        ? L('전체 영웅 기준', 'All heroes')
+        : c.few
+          ? L(`표본 ${c.matches}판`, `${c.matches} games`)
+          : '';
+  function draftCards(s) {
+    const d = s.brawl?.on ? s.brawl.draft : null;
+    if (!d?.cards?.length) return '';
+    return `<div class="fg-draft" data-pv="brawl">${d.cards
+      .map(c => {
+        const [dx, y] = DRAFT_PLACE[c.pos],
+          flag = draftFlag(c),
+          brief = window.ITEM_BRIEF?.[c.id];
+        return `<div class="fg-draft-card${c.tier ? ` t${c.tier}` : ''}" style="left:calc(50% + ${dx * 100}vh);top:${y * 100}vh"><span class="fg-draft-tier">${
+          c.tier ? TIER_LETTER[c.tier - 1] : '–'
+        }</span><div class="fg-draft-text"><b>${esc(itemName(c.id))}${flag ? `<em class="rough">${flag}</em>` : ''}</b>${
+          brief ? `<p>${esc(brief)}</p>` : ''
+        }</div>${
+          c.rank ? `<span class="fg-draft-rank">${c.rank}/${c.of}</span>` : ''
+        }</div>`;
+      })
+      .join('')}</div>`;
+  }
   function gameCompact(s) {
     const early = window.MatchPhase?.of(s.live?.seconds).laning,
       row = (name, value, cls = '') => `<div class="fg-row ${cls}"><b>${esc(name)}</b><span>${esc(value)}</span></div>`,
@@ -1828,8 +1900,11 @@
               .join('')
           : '',
       farming = farmingBox(s),
-      soulsTag = soulsBox(s);
-    return `<div class="figma-game ${early ? 'laning' : 'post'}"><aside class="fg-summary" data-figma="${early ? '42:159' : '64:172'}">${camps}${ults ? `<div class="fg-ults" data-pv="ults">${ults}</div>` : ''}${shown(s, 'pregame') ? `<div class="fg-teams" data-pv="pregame">${compactTeams(s)}</div>` : ''}</aside><div class="fg-spawn-stack">${shown(s, 'spawns') ? `<section class="fg-spawn-panel" data-figma="41:4">${spawnBands(s)}</section>` : ''}${soulsTag ? `<section class="fg-souls-box">${soulsTag}</section>` : ''}</div>${farming}</div>`;
+      soulsTag = soulsBox(s),
+      draft = shown(s, 'brawl') ? draftCards(s) : '',
+      // The draft screen has its own title at the top left: the brawl panel steps aside meanwhile.
+      brawl = shown(s, 'brawl') && !draft ? brawlBox(s) : '';
+    return `<div class="figma-game ${early ? 'laning' : 'post'}"><aside class="fg-summary" data-figma="${early ? '42:159' : '64:172'}">${brawl}${camps}${ults ? `<div class="fg-ults" data-pv="ults">${ults}</div>` : ''}${shown(s, 'pregame') ? `<div class="fg-teams" data-pv="pregame">${compactTeams(s)}</div>` : ''}</aside><div class="fg-spawn-stack">${shown(s, 'spawns') ? `<section class="fg-spawn-panel" data-figma="41:4">${spawnBands(s)}</section>` : ''}${soulsTag ? `<section class="fg-souls-box">${soulsTag}</section>` : ''}</div>${farming}${draft}</div>`;
   }
   function brief(s) {
     const rows = [],

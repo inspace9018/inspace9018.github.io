@@ -1,5 +1,7 @@
 'use strict';
 window.jungleUI = (() => {
+  // Also used by the minimap and website, which do not load the dashboard controller.
+  const pageHeading = (title, description) => window.DashboardUI?.heading(title, description) || `<div class="page-heading"><div><h1>${title}</h1><p>${description}</p></div></div>`;
   const esc = s =>
     String(s ?? '').replace(
       /[&<>"']/g,
@@ -309,10 +311,10 @@ window.jungleUI = (() => {
   function render(s) {
     const j = s.jungle;
     if (!j?.camps?.length)
-      return `<h1>${L('미니맵 도우미', 'Minimap helper')}</h1><p>${L('경기 정보를 기다립니다.', 'Waiting for match info.')}</p>`;
+      return pageHeading(L('미니맵 도우미', 'Minimap helper'), L('게임 미니맵 위에 위치·높이·확인된 시간을 표시합니다.', 'Shows positions, heights and confirmed times on the game minimap.')) + `<section class="card"><p class="op-empty">${L('경기 정보를 기다립니다.', 'Waiting for match info.')}</p></section>`;
     const selected = j.camps.find(c => c.id === j.selected) || j.camps[0];
     const point = c => (j.rotation === 180 ? { x: 1 - c.x, y: 1 - c.y } : c);
-    return `<div class="page-heading"><h1>${L('미니맵 도우미', 'Minimap helper')}</h1><p>${L('게임 미니맵 위에 위치·높이·확인된 시간을 표시합니다.', 'Shows positions, heights and confirmed times on the game minimap.')}</p></div><div class="jungle-status"><b>${j.minimap ? L('미니맵 위치 확인됨', 'Minimap found') : L('게임 미니맵 탐색 중', 'Looking for the game minimap')}</b><span>${j.seconds === null ? L('경기 시계 대기', 'Waiting for match clock') : Math.floor(j.seconds / 60) + ':' + String(Math.floor(j.seconds % 60)).padStart(2, '0')}</span><button data-j-action="jungle-enable">${j.enabled ? L('미니맵 표시 끄기', 'Turn off minimap marks') : L('미니맵 표시 켜기', 'Turn on minimap marks')}</button><button data-j-action="jungle-auto">${j.autoDetect ? L('자동 감지 켜짐', 'Auto-detect on') : L('자동 감지 꺼짐', 'Auto-detect off')}</button><button data-j-action="map">${L('게임에서 펼치기 · Alt G', 'Open in game · Alt G')}</button></div><p class="note">${j.autoTracking ? L(`캠프 아이콘 ${j.visibleCamps}곳 추적 중 · 방향 자동 확인`, `Tracking ${j.visibleCamps} camp icons · facing checked automatically`) : j.autoDetect ? L('자동 감지 대기 · 경기 시계와 캠프 아이콘을 확인합니다', 'Auto-detect waiting · checking the match clock and camp icons') : L('자동 감지 꺼짐 · 수동 보정만 사용합니다', 'Auto-detect off · manual corrections only')}</p><div class="map-layout"><div class="jungle-map"><img src="assets/map.png" alt="${L('Deadlock 캠프 위치 지도', 'Deadlock camp map')}" style="transform:rotate(${j.rotation}deg)">${j.camps
+    return `${pageHeading(L('미니맵 도우미', 'Minimap helper'), L('게임 미니맵 위에 위치·높이·확인된 시간을 표시합니다.', 'Shows positions, heights and confirmed times on the game minimap.'))}<div class="jungle-status"><b>${j.minimap ? L('미니맵 위치 확인됨', 'Minimap found') : L('게임 미니맵 탐색 중', 'Looking for the game minimap')}</b><span>${j.seconds === null ? L('경기 시계 대기', 'Waiting for match clock') : Math.floor(j.seconds / 60) + ':' + String(Math.floor(j.seconds % 60)).padStart(2, '0')}</span><button data-j-action="jungle-enable">${j.enabled ? L('미니맵 표시 끄기', 'Turn off minimap marks') : L('미니맵 표시 켜기', 'Turn on minimap marks')}</button><button data-j-action="jungle-auto">${j.autoDetect ? L('자동 감지 켜짐', 'Auto-detect on') : L('자동 감지 꺼짐', 'Auto-detect off')}</button><button data-j-action="map">${L('게임에서 펼치기', 'Open in game')}</button></div><p class="note">${j.autoTracking ? L(`캠프 아이콘 ${j.visibleCamps}곳 추적 중 · 방향 자동 확인`, `Tracking ${j.visibleCamps} camp icons · facing checked automatically`) : j.autoDetect ? L('자동 감지 대기 · 경기 시계와 캠프 아이콘을 확인합니다', 'Auto-detect waiting · checking the match clock and camp icons') : L('자동 감지 꺼짐 · 수동 보정만 사용합니다', 'Auto-detect off · manual corrections only')}</p><div class="map-layout"><div class="jungle-map"><img src="assets/map.png" alt="${L('Deadlock 캠프 위치 지도', 'Deadlock camp map')}" style="transform:rotate(${j.rotation}deg)">${j.camps
       .map(c => {
         const p = point(c),
           b = c.kind === 'vault' ? buildingOf(c.id) : null;

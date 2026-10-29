@@ -291,7 +291,7 @@
     const now = primary ? '<div class="iu-card top"><b>'+esc(primary.title)+'</b><p>'+esc(sentence)+'</p></div>' : L('<p class="op-empty">경기 화면이 읽히면 지금 할 일이 여기 뜹니다.</p>', '<p class="op-empty">What to do now shows here once the game screen is read.</p>');
     return `<div class="op-strip"><div><span class="op-live ${ok ? 'on' : ''}">${ok ? 'LIVE' : L('대기', 'Waiting')}</span><b>${
       Number.isFinite(live.seconds) ? window.IntelUI.clock(live.seconds) : '--:--'
-    }</b><span>${esc(s.connection?.message || '')}</span></div><div class="op-actions">${actions}</div></div><section class="op-box status-summary" data-reading-status>${window.ReadingStatus?.html(s)||''}</section><div class="op-grid3 op-now"><section class="op-box op-todo"><h3>${L('지금 할 행동', 'Do now')}</h3>${now}<small class="op-phase">${esc(window.MatchPhase?.of(live.seconds).label||L('시간 확인 중', 'Reading the clock'))}</small></section><section class="op-box"><h3>${L('다음 목표물', 'Next objective')}</h3>${nextObjective(s)}</section><section class="op-box"><h3>${L('내 전선 · 상대', 'My lane · opponents')}</h3>${laneSummary(s)}</section></div><details class="op-box op-more"><summary>${L('능력·빌드·운영과 전체 목표물 자세히', 'Abilities, builds, game plan and all objectives')}</summary><div class="op-grid3"><section><h3>${L('추가 안내·운영', 'More tips · game plan')}</h3>${window.IntelUI.now(s,4)}</section><section><h3>${L('전체 목표물', 'All objectives')}</h3>${window.IntelUI.timers(s)}</section><section><h3>${L('전선 상대 상세', 'Lane opponents in detail')}</h3>${window.IntelUI.lane(s,'',{...view,detail:true})}</section></div></details><div class="op-teams">${teamTable(
+    }</b><span>${esc(s.connection?.message || '')}</span></div><div class="op-actions">${actions}</div></div><div class="op-grid3 op-now"><section class="op-box op-todo"><h3>${L('지금 할 행동', 'Do now')}</h3>${now}<small class="op-phase">${esc(window.MatchPhase?.of(live.seconds).label||L('시간 확인 중', 'Reading the clock'))}</small></section><section class="op-box"><h3>${L('다음 목표물', 'Next objective')}</h3>${nextObjective(s)}</section><section class="op-box"><h3>${L('내 전선 · 상대', 'My lane · opponents')}</h3>${laneSummary(s)}</section></div>${window.DashboardUI ? DashboardUI.disclosure('match-reading', L('화면 인식 상태', 'Screen reading status'), `<div data-reading-status>${window.ReadingStatus?.html(s) || ''}</div>`, !ok) : `<section class="op-box status-summary" data-reading-status>${window.ReadingStatus?.html(s) || ''}</section>`}<details class="op-box op-more"><summary>${L('능력·빌드·운영과 전체 목표물 자세히', 'Abilities, builds, game plan and all objectives')}</summary><div class="op-grid3"><section><h3>${L('추가 안내·운영', 'More tips · game plan')}</h3>${window.IntelUI.now(s,4)}</section><section><h3>${L('전체 목표물', 'All objectives')}</h3>${window.IntelUI.timers(s)}</section><section><h3>${L('전선 상대 상세', 'Lane opponents in detail')}</h3>${window.IntelUI.lane(s,'',{...view,detail:true})}</section></div></details><div class="op-teams">${teamTable(
       L('우리 팀', 'Our team'),
       'ally',
       ours,
@@ -321,7 +321,7 @@
     return `<section class="op-box op-list"><input type="search" id="guide-q" placeholder="${search}" value="${esc(query)}" aria-label="${search}"><table><thead><tr><th>#</th>${th('name', L('영웅', 'Hero'))}${th('tier', L('티어', 'Tier'))}${th('win', L('승률', 'Win rate'))}${th('pick', L('픽률', 'Pick rate'))}</tr></thead><tbody>${list
       .map(
         (h, i) =>
-          `<tr data-guide-id="${h.id}" class="${h.id === selected ? 'on' : ''}"><td class="rank">${i + 1}</td><td class="op-hero">${portrait(h.id)}<b>${esc(heroName(h))}</b></td><td>${tierBadge(h.id)}</td><td class="num">${pct(type(h.id)?.winRate?.overall)}</td><td class="num">${pct(pickRate(h.id))}</td></tr>`
+          `<tr data-guide-id="${h.id}" tabindex="0" class="${h.id === selected ? 'on' : ''}"><td class="rank">${i + 1}</td><td class="op-hero">${portrait(h.id)}<b>${esc(heroName(h))}</b></td><td>${tierBadge(h.id)}</td><td class="num">${pct(type(h.id)?.winRate?.overall)}</td><td class="num">${pct(pickRate(h.id))}</td></tr>`
       )
       .join('')}</tbody></table></section>`;
   }
@@ -634,13 +634,15 @@
           }${spikes ? `<h4>${L('파워 스파이크', 'Power spikes')}</h4><p>${esc(spikes)}</p>` : ''}${
             none(withTips) ? '' : `<h4>${L('같은 팀일 때', 'With them on your team')}</h4><ul class="op-list-tips">${li(withTips)}</ul>`
           }</section>`;
-    return `<section class="op-box op-hero-head">${portrait(id, 'lg')}<div><h2>${esc(I18N.name(g))}${L(` <small>${esc(g.en)}</small>`, '')}</h2><p>${tierBadge(id)} <span>${esc(ROLE[g.role] || '')}</span> · <span>${esc(
+    const summary = `<section class="op-box op-hero-head">${portrait(id, 'lg')}<div><h2>${esc(I18N.name(g))}${L(` <small>${esc(g.en)}</small>`, '')}</h2><p>${tierBadge(id)} <span>${esc(ROLE[g.role] || '')}</span> · <span>${esc(
       [CURVE[t?.curve], FIGHT[t?.fight] && FIGHT[t?.fight] + L(' 중심', ' focus')].filter(Boolean).join(' · ')
     )}</span></p>${none(style) ? '' : `<p class="op-concept">${esc(style || '')}</p>`}<div class="op-stats"><div><small>${L('승률', 'Win rate')}</small><b>${pct(t?.winRate?.overall)}</b></div><div><small>${L('픽률', 'Pick rate')}</small><b>${pct(pickRate(id))}</b></div><div><small>${L('28분 전', 'Under 28 min')}</small><b>${pct(
       t?.winRate?.short
     )}</b></div><div><small>${L('40분 후', 'Over 40 min')}</small><b>${pct(t?.winRate?.long)}</b></div></div></div><div class="op-skill-icons">${abilities
       .map(a => `<span><img src="assets/abilities/${id}-${a.slot}.png" alt=""><small>${a.slot}</small></span>`)
-      .join('')}</div></section>${ib}${window.StrategyUI?.buildStyles(id) || ''}<div class="op-cols"><section class="op-box"><h3>${L(
+      .join('')}</div></section>`;
+    const builds = `${ib}${window.StrategyUI?.buildStyles(id) || ''}`;
+    const abilityContent = `<div class="op-cols"><section class="op-box"><h3>${L(
       '능력 마스터 순서 <small>먼저 마스터하는 능력 · 최근 30일</small>',
       'Ability max order <small>ability maxed first · last 30 days</small>'
     )}</h3>${order || '<p class="op-empty">—</p>'}${ib ? '' : `<h3>${L('인기 빌드 <small>시간대별 가장 많이 사는 아이템 · 승률</small>', 'Popular build <small>most bought items by phase · win rate</small>')}</h3>${phase('early', L('초반', 'Early'))}${phase('mid', L('중반', 'Mid'))}${phase('late', L('후반', 'Late'))}`}</section><section class="op-box"><h3>${L('능력', 'Abilities')}</h3>${abilities
@@ -651,9 +653,14 @@
           tip = tx(a, 'tip');
         return `<div class="op-ability"><img src="assets/abilities/${id}-${a.slot}.png" alt=""><div><b>${a.slot}. ${esc(I18N.name(a))}${dist ? ` <small>${esc(dist)}</small>` : ''}</b>${none(desc) ? '' : `<p>${esc(desc)}</p>`}${tip ? `<p class="tip">${L('상대할 때', 'Against it')}: ${esc(tip)}</p>` : ''}</div></div>`;
       })
-      .join('')}${gunLine ? `<div class="op-ability gun"><span>${L('총', 'Gun')}</span><div><b>${esc(L(`${g.ko}의 총`, `${I18N.name(g)}'s gun`))}</b><p>${esc(gunLine)}</p></div></div>` : ''}</section></div>${
-      vsBox || planBox ? `<div class="op-cols">${vsBox}${planBox}</div>` : ''
-    }`;
+      .join('')}${gunLine ? `<div class="op-ability gun"><span>${L('총', 'Gun')}</span><div><b>${esc(L(`${g.ko}의 총`, `${I18N.name(g)}'s gun`))}</b><p>${esc(gunLine)}</p></div></div>` : ''}</section></div>`;
+    // The website also consumes this renderer, without the desktop's topic controller.
+    if (!window.DashboardUI) return `${summary}${builds}${abilityContent}<div class="op-cols">${vsBox}${planBox}</div>`;
+    return summary + DashboardUI.tabs('hero-' + id, L('영웅 상세', 'Hero details'), [
+      { key: 'builds', label: L('아이템 빌드', 'Item builds'), html: `${window.CommunityBuildsUI ? DashboardUI.buildSources('stats', id) : ''}${builds}` },
+      { key: 'abilities', label: L('능력', 'Abilities'), html: abilityContent },
+      { key: 'matchup', label: L('상대법 · 운영', 'Matchup and game plan'), html: `<div class="op-cols">${vsBox}${planBox}</div>` }
+    ]);
   }
   function heroes(selected, query, sort, view) {
     return `<div class="op-heroes">${heroTable(selected, query, sort)}<div class="op-detail">${heroPage(selected, view)}</div></div>`;

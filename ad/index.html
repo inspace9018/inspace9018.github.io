@@ -6,8 +6,8 @@
     <meta name="robots" content="noindex" />
     <title>Lookout 광고</title>
     <!-- One RevIQ slot the Lookout dashboard shows in a frame. ?slot= picks the unit (default
-         right-rail-1, 300x250); the page takes that unit's size. RevIQ fills #ad; until it does, the
-         house card underneath shows. -->
+         right-rail-1, 300x250); the page takes that unit's size. RevIQ fills #ad. No feature-tip
+         placeholder is shown while an ad is unavailable. -->
     <style>
       html,
       body {
@@ -20,26 +20,6 @@
       #slot {
         position: relative;
       }
-      .house {
-        position: absolute;
-        inset: 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 10px 12px;
-        box-sizing: border-box;
-        border: 1px dashed #5b616b;
-        border-radius: 6px;
-        background: #1a1d22;
-      }
-      .house small {
-        color: #9aa3ad;
-        font-size: 10.5px;
-      }
-      .house p {
-        margin: 2px 0;
-        color: #cfd5db;
-      }
       #ad {
         position: relative;
         z-index: 1;
@@ -47,23 +27,10 @@
         height: 100%;
       }
     </style>
-    <script>
-      // RevIQ adds its bottom sticky ad (1000x100) to every page. In this frame it would load out of
-      // sight, so it goes as soon as it appears, before an ad is asked for.
-      new MutationObserver(() => document.querySelectorAll('[data-reviq-sticky-ad]').forEach(e => e.remove())).observe(
-        document.documentElement,
-        { childList: true, subtree: true }
-      );
-    </script>
-    <script src="https://js.rev.iq/obeloworks.com" defer></script>
+    <script src="../ad-policy.js"></script>
   </head>
   <body>
     <div id="slot">
-      <div class="house">
-        <small>광고</small>
-        <b>F10으로 오버레이 숨기기</b>
-        <p>경기 중 F10을 누르면 오버레이를 숨기고, 다시 누르면 띄웁니다.</p>
-      </div>
       <div id="ad"></div>
     </div>
     <script>
@@ -73,19 +40,24 @@
           'right-rail-2': '300x600',
           'left-rail-1': '300x250',
           'left-rail-2': '300x600',
-          'leaderboard-1': '728x90',
           'mobile-unit-1': '300x250'
         },
         asked = new URLSearchParams(location.search).get('slot'),
-        slot = SIZES[asked] ? asked : 'right-rail-1',
-        [w, h] = SIZES[slot].split('x');
+        // Retired banners stay empty for older clients, without requesting a replacement ad.
+        slot = asked === 'leaderboard-1' ? null : SIZES[asked] ? asked : 'right-rail-1',
+        [w, h] = (SIZES[slot] || '0x0').split('x');
       const ad = document.getElementById('ad');
-      ad.dataset.ad = slot;
-      ad.dataset.adSize = SIZES[slot];
+      if (slot) ad.dataset.ad = slot;
+      if (slot) ad.dataset.adSize = SIZES[slot];
       for (const el of [document.documentElement, document.body, document.getElementById('slot')])
         Object.assign(el.style, { width: w + 'px', height: h + 'px' });
-      // Tells the dashboard the page loaded (offline it keeps its own card instead).
-      if (parent !== window) parent.postMessage({ lookoutAd: 'ready', slot }, '*');
+      if (slot) {
+        const tag = document.createElement('script');
+        tag.src = 'https://js.rev.iq/obeloworks.com';
+        tag.defer = true;
+        document.head.append(tag);
+        if (parent !== window) parent.postMessage({ lookoutAd: 'ready', slot }, '*');
+      }
     </script>
   </body>
 </html>

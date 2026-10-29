@@ -1,0 +1,166 @@
+/* Painted Bill for the dashboard (2026-10-29): the game HUD's brush strokes and 1930s street bills.
+   Loaded last in ui/index.html. A brush band only where the eye should land first (the open menu item,
+   the open tab, tiers, badges); cards lose their borders and keep one lighter face; buttons that do
+   something are flat brick, never brush, so what can be pressed and what is decoration stay apart.
+   Colours and shapes come from tokens.css (--mustard, --brick, --paper, --brush...). */
+
+/* Menu: soot behind, a poster wordmark, the open section painted over. */
+.side {
+  background: var(--n-0);
+  border-right-color: var(--n-200);
+}
+.side .brand b {
+  font-family: var(--f-num);
+  font-weight: 400;
+  font-size: 23px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.side nav {
+  gap: 2px;
+}
+.side nav button {
+  border-left: 0;
+  border-radius: 0;
+}
+.side nav button b {
+  font-family: var(--f-kr);
+  font-weight: 800;
+  font-size: 15.5px;
+}
+.side nav button[aria-current='page'] {
+  background: transparent;
+  color: var(--text);
+}
+.side nav button[aria-current='page'] b {
+  display: inline-block;
+  padding: 2px 10px 3px;
+  margin: -2px -10px 1px;
+  background: var(--mustard);
+  color: var(--paper-ink);
+  clip-path: var(--brush-2);
+}
+.side nav button:hover {
+  background: var(--n-150);
+}
+
+/* Page tabs: the open one gets a painted stroke under it instead of a blue line. */
+.subnav button {
+  position: relative;
+  font-family: var(--f-kr);
+  font-weight: 800;
+  font-size: 15px;
+}
+.subnav button[aria-current='page'] {
+  border-bottom-color: transparent;
+}
+.subnav button[aria-current='page']::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  bottom: -2px;
+  height: 6px;
+  background: var(--mustard);
+  clip-path: var(--stroke);
+}
+
+/* Headings in the display face. */
+main h1,
+.page-heading h1 {
+  font-family: var(--f-kr);
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+main h2,
+.op-box h3 {
+  font-family: var(--f-kr);
+  font-weight: 800;
+}
+
+/* Surfaces: one lighter face, no outline. */
+.card,
+.op-box {
+  border-color: transparent;
+  border-radius: 2px;
+}
+.connection {
+  border-radius: 2px;
+}
+
+/* Controls: flat, square-cut; the main action in brick. */
+button,
+a.button,
+input,
+select {
+  border-radius: 2px !important;
+}
+button.primary {
+  background: var(--brick);
+  border-color: var(--brick);
+  color: #fff4e3;
+}
+button.primary:hover {
+  background: color-mix(in srgb, var(--brick) 85%, #fff);
+}
+a {
+  color: var(--mustard);
+}
+
+/* Small state labels: a short brush band. */
+.badge {
+  border: 0;
+  border-radius: 0;
+  padding: 3px 10px 4px;
+  background: var(--n-300);
+  color: var(--text);
+  clip-path: var(--brush-2);
+}
+.badge.wait {
+  color: var(--warning);
+}
+
+/* Tiers: a brush band per tier, paint colour by rank (1 mustard, 2 paper, 3 faded paper, 4-5 soot). */
+.op-tier {
+  min-width: 0;
+  padding: 3px 10px 4px;
+  border-radius: 0;
+  clip-path: var(--brush);
+  font-family: var(--f-num);
+  font-weight: 400;
+  font-size: 12.5px;
+  letter-spacing: 0.03em;
+  color: var(--paper-ink);
+}
+.op-tier.t1 {
+  background: var(--mustard);
+  color: var(--paper-ink);
+}
+.op-tier.t2 {
+  background: var(--paper);
+  color: var(--paper-ink);
+}
+.op-tier.t3 {
+  background: #b9aa88;
+  color: var(--paper-ink);
+}
+.op-tier.t4,
+.op-tier.t5 {
+  background: var(--n-500);
+  color: var(--n-950);
+}
+
+/* Numbers in tables and stat blocks in the poster face. */
+td.num {
+  font-family: var(--f-num);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* Portraits are pinned photos, not coins. */
+.op-portrait,
+.op-portrait.lg {
+  border-radius: 2px;
+}

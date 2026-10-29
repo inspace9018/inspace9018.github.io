@@ -345,7 +345,7 @@ p.note {
   min-width: 0;
   padding: 0;
   border-radius: 0;
-  background: none !important;
+  background: none;
   font-size: var(--fs-md);
   font-weight: 700;
   text-align: left;
@@ -601,7 +601,7 @@ table {
   .op-cols,
   .grid,
   .map-layout {
-    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-columns: minmax(0, 1fr);
   }
   .op-heroes .op-list {
     /* stacked above the hero page: a sticky list would slide over the hero header while scrolling */

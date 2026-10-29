@@ -86,20 +86,27 @@
     if (!us.ids.length || !them.ids.length) return tips;
     const e = them.counts,
       o = us.counts;
-    if (us.curve && them.curve) {
-      if (them.curve.late - us.curve.late >= 2)
-        tips.push(L('상대에 후반형이 더 많습니다. 균열과 중앙 보스로 앞서 나가서 25분 안에 끝내세요.', 'They scale better late. Get ahead with rifts and the Mid-Boss and end it within 25 min.'));
-      else if (us.curve.late - them.curve.late >= 2)
-        tips.push(L('우리가 후반형입니다. 초반 싸움은 피하고 파밍하다가 30분 넘어서 한타로 이기세요.', 'We scale better late. Avoid early fights, farm, and win team fights after 30 min.'));
-      if (them.curve.early - us.curve.early >= 2)
-        tips.push(L('상대가 초반에 강합니다. 라인전에서는 죽지 않는 게 먼저입니다.', 'They are strong early. In laning, staying alive comes first.'));
-    }
-    if (us.early !== null && them.early !== null) {
-      if (us.early - them.early >= 0.35)
-        tips.push(L('우리가 초반에 셉니다. 전선을 밀고 첫 균열(11~13분)과 중앙 보스를 먼저 챙기세요.', 'We are stronger early. Push lanes and take the first rift (11-13 min) and the Mid-Boss first.'));
-      else if (them.early - us.early >= 0.35)
-        tips.push(L('초반은 상대가 셉니다. 가디언 근처에서 파밍하며 아이템이 나올 때까지 버티세요.', 'They are stronger early. Farm near your Guardian and hold out until your items are in.'));
-    }
+    // One game plan from two measures: who is stronger early (lane strength, and snowball heroes by
+    // win rate over game length) and who scales better late (late heroes by the same win rates). They
+    // can point opposite ways (a lane-strong team of late heroes), so the plan is picked from both
+    // and never says rush and hold out at once. Early measures that disagree say nothing.
+    const side = (a, b, gap) => (a - b >= gap ? 'us' : b - a >= gap ? 'them' : null);
+    const lane = us.early !== null && them.early !== null ? side(us.early, them.early, 0.35) : null,
+      snow = us.curve && them.curve ? side(us.curve.early, them.curve.early, 2) : null,
+      early = lane && snow && lane !== snow ? null : lane || snow,
+      late = us.curve && them.curve ? side(us.curve.late, them.curve.late, 2) : null;
+    if (late === 'them' && early === 'them')
+      tips.push(L('상대가 초반에 세고 후반형도 더 많습니다. 라인전은 죽지 않고 버티다가, 첫 균열(11~13분)과 중앙 보스에 다 같이 모여 차이를 벌리세요.', 'They are stronger early and have more late heroes. Survive the laning phase, then group up for the first rift (11-13 min) and the Mid-Boss to get ahead.'));
+    else if (late === 'them')
+      tips.push(L('상대에 후반형이 더 많습니다. 균열과 중앙 보스로 앞서 나가서 25분 안에 끝내세요.', 'They scale better late. Get ahead with rifts and the Mid-Boss and end it within 25 min.'));
+    else if (late === 'us' && early === 'us')
+      tips.push(L('우리가 초반에 세고 후반형도 더 많습니다. 전선을 밀어 첫 균열(11~13분)과 중앙 보스를 먼저 챙기고, 무리하지 말고 차이를 굳히세요.', 'We are stronger early and have more late heroes. Push lanes, take the first rift (11-13 min) and the Mid-Boss first, and grow the lead without risky fights.'));
+    else if (late === 'us')
+      tips.push(L('우리가 후반형입니다. 초반 싸움은 피하고 파밍하다가 30분 넘어서 한타로 이기세요.', 'We scale better late. Avoid early fights, farm, and win team fights after 30 min.'));
+    else if (early === 'us')
+      tips.push(L('우리가 초반에 셉니다. 전선을 밀고 첫 균열(11~13분)과 중앙 보스를 먼저 챙기세요.', 'We are stronger early. Push lanes and take the first rift (11-13 min) and the Mid-Boss first.'));
+    else if (early === 'them')
+      tips.push(L('초반은 상대가 셉니다. 가디언 근처에서 파밍하며 아이템이 나올 때까지 버티세요.', 'They are stronger early. Farm near your Guardian and hold out until your items are in.'));
     if (e.sustain >= 2) tips.push(L('상대 회복이 많습니다. 한두 명은 치유 억제를 사세요.', 'They have lots of healing. One or two of you should buy Healbane.'));
     if (e.control >= 3) tips.push(L('상대 제어기가 많습니다. 뭉쳐 서지 말고, 약화 감소도 생각해 두세요.', "They have lots of CC. Don't bunch up, and consider Debuff Reducer."));
     if (e.burst >= 2) tips.push(L('상대에 암살형이 많습니다. 뒤에서 딜하는 아군은 혼자 다니지 마세요.', 'They have several assassins. Backline damage dealers should not walk alone.'));

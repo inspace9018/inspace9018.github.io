@@ -50,6 +50,7 @@
         height: 250px;
       }
     </style>
+    <script src="../ad-policy.js"></script>
     <script>
       // RevIQ's other install: the same tag, added by script.
       const s = document.createElement('script');
@@ -62,11 +63,12 @@
     <div id="slot">
       <div class="house">
         <small>광고</small>
-        <b>Alt+Q로 패널 펼치기</b>
-        <p>경기 중 Alt+Q를 누르면 라인전 · 동선 · 적 빌드 · 타이머 탭이 열립니다.</p>
+        <b>F10으로 오버레이 숨기기</b>
+        <p>경기 중 F10을 누르면 오버레이를 숨기고, 다시 누르면 띄웁니다.</p>
       </div>
       <div id="ad" data-ad="right-rail-1" data-ad-size="300x250"></div>
     </div>
+
     <script>
       // Tells the dashboard the page loaded (offline it keeps its own card instead).
       if (parent !== window) parent.postMessage({ lookoutAd: 'ready' }, '*');

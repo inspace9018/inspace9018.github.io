@@ -1,23 +1,24 @@
 /* Lookout design tokens, shared by the dashboard (ui/index.html) and every in-game window (overlay,
-   minimap, HUD labels). One palette: cool slate neutrals, Lookout mint as the brand colour, blue for our
-   team, red for theirs, amber for "now", gold for the big camps, teal for souls.
+   minimap, HUD labels). Painted Bill (2026-10-29): the game HUD's brush strokes and 1930s street bills.
+   Warm soot-brown neutrals, mustard paint as the brand colour, brick and bill paper beside it; blue for
+   our team, red for theirs (the game's own), amber for "now", gold for the big camps, teal for souls.
    The other stylesheets only use these variables (tools/apply-tokens.cjs maps raw colours here). */
 :root {
   /* Neutrals, dark to light. */
   --n-black: #000;
-  --n-0: #0b0d0f;
-  --n-50: #101315;
-  --n-100: #15191c;
-  --n-150: #1b2024;
-  --n-200: #22282c;
-  --n-300: #2c3338;
-  --n-400: #3a4248;
-  --n-500: #535d64;
-  --n-600: #737e85;
-  --n-700: #96a1a8;
-  --n-800: #b9c2c7;
-  --n-900: #dce2e5;
-  --n-950: #f2f5f6;
+  --n-0: #0d0b08;
+  --n-50: #16130f;
+  --n-100: #1f1b15;
+  --n-150: #26211a;
+  --n-200: #2e2820;
+  --n-300: #3b3328;
+  --n-400: #4a4134;
+  --n-500: #6b5e4a;
+  --n-600: #85775f;
+  --n-700: #a89a80;
+  --n-800: #c9bca0;
+  --n-900: #ddd2b9;
+  --n-950: #ece2cb;
   --n-white: #fff;
 
   /* Hue ramps: 900 tinted background, 700 deep, 500 base, 300 light, 100 pale. */
@@ -57,9 +58,16 @@
   --purple-300: #c9aef7;
   --purple-100: #ece2fc;
 
+  /* Painted Bill: paint, brick and the bill paper it is pasted on. */
+  --mustard: #e0b23a;
+  --brick: #c8432b;
+  --paper: #e9dfc8;
+  --paper-ink: #1c1406;
+  --paper-muted: #5a4c34;
+
   /* Meaning. */
-  --brand: var(--green-300);
-  --brand-ink: #10251a;
+  --brand: var(--mustard);
+  --brand-ink: var(--paper-ink);
   --ally: var(--blue-500);
   --ally-bg: var(--blue-900);
   --enemy: var(--red-500);
@@ -73,17 +81,26 @@
   --lane-green: #6cbf5a;
   --lane-blue: #3fa9dc;
 
-  /* Type, radius, space. */
+  /* Type, radius, space. Numbers and latin labels in a condensed poster face (Anton when bundled, else
+     Windows' Impact); Korean headings in a heavy display face, else Pretendard at 800. Each stack ends in
+     the body face, so Hangul the poster face lacks falls through to it. */
   --font: 'Pretendard Variable', Pretendard, 'Segoe UI Variable Text', 'Malgun Gothic', 'Segoe UI', sans-serif;
+  --f-num: Anton, Impact, 'Bahnschrift SemiBold Condensed', var(--font);
+  --f-kr: 'Do Hyeon', 'Black Han Sans', var(--font);
+  /* Brush shapes: a painted band with ragged ends, a second stroke so neighbours differ, a torn bill. */
+  --brush: polygon(2% 18%, 9% 4%, 30% 9%, 55% 2%, 80% 8%, 97% 3%, 100% 30%, 96% 55%, 99% 82%, 88% 97%, 62% 92%, 38% 98%, 14% 93%, 3% 99%, 0 70%, 3% 45%);
+  --brush-2: polygon(0 12%, 14% 2%, 41% 7%, 66% 0, 90% 6%, 100% 22%, 98% 60%, 100% 90%, 78% 100%, 50% 93%, 24% 99%, 4% 92%, 1% 58%);
+  --stroke: polygon(0 30%, 3% 8%, 20% 14%, 50% 4%, 80% 12%, 97% 0, 100% 40%, 98% 75%, 100% 100%, 70% 90%, 40% 100%, 12% 88%, 2% 100%, 1% 65%);
+  --torn: polygon(0 3%, 6% 0, 18% 2%, 40% 0, 63% 2%, 85% 0, 100% 2%, 99% 40%, 100% 75%, 98% 100%, 70% 98%, 45% 100%, 20% 97%, 0 100%, 1% 60%);
   --fs-xs: 11px;
   --fs-sm: 12px;
   --fs-md: 14px;
   --fs-lg: 16px;
   --fs-xl: 20px;
   --fs-2xl: 26px;
-  --r-sm: 3px;
-  --r-md: 4px;
-  --r-lg: 6px;
+  --r-sm: 2px;
+  --r-md: 2px;
+  --r-lg: 3px;
   --sp-1: 4px;
   --sp-2: 8px;
   --sp-3: 12px;

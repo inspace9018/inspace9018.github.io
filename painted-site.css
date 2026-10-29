@@ -68,6 +68,17 @@ body {
 .side-lang select {
   min-height: 38px;
   border-color: var(--n-400);
+  width: 100%;
+}
+.side-lang {
+  display: grid;
+  gap: 6px;
+}
+.side-lang .side-lang-title {
+  display: block;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
 }
 .page {
   padding-inline: var(--site-space);
@@ -369,6 +380,10 @@ body[data-page="privacy"] {
     min-height: 40px;
     padding: 10px;
     font-size: 12px;
+  }
+  .side-lang {
+    width: 180px;
+    padding: 0;
   }
   .side nav.menu {
     gap: 4px;

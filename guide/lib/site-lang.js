@@ -38,6 +38,11 @@
     at = LANGS.indexOf(lang) - 1;
   window.SITE_LANG = lang;
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+  // The canonical address: this page in the language asked for, or the plain address otherwise.
+  const canon = document.createElement('link');
+  canon.rel = 'canonical';
+  canon.href = location.origin + location.pathname.replace(/index\.html$/, '') + (LANGS.includes(asked) ? '?lang=' + asked : '');
+  document.head.appendChild(canon);
   if (lang === 'zh' || lang === 'ru') document.write('<script src="' + lib + 'i18n-' + lang + '.js"><\/script>');
   const text = k => (TEXT[k] ? TEXT[k][at] : null);
   window.SITE_TEXT = () => {

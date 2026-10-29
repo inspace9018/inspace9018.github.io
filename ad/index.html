@@ -47,6 +47,14 @@
         height: 100%;
       }
     </style>
+    <script>
+      // RevIQ adds its bottom sticky ad (1000x100) to every page. In this frame it would load out of
+      // sight, so it goes as soon as it appears, before an ad is asked for.
+      new MutationObserver(() => document.querySelectorAll('[data-reviq-sticky-ad]').forEach(e => e.remove())).observe(
+        document.documentElement,
+        { childList: true, subtree: true }
+      );
+    </script>
     <script src="https://js.rev.iq/obeloworks.com" defer></script>
   </head>
   <body>

@@ -87,7 +87,7 @@
 
   const draw = {
     index: () => StrategyUI.guidePage(data),
-    heroes: () => OpggUI.heroes(guideId, guideQuery, heroSort, guideView),
+    heroes: () => heading(document.body.dataset.pageTitle, document.body.dataset.pageDescription) + OpggUI.heroes(guideId, guideQuery, heroSort, guideView),
     comp: compPage,
     map: () => MapAtlas.page(),
     routes: () => RouteGuide.page(data, routePick, heading)

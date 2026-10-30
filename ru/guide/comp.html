@@ -1,0 +1,118 @@
+<!doctype html>
+<!-- Written by lane-electron/tools/build-site-guide.cjs. Edit there, not here. -->
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <base href="/guide/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Составы в Deadlock · контрпики | Lookout</title>
+
+    <meta name="description" content="Сильные и слабые стороны вашего и вражеского состава в Deadlock, стратегия и пики на свободные слоты." />
+    <meta property="og:title" content="Составы в Deadlock · контрпики | Lookout" />
+    <meta property="og:description" content="Сильные и слабые стороны вашего и вражеского состава в Deadlock, стратегия и пики на свободные слоты." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://obeloworks.com/ru/guide/comp.html" />
+    <meta property="og:image" content="https://obeloworks.com/guide/assets/map.png" />
+    <meta name="theme-color" content="#16130f" />
+    <link rel="canonical" href="https://obeloworks.com/ru/guide/comp.html" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:site_name" content="Lookout" />
+    <meta property="og:image:alt" content="Составы в Deadlock · контрпики | Lookout" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Составы в Deadlock · контрпики | Lookout" />
+    <meta name="twitter:description" content="Сильные и слабые стороны вашего и вражеского состава в Deadlock, стратегия и пики на свободные слоты." />
+    <meta name="twitter:image" content="https://obeloworks.com/guide/assets/map.png" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://obeloworks.com/#publisher","name":"Nexus lab","url":"https://obeloworks.com/"},{"@type":"WebSite","@id":"https://obeloworks.com/#website","name":"Lookout","alternateName":["룩아웃","Lookout for Deadlock"],"url":"https://obeloworks.com/","inLanguage":["ko","en","zh-Hans","ru"],"publisher":{"@id":"https://obeloworks.com/#publisher"}},{"@type":"WebPage","@id":"https://obeloworks.com/ru/guide/comp.html#webpage","url":"https://obeloworks.com/ru/guide/comp.html","name":"Составы в Deadlock · контрпики | Lookout","description":"Сильные и слабые стороны вашего и вражеского состава в Deadlock, стратегия и пики на свободные слоты.","inLanguage":"ru","isPartOf":{"@id":"https://obeloworks.com/#website"},"breadcrumb":{"@id":"https://obeloworks.com/ru/guide/comp.html#breadcrumbs"}},{"@type":"BreadcrumbList","@id":"https://obeloworks.com/ru/guide/comp.html#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Lookout","item":"https://obeloworks.com/ru/"},{"@type":"ListItem","position":2,"name":"Составы в Deadlock · контрпики | Lookout","item":"https://obeloworks.com/ru/guide/comp.html"}]}]}</script>
+    <link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/comp.html" />
+    <link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/comp.html" />
+    <link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/comp.html" />
+    <link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/comp.html" />
+    <link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/comp.html" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <script src="../guide/lib/site-lang.js"></script>
+    <link rel="stylesheet" href="../guide/lib/tokens.css" />
+    <link rel="stylesheet" href="../guide/lib/desktop.css" />
+    <link rel="stylesheet" href="../guide/lib/intel-ui.css" />
+    <link rel="stylesheet" href="../guide/lib/opgg.css" />
+    <link rel="stylesheet" href="../guide/lib/strategy.css" />
+    <link rel="stylesheet" href="../guide/lib/lane-ui.css" />
+    <link rel="stylesheet" href="../guide/lib/route-guide.css" />
+    <link rel="stylesheet" href="../guide/lib/map-atlas.css" />
+    <link rel="stylesheet" href="../guide/lib/painted.css" />
+    <link rel="stylesheet" href="../guide/guide.css" />
+    <link rel="stylesheet" href="../painted-site.css" />
+    <script src="../ad-policy.js"></script>
+    <script defer src="lib/i18n.js"></script>
+    <script defer src="lib/game-data.js"></script>
+    <script defer src="lib/item-catalog.js"></script>
+    <script defer src="lib/map-objectives.js"></script>
+    <script defer src="lib/jungle-ui.js"></script>
+    <script defer src="lib/hero-guide.js"></script>
+    <script defer src="lib/item-ko.js"></script>
+    <script defer src="lib/hero-types.js"></script>
+    <script defer src="lib/hero-builds.js"></script>
+    <script defer src="lib/hero-item-builds.js"></script>
+    <script defer src="lib/hero-ranges.js"></script>
+    <script defer src="lib/item-brief.js"></script>
+    <script defer src="lib/item-intel.js"></script>
+    <script defer src="lib/comp.js"></script>
+    <script defer src="lib/intel-ui.js"></script>
+    <script defer src="lib/opgg.js"></script>
+    <script defer src="lib/jungle-data.js"></script>
+    <script defer src="lib/map-points.js"></script>
+    <script defer src="lib/map-atlas-data.js"></script>
+    <script defer src="lib/map-atlas.js"></script>
+    <script defer src="lib/lane-route.js"></script>
+    <script defer src="lib/hero-meta.js"></script>
+    <script defer src="lib/hero-archetypes.js"></script>
+    <script defer src="lib/strategy-data.js"></script>
+    <script defer src="lib/strategy.js"></script>
+    <script defer src="lib/route-guide-data.js"></script>
+    <script defer src="lib/route-guide.js"></script>
+    <script defer src="main.js"></script>
+    <script defer src="https://js.rev.iq/obeloworks.com"></script>
+  </head>
+  <body data-title="comp" data-page-title="Составы в Deadlock · контрпики" data-page-description="Сильные и слабые стороны вашего и вражеского состава в Deadlock, стратегия и пики на свободные слоты." data-page="comp">
+    <aside class="side">
+      <a class="brand" href="/ru/"><img src="../favicon.svg" alt="" width="26" height="26" /><b>Lookout</b></a>
+      <nav class="menu" aria-label="Меню" data-t-label="menu"><a href="/ru/" class="nav-get"><b data-t="nav.download">Скачать</b><small data-t="nav.download.sub">Бесплатно · оверлей для Windows</small></a><a href="/ru/guide/"><b data-t="nav.guide">Гайд</b><small data-t="nav.guide.sub">Души · ветки · лес</small></a><a href="/ru/guide/heroes.html"><b data-t="nav.heroes">Герои</b><small data-t="nav.heroes.sub">Тиры · сборки</small></a><a href="/ru/guide/comp.html" aria-current="page"><b data-t="nav.comp">Состав команды</b><small data-t="nav.comp.sub">Контрпики · свободные слоты</small></a><a href="/ru/guide/map.html"><b data-t="nav.map">Карта</b><small data-t="nav.map.sub">Лагеря · ящики · магазины</small></a><a href="/ru/guide/routes.html"><b data-t="nav.routes">Маршруты по ветке</b><small data-t="nav.routes.sub">Лес между волнами</small></a></nav>
+      <div class="side-foot">
+        <a class="side-get" href="https://github.com/inspace9018/lookout-releases/releases/latest/download/Lookout-Setup.exe"><span data-t="side.get">Скачать бесплатно для Windows</span><small>Lookout <span data-version>0.1.14</span></small></a>
+        <label class="side-lang"><span class="side-lang-title" id="site-language-label"><span lang="ko">언어</span> / <span lang="en">Language</span> / <span lang="zh">语言</span> / <span lang="ru">Язык</span></span><select data-lang aria-labelledby="site-language-label"><option value="ko" lang="ko">한국어</option><option value="en" lang="en">English</option><option value="zh" lang="zh">简体中文</option><option value="ru" selected lang="ru">Русский</option></select></label>
+        <div class="side-meta"><a href="https://github.com/inspace9018/lookout-releases/issues/new/choose" data-t="side.bug">Сообщить об ошибке</a><a href="../privacy.html" data-t="side.privacy">Конфиденциальность</a></div>
+      </div>
+    </aside>
+    <div class="page">
+      <main id="app"><div class="page-heading"><div><h1>Состав</h1><p>Сильные и слабые стороны обеих команд, стратегия и выбор героев для свободных слотов</p></div><div class="inline"><button data-comp-clear>Сбросить</button></div></div><div class="comp-teams"><div class="comp-row active"><button class="comp-label" data-comp-side="us">Наша команда</button><button class="comp-slot" data-comp-side="us">+</button><button class="comp-slot" data-comp-side="us">+</button><button class="comp-slot" data-comp-side="us">+</button><button class="comp-slot" data-comp-side="us">+</button><button class="comp-slot" data-comp-side="us">+</button><button class="comp-slot" data-comp-side="us">+</button></div><div class="comp-row them "><button class="comp-label" data-comp-side="them">Команда врага</button><button class="comp-slot" data-comp-side="them">+</button><button class="comp-slot" data-comp-side="them">+</button><button class="comp-slot" data-comp-side="them">+</button><button class="comp-slot" data-comp-side="them">+</button><button class="comp-slot" data-comp-side="them">+</button><button class="comp-slot" data-comp-side="them">+</button></div></div><p class="note">Добавление в our team · нажмите на героя ниже. Нажмите на занятый слот, чтобы убрать.</p><div class="guide-top heroes"><button data-comp-add="1" >Инфернус</button><button data-comp-add="2" >Семь</button><button data-comp-add="3" >Виндикта</button><button data-comp-add="4" >Леди Гайст</button><button data-comp-add="6" >Абрамс</button><button data-comp-add="7" >Тень</button><button data-comp-add="8" >Макгиннис</button><button data-comp-add="10" >Парадокс</button><button data-comp-add="11" >Динамо</button><button data-comp-add="12" >Кельвин</button><button data-comp-add="13" >Пелена</button><button data-comp-add="14" >Холлидей</button><button data-comp-add="15" >Бибоп</button><button data-comp-add="16" >Калико</button><button data-comp-add="17" >Серый Коготь</button><button data-comp-add="18" >Мо и Мелкий</button><button data-comp-add="19" >Заточка</button><button data-comp-add="20" >Плющик</button><button data-comp-add="25" >Дозорный</button><button data-comp-add="27" >Ямато</button><button data-comp-add="31" >Хлыст</button><button data-comp-add="35" >Вязкус</button><button data-comp-add="50" >Карман</button><button data-comp-add="52" >Мираж</button><button data-comp-add="58" >Гадюка</button><button data-comp-add="60" >Синклер</button><button data-comp-add="63" >Мина</button><button data-comp-add="64" >Скиталец</button><button data-comp-add="65" >Венатор</button><button data-comp-add="66" >Виктор</button><button data-comp-add="67" >Пейдж</button><button data-comp-add="69" >Швейцар</button><button data-comp-add="72" >Билли</button><button data-comp-add="76" >Грейвс</button><button data-comp-add="77" >Аполлон</button><button data-comp-add="78" >Дохлый Дэнни</button><button data-comp-add="79" >Дрём</button><button data-comp-add="80" >Сильвер</button><button data-comp-add="81" >Селеста</button><button data-comp-add="84" >Крысиный король</button><button data-comp-add="85" >Соломон</button><button data-comp-add="86" >Виолетта</button><button data-comp-add="87" >Сестра Хэрроу</button><button data-comp-add="88" >Буся</button></div><div class="grid intel"><section class="card"><div class="card-head"><h2>Наш состав</h2><span class="label">Выбрать героев</span></div></section><section class="card"><div class="card-head"><h2>Состав врагов</h2><span class="label">Выбрать героев</span></div></section><section class="card"><div class="card-head"><h2>Стратегия</h2><span class="label">По противникам</span></div><p class="iu-empty">Выберите хотя бы по одному герою в каждой команде для стратегии.</p></section><section class="card"><div class="card-head"><h2>Рекомендуемый выбор</h2><span class="label">Для наших свободных слотов</span></div><div class="comp-suggest"><img src="assets/portraits/4-small.png" alt=""><div><b>Леди Гайст</b><small>Adds frontline · Adds ranged poke · Adds sustain</small></div><button data-comp-pick="4">Добавить</button></div><div class="comp-suggest"><img src="assets/portraits/18-small.png" alt=""><div><b>Мо и Мелкий</b><small>Adds frontline · Adds crowd control · Adds sustain</small></div><button data-comp-pick="18">Добавить</button></div><div class="comp-suggest"><img src="assets/portraits/72-small.png" alt=""><div><b>Билли</b><small>Adds frontline · Adds crowd control · Adds sustain</small></div><button data-comp-pick="72">Добавить</button></div><div class="comp-suggest"><img src="assets/portraits/6-small.png" alt=""><div><b>Абрамс</b><small>Adds frontline · Adds crowd control · Adds sustain</small></div><button data-comp-pick="6">Добавить</button></div><div class="comp-suggest"><img src="assets/portraits/19-small.png" alt=""><div><b>Заточка</b><small>Adds frontline · Adds ranged poke</small></div><button data-comp-pick="19">Добавить</button></div></section></div><p class="note">Грубая оценка по стилям, сильным и слабым сторонам из гайдов по героям. Не статистика побед.</p></main>
+      <aside class="ad-side" aria-label="Реклама" data-t-label="ad">
+        <small data-t="ad">Реклама</small>
+        <div class="ad-slot">
+          <a class="ad-house" href="/ru/"><b data-t="ad.house.title">Lookout — бесплатный оверлей</b><span data-t="ad.house.text">Показывает ульты врагов, респаун леса и маршруты по ветке поверх игры.</span><em data-t="ad.house.cta">Скачать бесплатно</em></a>
+          <div id="ad" data-ad="right-rail-1" data-ad-size="300x250"></div>
+        </div>
+        <div class="ad-slot ad-tall"><div data-ad="right-rail-2" data-ad-size="300x600"></div></div>
+      </aside>
+      <footer>
+        <span data-t="foot.note">© 2026 Nexus lab · Фанатский сайт, не связан с Valve</span>
+        <a href="https://github.com/inspace9018/lookout-releases/issues/new/choose" data-t="side.bug">Сообщить об ошибке</a>
+        <a href="../privacy.html" data-t="foot.privacy">Политика конфиденциальности</a>
+      </footer>
+    </div>
+    <script>
+      // The page in the visitor's language (lib/site-lang.js), before the release check below.
+      window.SITE_TEXT?.();
+      // The download buttons always get the newest installer; this writes that release's version and
+      // size next to them. Without an answer the version from the last site build stays.
+      fetch('https://api.github.com/repos/inspace9018/lookout-releases/releases/latest')
+        .then(r => (r.ok ? r.json() : null))
+        .then(r => {
+          const v = r && /^v?(\d+\.\d+\.\d+)$/.exec(r.tag_name || ''),
+            exe = r && (r.assets || []).find(a => a.name === 'Lookout-Setup.exe');
+          if (v) for (const e of document.querySelectorAll('[data-version]')) e.textContent = v[1];
+          if (exe) for (const e of document.querySelectorAll('[data-size]')) e.textContent = Math.round(exe.size / 1048576) + (window.SITE_LANG === 'ru' ? ' МБ' : 'MB');
+        })
+        .catch(() => {});
+    </script>
+  </body>
+</html>

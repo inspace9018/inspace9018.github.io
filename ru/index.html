@@ -1,0 +1,148 @@
+<!doctype html>
+<!-- Written by lane-electron/tools/build-site-guide.cjs. Edit there, not here. -->
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lookout · бесплатный оверлей для Deadlock на Windows</title>
+    <meta name="google-site-verification" content="LSKutu72gM2Q0TodS1ddjb2Uv0uJtL1DjRBEgMv0Evo" />
+    <meta name="description" content="Бесплатный оверлей для Windows: респаун леса, маршруты, ульты врагов и таймеры рядом с матчем Deadlock. Гайд, сборки и карта открываются в браузере без установки." />
+    <meta property="og:title" content="Lookout · бесплатный оверлей для Deadlock на Windows" />
+    <meta property="og:description" content="Бесплатный оверлей для Windows: респаун леса, маршруты, ульты врагов и таймеры рядом с матчем Deadlock. Гайд, сборки и карта открываются в браузере без установки." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://obeloworks.com/ru/" />
+    <meta property="og:image" content="https://obeloworks.com/img/overlay-play.jpg" />
+    <meta name="theme-color" content="#16130f" />
+    <link rel="canonical" href="https://obeloworks.com/ru/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:site_name" content="Lookout" />
+    <meta property="og:image:alt" content="Lookout · бесплатный оверлей для Deadlock на Windows" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Lookout · бесплатный оверлей для Deadlock на Windows" />
+    <meta name="twitter:description" content="Бесплатный оверлей для Windows: респаун леса, маршруты, ульты врагов и таймеры рядом с матчем Deadlock. Гайд, сборки и карта открываются в браузере без установки." />
+    <meta name="twitter:image" content="https://obeloworks.com/img/overlay-play.jpg" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://obeloworks.com/#publisher","name":"Nexus lab","url":"https://obeloworks.com/"},{"@type":"WebSite","@id":"https://obeloworks.com/#website","name":"Lookout","alternateName":["룩아웃","Lookout for Deadlock"],"url":"https://obeloworks.com/","inLanguage":["ko","en","zh-Hans","ru"],"publisher":{"@id":"https://obeloworks.com/#publisher"}},{"@type":"WebPage","@id":"https://obeloworks.com/ru/#webpage","url":"https://obeloworks.com/ru/","name":"Lookout · бесплатный оверлей для Deadlock на Windows","description":"Бесплатный оверлей для Windows: респаун леса, маршруты, ульты врагов и таймеры рядом с матчем Deadlock. Гайд, сборки и карта открываются в браузере без установки.","inLanguage":"ru","isPartOf":{"@id":"https://obeloworks.com/#website"},"mainEntity":{"@id":"https://obeloworks.com/#lookout"}},{"@type":"SoftwareApplication","@id":"https://obeloworks.com/#lookout","name":"Lookout","alternateName":"룩아웃","url":"https://obeloworks.com/ru/","description":"Бесплатный оверлей для Windows: респаун леса, маршруты, ульты врагов и таймеры рядом с матчем Deadlock. Гайд, сборки и карта открываются в браузере без установки.","operatingSystem":"Windows","applicationCategory":"UtilitiesApplication","softwareVersion":"0.1.14","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"downloadUrl":"https://github.com/inspace9018/lookout-releases/releases/latest/download/Lookout-Setup.exe","screenshot":"https://obeloworks.com/img/overlay-play.jpg","publisher":{"@id":"https://obeloworks.com/#publisher"}}]}</script>
+    <link rel="alternate" hreflang="ko" href="https://obeloworks.com/" />
+    <link rel="alternate" hreflang="en" href="https://obeloworks.com/en/" />
+    <link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/" />
+    <link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/" />
+    <link rel="alternate" hreflang="x-default" href="https://obeloworks.com/" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <script src="guide/lib/site-lang.js"></script>
+    <link rel="stylesheet" href="guide/lib/tokens.css" />
+    <link rel="stylesheet" href="guide/lib/desktop.css" />
+    <link rel="stylesheet" href="guide/lib/intel-ui.css" />
+    <link rel="stylesheet" href="guide/lib/opgg.css" />
+    <link rel="stylesheet" href="guide/lib/strategy.css" />
+    <link rel="stylesheet" href="guide/lib/lane-ui.css" />
+    <link rel="stylesheet" href="guide/lib/route-guide.css" />
+    <link rel="stylesheet" href="guide/lib/map-atlas.css" />
+    <link rel="stylesheet" href="guide/lib/painted.css" />
+    <link rel="stylesheet" href="guide/guide.css" />
+    <link rel="stylesheet" href="painted-site.css" />
+    <script src="ad-policy.js"></script>
+    <script defer src="https://js.rev.iq/obeloworks.com"></script>
+  </head>
+  <body data-title="front" data-page-title="Lookout · бесплатный оверлей для Deadlock на Windows" data-page-description="Бесплатный оверлей для Windows: респаун леса, маршруты, ульты врагов и таймеры рядом с матчем Deadlock. Гайд, сборки и карта открываются в браузере без установки." data-page="download">
+    <aside class="side">
+      <a class="brand" href="/ru/"><img src="favicon.svg" alt="" width="26" height="26" /><b>Lookout</b></a>
+      <nav class="menu" aria-label="Меню" data-t-label="menu"><a href="/ru/" aria-current="page" class="nav-get"><b data-t="nav.download">Скачать</b><small data-t="nav.download.sub">Бесплатно · оверлей для Windows</small></a><a href="/ru/guide/"><b data-t="nav.guide">Гайд</b><small data-t="nav.guide.sub">Души · ветки · лес</small></a><a href="/ru/guide/heroes.html"><b data-t="nav.heroes">Герои</b><small data-t="nav.heroes.sub">Тиры · сборки</small></a><a href="/ru/guide/comp.html"><b data-t="nav.comp">Состав команды</b><small data-t="nav.comp.sub">Контрпики · свободные слоты</small></a><a href="/ru/guide/map.html"><b data-t="nav.map">Карта</b><small data-t="nav.map.sub">Лагеря · ящики · магазины</small></a><a href="/ru/guide/routes.html"><b data-t="nav.routes">Маршруты по ветке</b><small data-t="nav.routes.sub">Лес между волнами</small></a></nav>
+      <div class="side-foot">
+        <a class="side-get" href="https://github.com/inspace9018/lookout-releases/releases/latest/download/Lookout-Setup.exe"><span data-t="side.get">Скачать бесплатно для Windows</span><small>Lookout <span data-version>0.1.14</span></small></a>
+        <label class="side-lang"><span class="side-lang-title" id="site-language-label"><span lang="ko">언어</span> / <span lang="en">Language</span> / <span lang="zh">语言</span> / <span lang="ru">Язык</span></span><select data-lang aria-labelledby="site-language-label"><option value="ko" lang="ko">한국어</option><option value="en" lang="en">English</option><option value="zh" lang="zh">简体中文</option><option value="ru" selected lang="ru">Русский</option></select></label>
+        <div class="side-meta"><a href="https://github.com/inspace9018/lookout-releases/issues/new/choose" data-t="side.bug">Сообщить об ошибке</a><a href="privacy.html" data-t="side.privacy">Конфиденциальность</a></div>
+      </div>
+    </aside>
+    <div class="page">
+      <main class="dl">
+        <section class="dl-hero">
+          <div class="dl-copy">
+            <span class="dl-kicker" data-t="dl.kicker">Оверлей для Deadlock · бесплатно</span>
+            <h1 data-t="dl.h1">Маленький блокнот рядом с матчем Deadlock</h1>
+            <p data-t="dl.searchintro">Lookout — бесплатное приложение-помощник, которое можно держать рядом во время матча Deadlock.</p>
+            <p data-t="dl.lead">Читает экран игры и тихо показывает слева только то, что важно сейчас: когда вернётся лес, куда сходить после волны, открыт ли у врага ульт.</p>
+            <div class="dl-actions">
+              <a class="dl-button" href="https://github.com/inspace9018/lookout-releases/releases/latest/download/Lookout-Setup.exe" data-t="dl.button">Скачать бесплатно для Windows</a>
+              <span class="dl-meta" data-t="dl.meta">Версия <b data-version>0.1.14</b> · установщик <span data-size>около 150 МБ</span> · <a href="https://github.com/inspace9018/lookout-releases/releases/latest">Что нового</a></span>
+            </div>
+            <p class="dl-req" data-t="dl.req">Только Windows · игра в окне или в окне без рамки</p>
+          </div>
+          <a class="dl-shot" href="img/ru/overlay-play.jpg"><img src="img/ru/overlay-play.jpg" alt="В матче: панель слева, оповещения сверху и таймеры леса на мини-карте" data-t-alt="dl.shot.alt" width="1600" height="900" /></a>
+        </section>
+        <section class="dl-steps" aria-label="Установка" data-t-label="dl.steps">
+          <div><b>1</b><p data-t="dl.step1"><strong>Запустите установщик</strong>Откройте скачанный Lookout-Setup.exe. Новые версии приложение скачивает само.</p></div>
+          <div><b>2</b><p data-t="dl.step2"><strong>Режим экрана</strong>Запустите Deadlock в окне или в окне без рамки.</p></div>
+          <div><b>3</b><p data-t="dl.step3"><strong>Начните матч</strong>Оверлей появится в матче. F10 скрывает его или возвращает.</p></div>
+        </section>
+        <h2 class="dl-h" data-t="dl.h.ingame">Что видно в матче</h2>
+        <section class="dl-gallery">
+          <figure>
+            <a href="img/ru/overlay-list.jpg"><img src="img/ru/overlay-list.jpg" alt="Панель слева: респаун леса, души до уровня, составы" data-t-alt="dl.list.alt" width="420" height="420" loading="lazy" /></a>
+            <figcaption data-t="dl.list.cap"><b>Панель слева</b>Респаун лесных лагерей, души до уровня и откроется ли ульт, составы команд.</figcaption>
+          </figure>
+          <figure>
+            <a href="img/ru/overlay-tab.jpg"><img src="img/ru/overlay-tab.jpg" alt="Экран Tab: заметки по каждому врагу и контрпики" data-t-alt="dl.tab.alt" width="1600" height="900" loading="lazy" /></a>
+            <figcaption data-t="dl.tab.cap"><b>Экран Tab</b>Нажмите Tab: открыт ли ульт у каждого врага и контрпики.</figcaption>
+          </figure>
+          <figure>
+            <a href="img/ru/overlay-select.jpg"><img src="img/ru/overlay-select.jpg" alt="Выбор героя: винрейт и пикрейт на портретах, данные о выбранном герое" data-t-alt="dl.select.alt" width="1600" height="900" loading="lazy" /></a>
+            <figcaption data-t="dl.select.cap"><b>Выбор героя</b>Винрейт и пикрейт на портретах, сильные и слабые стороны пика.</figcaption>
+          </figure>
+        </section>
+        <section class="dl-features">
+          <div class="dl-more">
+            <b data-t="dl.routes.h">Маршруты по ветке</b>
+            <p data-t="dl.routes.p">Страница маршрутов в разделе карты на панели: круг под вашу ветку и команду, ящики по пути туда (A) и обратно (B) и сколько это займёт.</p>
+            <b data-t="dl.more.h">А также</b>
+            <ul>
+              <li data-t="dl.more.1">Таймеры респауна лагерей и этажи на мини-карте</li>
+              <li data-t="dl.more.2">По Tab: открыт ли ульт у каждого врага и контрпики</li>
+              <li data-t="dl.more.3">В магазине — предметы, которые стоит взять против этой команды</li>
+              <li data-t="dl.more.4">Винрейт и пикрейт на портретах при выборе героя</li>
+              <li data-t="dl.more.5">Оповещения за 30 с до появления, например малых лагерей в 2:00</li>
+              <li data-t="dl.more.6">Души и солдаты до уровня и откроется ли на нём ульт</li>
+              <li data-t="dl.more.7">Патчноуты Deadlock на панели управления</li>
+            </ul>
+          </div>
+        </section>
+        <h2 class="dl-h" data-t="dl.h.web">В браузере, без установки</h2>
+        <section class="dl-pages"><a href="/ru/guide/"><b data-t="nav.guide">Гайд</b><span data-t="nav.guide.sub">Души · ветки · лес</span></a><a href="/ru/guide/heroes.html"><b data-t="nav.heroes">Герои</b><span data-t="nav.heroes.sub">Тиры · сборки</span></a><a href="/ru/guide/comp.html"><b data-t="nav.comp">Состав команды</b><span data-t="nav.comp.sub">Контрпики · свободные слоты</span></a><a href="/ru/guide/map.html"><b data-t="nav.map">Карта</b><span data-t="nav.map.sub">Лагеря · ящики · магазины</span></a><a href="/ru/guide/routes.html"><b data-t="nav.routes">Маршруты по ветке</b><span data-t="nav.routes.sub">Лес между волнами</span></a></section>
+        <h2 class="dl-h" data-t="dl.faq.h">Перед использованием Lookout</h2>
+        <section class="dl-questions"><article><h3 data-t="dl.faq.q1">Что показывает Lookout?</h3><p data-t="dl.faq.a1">Это оверлей для Deadlock на Windows с таймерами леса, напоминаниями, сведениями о героях и эффектах улучшения способностей. Нужные элементы выбираются в настройках.</p></article><article><h3 data-t="dl.faq.q2">Это бесплатно? Какие требования?</h3><p data-t="dl.faq.a2">Приложение бесплатно и работает на Windows. Запускайте Deadlock в оконном режиме или окне без рамки. На панели и сайте есть реклама.</p></article><article><h3 data-t="dl.faq.q3">Можно пользоваться сайтом без установки?</h3><p data-t="dl.faq.a3">Гайд, герои и сборки, анализ составов, карта и маршруты доступны в браузере. Для оверлея поверх игры нужно приложение Windows.</p></article><article><h3 data-t="dl.faq.q4">Как приложение получает информацию об игре?</h3><p data-t="dl.faq.a4">Распознавание экрана выполняется на этом ПК. Необязательная связь с HUD использует мод и настройки в папке игры с резервной копией перед изменениями. Приложение не читает память игры, не внедряет DLL и не изменяет пакеты. Это фанатский инструмент, не связанный с Valve.</p></article><article><h3 data-t="dl.faq.q5">Насколько снизится FPS?</h3><p data-t="dl.faq.a5">Это зависит от ПК и включённых функций; фиксированного значения нет. В настройках можно посмотреть использование CPU и отключить лишнее. Начиная с 0.1.14, скрытие оверлея клавишей F10 также приостанавливает распознавание экрана.</p></article><article><h3 data-t="dl.faq.q6">Можно скрыть или настроить оверлей?</h3><p data-t="dl.faq.a6">По умолчанию F10 показывает и скрывает оверлей, F11 открывает детали мини-карты. В настройках меняются клавиши, элементы, размер текста и прозрачность фона.</p></article></section>
+        <p class="dl-note" data-t="dl.note">
+          По умолчанию распознавание работает на этом ПК и не меняет файлы игры. Необязательная связь с HUD после резервного копирования ставит один файл мода и добавляет три строки в gameinfo.gi; её можно удалить с панели. Скриншоты для отзыва отправляются только после выбора и согласия. Фанатский инструмент, не читающий память игры и не связанный с Valve.
+        </p>
+      </main>
+      <aside class="ad-side" aria-label="Реклама" data-t-label="ad">
+        <small data-t="ad">Реклама</small>
+        <div class="ad-slot">
+          <a class="ad-house" href="/ru/"><b data-t="ad.house.title">Lookout — бесплатный оверлей</b><span data-t="ad.house.text">Показывает ульты врагов, респаун леса и маршруты по ветке поверх игры.</span><em data-t="ad.house.cta">Скачать бесплатно</em></a>
+          <div id="ad" data-ad="right-rail-1" data-ad-size="300x250"></div>
+        </div>
+        <div class="ad-slot ad-tall"><div data-ad="right-rail-2" data-ad-size="300x600"></div></div>
+      </aside>
+      <footer>
+        <span data-t="foot.note">© 2026 Nexus lab · Фанатский сайт, не связан с Valve</span>
+        <a href="https://github.com/inspace9018/lookout-releases/issues/new/choose" data-t="side.bug">Сообщить об ошибке</a>
+        <a href="privacy.html" data-t="foot.privacy">Политика конфиденциальности</a>
+      </footer>
+    </div>
+    <script>
+      // The page in the visitor's language (lib/site-lang.js), before the release check below.
+      window.SITE_TEXT?.();
+      // The download buttons always get the newest installer; this writes that release's version and
+      // size next to them. Without an answer the version from the last site build stays.
+      fetch('https://api.github.com/repos/inspace9018/lookout-releases/releases/latest')
+        .then(r => (r.ok ? r.json() : null))
+        .then(r => {
+          const v = r && /^v?(\d+\.\d+\.\d+)$/.exec(r.tag_name || ''),
+            exe = r && (r.assets || []).find(a => a.name === 'Lookout-Setup.exe');
+          if (v) for (const e of document.querySelectorAll('[data-version]')) e.textContent = v[1];
+          if (exe) for (const e of document.querySelectorAll('[data-size]')) e.textContent = Math.round(exe.size / 1048576) + (window.SITE_LANG === 'ru' ? ' МБ' : 'MB');
+        })
+        .catch(() => {});
+    </script>
+  </body>
+</html>

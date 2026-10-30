@@ -1,0 +1,90 @@
+<!doctype html>
+<!-- Written by lane-electron/tools/build-site-guide.cjs. Edit there, not here. -->
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <base href="/guide/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FPS, нагрузка CPU и рывки мыши в Lookout | Lookout</title>
+
+    <meta name="description" content="Фиксированное падение FPS пока не измерено. Нагрузка CPU и FPS — разные показатели. Ниже отдельно приведены сохранённые CPU-данные, тест отдельного окна и способ самостоятельного сравнения." />
+    <meta property="og:title" content="FPS, нагрузка CPU и рывки мыши в Lookout | Lookout" />
+    <meta property="og:description" content="Фиксированное падение FPS пока не измерено. Нагрузка CPU и FPS — разные показатели. Ниже отдельно приведены сохранённые CPU-данные, тест отдельного окна и способ самостоятельного сравнения." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://obeloworks.com/ru/help/performance/" />
+    <meta property="og:image" content="https://obeloworks.com/img/overlay-play.jpg" />
+    <meta name="theme-color" content="#16130f" />
+    <link rel="canonical" href="https://obeloworks.com/ru/help/performance/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:site_name" content="Lookout" />
+    <meta property="og:image:alt" content="FPS, нагрузка CPU и рывки мыши в Lookout | Lookout" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="FPS, нагрузка CPU и рывки мыши в Lookout | Lookout" />
+    <meta name="twitter:description" content="Фиксированное падение FPS пока не измерено. Нагрузка CPU и FPS — разные показатели. Ниже отдельно приведены сохранённые CPU-данные, тест отдельного окна и способ самостоятельного сравнения." />
+    <meta name="twitter:image" content="https://obeloworks.com/img/overlay-play.jpg" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://obeloworks.com/#publisher","name":"Nexus lab","url":"https://obeloworks.com/"},{"@type":"WebSite","@id":"https://obeloworks.com/#website","name":"Lookout","alternateName":["룩아웃","Lookout for Deadlock"],"url":"https://obeloworks.com/","inLanguage":["ko","en","zh-Hans","ru"],"publisher":{"@id":"https://obeloworks.com/#publisher"}},{"@type":"WebPage","@id":"https://obeloworks.com/ru/help/performance/#webpage","url":"https://obeloworks.com/ru/help/performance/","name":"FPS, нагрузка CPU и рывки мыши в Lookout | Lookout","description":"Фиксированное падение FPS пока не измерено. Нагрузка CPU и FPS — разные показатели. Ниже отдельно приведены сохранённые CPU-данные, тест отдельного окна и способ самостоятельного сравнения.","inLanguage":"ru","isPartOf":{"@id":"https://obeloworks.com/#website"},"mainEntity":{"@id":"https://obeloworks.com/ru/help/performance/#content"},"breadcrumb":{"@id":"https://obeloworks.com/ru/help/performance/#breadcrumbs"}},{"@type":"TechArticle","headline":"FPS, нагрузка CPU и рывки мыши в Lookout","description":"Фиксированное падение FPS пока не измерено. Нагрузка CPU и FPS — разные показатели. Ниже отдельно приведены сохранённые CPU-данные, тест отдельного окна и способ самостоятельного сравнения.","inLanguage":"ru","datePublished":"2026-10-31","dateModified":"2026-10-31","author":{"@id":"https://obeloworks.com/#publisher"},"@id":"https://obeloworks.com/ru/help/performance/#content"},{"@type":"BreadcrumbList","@id":"https://obeloworks.com/ru/help/performance/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Lookout","item":"https://obeloworks.com/ru/"},{"@type":"ListItem","position":2,"name":"Помощь","item":"https://obeloworks.com/ru/help/"},{"@type":"ListItem","position":3,"name":"FPS, нагрузка CPU и рывки мыши в Lookout","item":"https://obeloworks.com/ru/help/performance/"}]}]}</script>
+    <link rel="alternate" hreflang="ko" href="https://obeloworks.com/help/performance/" />
+    <link rel="alternate" hreflang="en" href="https://obeloworks.com/en/help/performance/" />
+    <link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/help/performance/" />
+    <link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/help/performance/" />
+    <link rel="alternate" hreflang="x-default" href="https://obeloworks.com/help/performance/" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <script src="../guide/lib/site-lang.js"></script>
+    <link rel="stylesheet" href="../guide/lib/tokens.css" />
+    <link rel="stylesheet" href="../guide/lib/desktop.css" />
+    <link rel="stylesheet" href="../guide/lib/intel-ui.css" />
+    <link rel="stylesheet" href="../guide/lib/opgg.css" />
+    <link rel="stylesheet" href="../guide/lib/strategy.css" />
+    <link rel="stylesheet" href="../guide/lib/lane-ui.css" />
+    <link rel="stylesheet" href="../guide/lib/route-guide.css" />
+    <link rel="stylesheet" href="../guide/lib/map-atlas.css" />
+    <link rel="stylesheet" href="../guide/lib/painted.css" />
+    <link rel="stylesheet" href="../guide/guide.css" />
+    <link rel="stylesheet" href="../painted-site.css" />
+    <script src="../ad-policy.js"></script>
+    <script defer src="https://js.rev.iq/obeloworks.com"></script>
+  </head>
+  <body data-title="article" data-page-title="FPS, нагрузка CPU и рывки мыши в Lookout" data-page-description="Фиксированное падение FPS пока не измерено. Нагрузка CPU и FPS — разные показатели. Ниже отдельно приведены сохранённые CPU-данные, тест отдельного окна и способ самостоятельного сравнения." data-page="article">
+    <aside class="side">
+      <a class="brand" href="/ru/"><img src="../favicon.svg" alt="" width="26" height="26" /><b>Lookout</b></a>
+      <nav class="menu" aria-label="Меню" data-t-label="menu"><a href="/ru/" class="nav-get"><b data-t="nav.download">Скачать</b><small data-t="nav.download.sub">Бесплатно · оверлей для Windows</small></a><a href="/ru/guide/"><b data-t="nav.guide">Гайд</b><small data-t="nav.guide.sub">Души · ветки · лес</small></a><a href="/ru/guide/heroes.html"><b data-t="nav.heroes">Герои</b><small data-t="nav.heroes.sub">Тиры · сборки</small></a><a href="/ru/guide/comp.html"><b data-t="nav.comp">Состав команды</b><small data-t="nav.comp.sub">Контрпики · свободные слоты</small></a><a href="/ru/guide/map.html"><b data-t="nav.map">Карта</b><small data-t="nav.map.sub">Лагеря · ящики · магазины</small></a><a href="/ru/guide/routes.html"><b data-t="nav.routes">Маршруты по ветке</b><small data-t="nav.routes.sub">Лес между волнами</small></a><a href="/ru/help/"><b data-t="nav.help">Помощь</b><small data-t="nav.help.sub">Установка · нагрузка · помощь</small></a></nav>
+      <div class="side-foot">
+        <a class="side-get" href="https://github.com/inspace9018/lookout-releases/releases/latest/download/Lookout-Setup.exe"><span data-t="side.get">Скачать бесплатно для Windows</span><small>Lookout <span data-version>0.1.14</span></small></a>
+        <label class="side-lang"><span class="side-lang-title" id="site-language-label"><span lang="ko">언어</span> / <span lang="en">Language</span> / <span lang="zh">语言</span> / <span lang="ru">Язык</span></span><select data-lang aria-labelledby="site-language-label"><option value="ko" lang="ko">한국어</option><option value="en" lang="en">English</option><option value="zh" lang="zh">简体中文</option><option value="ru" selected lang="ru">Русский</option></select></label>
+        <div class="side-meta"><a href="https://github.com/inspace9018/lookout-releases/issues/new/choose" data-t="side.bug">Сообщить об ошибке</a><a href="../privacy.html" data-t="side.privacy">Конфиденциальность</a></div>
+      </div>
+    </aside>
+    <div class="page">
+      <main class="doc-page"><nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="/ru/">Lookout</a> / <a href="/ru/help/">Помощь</a></nav><header class="doc-heading"><p class="label">Документ проверен · 2026-10-31</p><h1>FPS, нагрузка CPU и рывки мыши в Lookout</h1><p class="doc-lead">Фиксированное падение FPS пока не измерено. Нагрузка CPU и FPS — разные показатели. Ниже отдельно приведены сохранённые CPU-данные, тест отдельного окна и способ самостоятельного сравнения.</p></header><section class="doc-section"><h2>Доступные CPU-данные</h2><p>Приближённая коррекция 360 сохранённых игровых CPU-замеров до 0.1.14 на одном i7-12700F с 20 логическими процессорами. Это не сравнение FPS до и после.</p><dl class="doc-facts"><div><dt>Медиана</dt><dd>≈ 6.2%</dd></div><div><dt>95th percentile</dt><dd>≈ 7.8%</dd></div><div><dt>Максимум</dt><dd>≈ 9.6%</dd></div></dl><p class="note">Доля Lookout от общей мощности CPU. Из-за округления точное восстановление невозможно. Эти числа не переводятся в FPS или задержку мыши.</p></section><section class="doc-section" id="section-1"><h2>Изменения в 0.1.14</h2><p>Убрана неиспользуемая пересылка движений мыши. Перечисление окон каждые 15 секунд заменено отдельным наблюдением за окном. Скрытие по F10 приостанавливает захват и OCR. Исправлено занижение CPU.</p><p class="doc-links"><a href="https://github.com/inspace9018/lookout-releases/releases/tag/v0.1.14">Изменения 0.1.14</a></p></section><section class="doc-section" id="section-2"><h2>Сравнение в одинаковых условиях</h2><ol><li>Зафиксируйте разрешение, графику, лимит кадров и сцену. Запишите версию игры и характеристики ПК.</li><li>Сравните полностью закрытый Lookout, приложение с видимым оверлеем и скрытие по F10. Скрытие отличается от полного закрытия.</li><li>По возможности запишите не только средний FPS, но и низкие значения и время кадра. Повторите сцену, чтобы отделить случайную боевую нагрузку.</li></ol></section><section class="doc-section" id="section-3"><h2>Если рывки остаются</h2><p>Отключите лишние элементы и сравните CPU. В отзыве опишите условия, разницу при скрытии и измеренный FPS. Диагностика и скриншоты отправляются после проверки и согласия.</p><p class="doc-links"><a href="/evidence/performance-2026-10-30.json">Данные измерений и ограничения (JSON)</a></p></section><section class="doc-section"><h2>Читайте также</h2><div class="doc-related"><a href="/ru/help/install/">Установка Lookout и проверка отсутствующего оверлея</a><a href="/ru/guide/jungle-timers/">Первое появление и респаун леса в Deadlock</a><a href="/ru/guide/brawl/">Street Brawl и обычный Deadlock: отображение Lookout</a><a href="/ru/guide/ability-upgrades/">Как смотреть эффекты улучшений способностей по Tab</a></div></section><p class="note">Документация Lookout. Правила и числа относятся к указанным датам источников и могут изменяться с патчами.</p></main>
+      <aside class="ad-side" aria-label="Реклама" data-t-label="ad">
+        <small data-t="ad">Реклама</small>
+        <div class="ad-slot">
+          <a class="ad-house" href="/ru/"><b data-t="ad.house.title">Lookout — бесплатный оверлей</b><span data-t="ad.house.text">Показывает ульты врагов, респаун леса и маршруты по ветке поверх игры.</span><em data-t="ad.house.cta">Скачать бесплатно</em></a>
+          <div id="ad" data-ad="right-rail-1" data-ad-size="300x250"></div>
+        </div>
+        <div class="ad-slot ad-tall"><div data-ad="right-rail-2" data-ad-size="300x600"></div></div>
+      </aside>
+      <footer>
+        <span data-t="foot.note">© 2026 Nexus lab · Фанатский сайт, не связан с Valve</span>
+        <a href="https://github.com/inspace9018/lookout-releases/issues/new/choose" data-t="side.bug">Сообщить об ошибке</a>
+        <a href="../privacy.html" data-t="foot.privacy">Политика конфиденциальности</a>
+      </footer>
+    </div>
+    <script>
+      // The page in the visitor's language (lib/site-lang.js), before the release check below.
+      window.SITE_TEXT?.();
+      // The download buttons always get the newest installer; this writes that release's version and
+      // size next to them. Without an answer the version from the last site build stays.
+      fetch('https://api.github.com/repos/inspace9018/lookout-releases/releases/latest')
+        .then(r => (r.ok ? r.json() : null))
+        .then(r => {
+          const v = r && /^v?(\d+\.\d+\.\d+)$/.exec(r.tag_name || ''),
+            exe = r && (r.assets || []).find(a => a.name === 'Lookout-Setup.exe');
+          if (v) for (const e of document.querySelectorAll('[data-version]')) e.textContent = v[1];
+          if (exe) for (const e of document.querySelectorAll('[data-size]')) e.textContent = Math.round(exe.size / 1048576) + (window.SITE_LANG === 'ru' ? ' МБ' : 'MB');
+        })
+        .catch(() => {});
+    </script>
+  </body>
+</html>

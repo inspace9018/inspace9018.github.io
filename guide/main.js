@@ -15,15 +15,28 @@
   window.lane = { command: async () => null, onState() {} };
   const heading = (title, sub, action = '') => `<div class="page-heading"><div><h1>${title}</h1><p>${sub}</p></div>${action}</div>`;
   const params = new URLSearchParams(location.search),
-    heroParam = +params.get('hero') || null;
+    heroParam = +(params.get('hero') || document.body.dataset.heroId) || null;
+  const heroAddress = id => {
+    const slug = window.SITE_HERO_PATHS?.[id];
+    return slug ? (window.SITE_LANG === 'ko' ? '' : '/' + window.SITE_LANG) + '/guide/heroes/' + slug + '/' : null;
+  };
+  if (params.has('hero') && heroAddress(heroParam)) {
+    const canonical = new URL(location.href);
+    canonical.pathname = heroAddress(heroParam);
+    canonical.searchParams.delete('hero');
+    location.replace(canonical.href);
+    return;
+  }
   const setHero = id => {
+    const destination = heroAddress(id);
+    if (destination && destination !== location.pathname) { location.href = destination; return true; }
     const u = new URL(location.href);
     u.searchParams.set('hero', id);
     history.replaceState(null, '', u);
   };
 
   // 영웅: hero list with tiers, and the chosen hero's abilities and item builds.
-  const guideView = { focus: 0, skill: 1, build: null, item: null, sheet: false };
+  const guideView = { focus: 0, skill: 1, build: null, item: null, sheet: false, ib: !!document.body.dataset.heroId };
   let guideId = heroParam || (window.HERO_GUIDE || [])[0]?.id,
     guideQuery = '',
     heroSort = 'tier';
@@ -87,7 +100,14 @@
 
   const draw = {
     index: () => StrategyUI.guidePage(data),
-    heroes: () => heading(document.body.dataset.pageTitle, document.body.dataset.pageDescription) + OpggUI.heroes(guideId, guideQuery, heroSort, guideView),
+    heroes: () => {
+      let html = OpggUI.heroes(guideId, guideQuery, heroSort, guideView);
+      if (document.body.dataset.heroId) html = html.replace(/<section class="op-box op-list">[\s\S]*?<\/section>/, '');
+      else html = html.replace(/(<tr[^>]*data-guide-id="(\d+)"[^>]*>[\s\S]*?<b>)([\s\S]*?)(<\/b>)/g, (all, before, id, name, after) => before + '<a data-hero-link href="' + heroAddress(id) + '">' + name + '</a>' + after);
+      const stats = window.HERO_ITEM_BUILDS;
+      const scope = document.body.dataset.heroId && stats ? '<p class="note hero-scope">' + stats.updated + ' · ' + stats.days + ' days · ' + esc(stats.source) + ' · <a href="https://deadlock-api.com/">Deadlock API</a></p>' : '';
+      return heading(document.body.dataset.pageTitle, document.body.dataset.pageDescription) + html + scope;
+    },
     comp: compPage,
     map: () => MapAtlas.page(),
     routes: () => RouteGuide.page(data, routePick, heading)
@@ -109,6 +129,7 @@
   }
 
   document.addEventListener('click', e => {
+    if (e.target.closest('a[data-hero-link]')) return;
     // 공략: the 목차, cross-links and footnote marks scroll within the page (kept in the address).
     const sec = window.StrategyUI?.pick(e.target);
     if (sec) {
@@ -121,7 +142,7 @@
     if (row) {
       guideId = +row.dataset.guideId;
       guideView.build = guideView.item = null;
-      setHero(guideId);
+      if (setHero(guideId)) return;
       render();
       $('.op-detail')?.scrollIntoView({ block: 'start' });
       return;
@@ -133,7 +154,7 @@
       guideId = +d.guideId;
       guideView.skill = 1;
       guideView.build = guideView.item = null;
-      setHero(guideId);
+      if (setHero(guideId)) return;
     } else if (d.heroBuild) {
       guideView.build = d.heroBuild;
       guideView.item = null;

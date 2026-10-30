@@ -1,0 +1,90 @@
+<!doctype html>
+<!-- Written by lane-electron/tools/build-site-guide.cjs. Edit there, not here. -->
+<html lang="zh-Hans">
+  <head>
+    <meta charset="utf-8" />
+    <base href="/guide/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Deadlock 街头乱斗与普通对局：Lookout 显示差异 | Lookout</title>
+
+    <meta name="description" content="街头乱斗为 4 对 4，普通对局为 6 对 6。Lookout 会按模式调整显示，乱斗中不使用野区或商店叠加层。" />
+    <meta property="og:title" content="Deadlock 街头乱斗与普通对局：Lookout 显示差异 | Lookout" />
+    <meta property="og:description" content="街头乱斗为 4 对 4，普通对局为 6 对 6。Lookout 会按模式调整显示，乱斗中不使用野区或商店叠加层。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://obeloworks.com/zh/guide/brawl/" />
+    <meta property="og:image" content="https://obeloworks.com/img/overlay-play.jpg" />
+    <meta name="theme-color" content="#16130f" />
+    <link rel="canonical" href="https://obeloworks.com/zh/guide/brawl/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:site_name" content="Lookout" />
+    <meta property="og:image:alt" content="Deadlock 街头乱斗与普通对局：Lookout 显示差异 | Lookout" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Deadlock 街头乱斗与普通对局：Lookout 显示差异 | Lookout" />
+    <meta name="twitter:description" content="街头乱斗为 4 对 4，普通对局为 6 对 6。Lookout 会按模式调整显示，乱斗中不使用野区或商店叠加层。" />
+    <meta name="twitter:image" content="https://obeloworks.com/img/overlay-play.jpg" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://obeloworks.com/#publisher","name":"Nexus lab","url":"https://obeloworks.com/"},{"@type":"WebSite","@id":"https://obeloworks.com/#website","name":"Lookout","alternateName":["룩아웃","Lookout for Deadlock"],"url":"https://obeloworks.com/","inLanguage":["ko","en","zh-Hans","ru"],"publisher":{"@id":"https://obeloworks.com/#publisher"}},{"@type":"WebPage","@id":"https://obeloworks.com/zh/guide/brawl/#webpage","url":"https://obeloworks.com/zh/guide/brawl/","name":"Deadlock 街头乱斗与普通对局：Lookout 显示差异 | Lookout","description":"街头乱斗为 4 对 4，普通对局为 6 对 6。Lookout 会按模式调整显示，乱斗中不使用野区或商店叠加层。","inLanguage":"zh-Hans","isPartOf":{"@id":"https://obeloworks.com/#website"},"mainEntity":{"@id":"https://obeloworks.com/zh/guide/brawl/#content"},"breadcrumb":{"@id":"https://obeloworks.com/zh/guide/brawl/#breadcrumbs"}},{"@type":"TechArticle","headline":"Deadlock 街头乱斗与普通对局：Lookout 显示差异","description":"街头乱斗为 4 对 4，普通对局为 6 对 6。Lookout 会按模式调整显示，乱斗中不使用野区或商店叠加层。","inLanguage":"zh","datePublished":"2026-10-31","dateModified":"2026-10-31","author":{"@id":"https://obeloworks.com/#publisher"},"@id":"https://obeloworks.com/zh/guide/brawl/#content"},{"@type":"BreadcrumbList","@id":"https://obeloworks.com/zh/guide/brawl/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Lookout","item":"https://obeloworks.com/zh/"},{"@type":"ListItem","position":2,"name":"帮助","item":"https://obeloworks.com/zh/help/"},{"@type":"ListItem","position":3,"name":"Deadlock 街头乱斗与普通对局：Lookout 显示差异","item":"https://obeloworks.com/zh/guide/brawl/"}]}]}</script>
+    <link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/brawl/" />
+    <link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/brawl/" />
+    <link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/brawl/" />
+    <link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/brawl/" />
+    <link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/brawl/" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <script src="../guide/lib/site-lang.js"></script>
+    <link rel="stylesheet" href="../guide/lib/tokens.css" />
+    <link rel="stylesheet" href="../guide/lib/desktop.css" />
+    <link rel="stylesheet" href="../guide/lib/intel-ui.css" />
+    <link rel="stylesheet" href="../guide/lib/opgg.css" />
+    <link rel="stylesheet" href="../guide/lib/strategy.css" />
+    <link rel="stylesheet" href="../guide/lib/lane-ui.css" />
+    <link rel="stylesheet" href="../guide/lib/route-guide.css" />
+    <link rel="stylesheet" href="../guide/lib/map-atlas.css" />
+    <link rel="stylesheet" href="../guide/lib/painted.css" />
+    <link rel="stylesheet" href="../guide/guide.css" />
+    <link rel="stylesheet" href="../painted-site.css" />
+    <script src="../ad-policy.js"></script>
+    <script defer src="https://js.rev.iq/obeloworks.com"></script>
+  </head>
+  <body data-title="article" data-page-title="Deadlock 街头乱斗与普通对局：Lookout 显示差异" data-page-description="街头乱斗为 4 对 4，普通对局为 6 对 6。Lookout 会按模式调整显示，乱斗中不使用野区或商店叠加层。" data-page="article">
+    <aside class="side">
+      <a class="brand" href="/zh/"><img src="../favicon.svg" alt="" width="26" height="26" /><b>Lookout</b></a>
+      <nav class="menu" aria-label="菜单" data-t-label="menu"><a href="/zh/" class="nav-get"><b data-t="nav.download">下载</b><small data-t="nav.download.sub">免费 · Windows 叠加层</small></a><a href="/zh/guide/"><b data-t="nav.guide">攻略</b><small data-t="nav.guide.sub">魂魄 · 对线 · 野区</small></a><a href="/zh/guide/heroes.html"><b data-t="nav.heroes">英雄</b><small data-t="nav.heroes.sub">梯队 · 物品配装</small></a><a href="/zh/guide/comp.html"><b data-t="nav.comp">阵容分析</b><small data-t="nav.comp.sub">克制关系 · 剩余选择</small></a><a href="/zh/guide/map.html"><b data-t="nav.map">地图</b><small data-t="nav.map.sub">野怪 · 箱子 · 商店位置</small></a><a href="/zh/guide/routes.html"><b data-t="nav.routes">分路路线</b><small data-t="nav.routes.sub">兵线间隙的打野路线</small></a><a href="/zh/help/"><b data-t="nav.help">帮助</b><small data-t="nav.help.sub">安装 · 性能 · 排查</small></a></nav>
+      <div class="side-foot">
+        <a class="side-get" href="https://github.com/inspace9018/lookout-releases/releases/latest/download/Lookout-Setup.exe"><span data-t="side.get">免费下载（Windows）</span><small>Lookout <span data-version>0.1.14</span></small></a>
+        <label class="side-lang"><span class="side-lang-title" id="site-language-label"><span lang="ko">언어</span> / <span lang="en">Language</span> / <span lang="zh">语言</span> / <span lang="ru">Язык</span></span><select data-lang aria-labelledby="site-language-label"><option value="ko" lang="ko">한국어</option><option value="en" lang="en">English</option><option value="zh" selected lang="zh">简体中文</option><option value="ru" lang="ru">Русский</option></select></label>
+        <div class="side-meta"><a href="https://github.com/inspace9018/lookout-releases/issues/new/choose" data-t="side.bug">反馈问题</a><a href="../privacy.html" data-t="side.privacy">隐私</a></div>
+      </div>
+    </aside>
+    <div class="page">
+      <main class="doc-page"><nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="/zh/">Lookout</a> / <a href="/zh/help/">帮助</a></nav><header class="doc-heading"><p class="label">文档核对 · 2026-10-31</p><h1>Deadlock 街头乱斗与普通对局：Lookout 显示差异</h1><p class="doc-lead">街头乱斗为 4 对 4，普通对局为 6 对 6。Lookout 会按模式调整显示，乱斗中不使用野区或商店叠加层。</p></header><section class="doc-section" id="section-1"><h2>物品选择画面</h2><p>通过图标和名称识别当前选项，并在物品上方显示梯队、选取率排名和简短说明。多次选择或重掷后会重新读取新选项。</p></section><section class="doc-section" id="section-2"><h2>同时查看梯队与样本</h2><p>物品梯队与排名依据选取率。高梯队不代表当前情况下必然最优或必胜。没有该英雄记录时会注明使用全部英雄数据，小样本也会单独标识。</p></section><section class="doc-section" id="section-3"><h2>模式似乎识别错误时</h2><p>先检查游戏画面与仪表盘连接。可选 HUD 联动会用 8 个或 12 个英雄槽位判断乱斗或普通对局。这是程序内部判定方式，应结合实际游戏人数检查。</p><p class="doc-links"><a href="/zh/help/install/">连接与显示排查</a></p></section><section class="doc-section"><h2>相关内容</h2><div class="doc-related"><a href="/zh/help/install/">安装 Lookout 与叠加层不显示的排查</a><a href="/zh/help/performance/">Lookout 帧率、CPU 使用率与鼠标卡顿检查</a><a href="/zh/guide/jungle-timers/">Deadlock 野怪首次生成与刷新时间</a><a href="/zh/guide/ability-upgrades/">按 Tab 查看 Deadlock 技能升级效果</a></div></section><p class="note">Lookout 产品文档。游戏规则和数值以注明的资料日期为准，可能随补丁变化。</p></main>
+      <aside class="ad-side" aria-label="广告" data-t-label="ad">
+        <small data-t="ad">广告</small>
+        <div class="ad-slot">
+          <a class="ad-house" href="/zh/"><b data-t="ad.house.title">Lookout 免费叠加层</b><span data-t="ad.house.text">对局中在游戏画面上显示敌方终极技能、野怪刷新和分路路线。</span><em data-t="ad.house.cta">免费下载</em></a>
+          <div id="ad" data-ad="right-rail-1" data-ad-size="300x250"></div>
+        </div>
+        <div class="ad-slot ad-tall"><div data-ad="right-rail-2" data-ad-size="300x600"></div></div>
+      </aside>
+      <footer>
+        <span data-t="foot.note">© 2026 Nexus lab · 玩家自制网站，与 Valve 无关</span>
+        <a href="https://github.com/inspace9018/lookout-releases/issues/new/choose" data-t="side.bug">反馈问题</a>
+        <a href="../privacy.html" data-t="foot.privacy">隐私政策</a>
+      </footer>
+    </div>
+    <script>
+      // The page in the visitor's language (lib/site-lang.js), before the release check below.
+      window.SITE_TEXT?.();
+      // The download buttons always get the newest installer; this writes that release's version and
+      // size next to them. Without an answer the version from the last site build stays.
+      fetch('https://api.github.com/repos/inspace9018/lookout-releases/releases/latest')
+        .then(r => (r.ok ? r.json() : null))
+        .then(r => {
+          const v = r && /^v?(\d+\.\d+\.\d+)$/.exec(r.tag_name || ''),
+            exe = r && (r.assets || []).find(a => a.name === 'Lookout-Setup.exe');
+          if (v) for (const e of document.querySelectorAll('[data-version]')) e.textContent = v[1];
+          if (exe) for (const e of document.querySelectorAll('[data-size]')) e.textContent = Math.round(exe.size / 1048576) + (window.SITE_LANG === 'ru' ? ' МБ' : 'MB');
+        })
+        .catch(() => {});
+    </script>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "measuredDate": "2026-10-30",
+  "scope": "Historical saved Lookout match-phase CPU samples, before 0.1.14. Not a before/after FPS benchmark.",
+  "hardware": {
+    "cpu": "Intel Core i7-12700F",
+    "logicalProcessors": 20
+  },
+  "samples": 360,
+  "method": "Older saved whole-machine CPU values were mistakenly divided a second time by 20. Multiply their rounded values by 20 to reconstruct an approximation.",
+  "approximateWholeMachineCpuPercent": {
+    "median": 6.2,
+    "p95": 7.8,
+    "max": 9.6
+  },
+  "limitations": [
+    "Saved values were rounded; these reconstructed percentages are approximate.",
+    "One machine and historical samples; not representative of every user.",
+    "No FPS, 1% low or mouse-latency measurements.",
+    "Not evidence of live-game performance after the 0.1.14 changes."
+  ],
+  "releaseNotes": "https://github.com/inspace9018/lookout-releases/releases/tag/v0.1.14"
+}

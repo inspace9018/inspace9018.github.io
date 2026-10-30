@@ -25,7 +25,7 @@
       if (url.origin !== location.origin) continue;
       let plain = url.pathname.replace(/^\/(en|zh|ru)(?=\/)/, '').replace(/index\.html$/, '');
       if (raw.startsWith('#')) plain = bare;
-      if (!/^\/(?:guide\/(?:heroes\.html|comp\.html|map\.html|routes\.html)?|)$/.test(plain)) continue;
+      if (!/^\/(?:guide\/(?:heroes\.html|comp\.html|map\.html|routes\.html|heroes\/[a-z-]+\/|jungle-timers\/|brawl\/|ability-upgrades\/)?|help\/(?:install\/|performance\/)?|)$/.test(plain)) continue;
       const next = (lang === 'ko' ? '' : '/' + lang) + plain + url.search + url.hash;
       if (raw !== next) link.setAttribute('href', next);
     }

@@ -192,5 +192,1605 @@
     <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/routes.html" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/routes.html" />
   </url>
+  <url>
+    <loc>https://obeloworks.com/help/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/help/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/help/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/help/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/help/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/help/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/help/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/help/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/help/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/help/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/help/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/help/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/help/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/help/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/help/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/help/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/help/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/help/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/help/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/help/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/help/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/help/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/help/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/help/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/help/install/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/help/install/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/help/install/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/help/install/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/help/install/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/help/install/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/help/install/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/help/install/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/help/install/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/help/install/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/help/install/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/help/install/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/help/install/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/help/install/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/help/install/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/help/install/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/help/install/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/help/install/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/help/install/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/help/install/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/help/install/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/help/install/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/help/install/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/help/install/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/help/performance/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/help/performance/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/help/performance/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/help/performance/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/help/performance/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/help/performance/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/help/performance/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/help/performance/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/help/performance/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/help/performance/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/help/performance/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/help/performance/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/help/performance/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/help/performance/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/help/performance/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/help/performance/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/help/performance/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/help/performance/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/help/performance/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/help/performance/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/help/performance/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/help/performance/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/help/performance/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/help/performance/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/jungle-timers/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/jungle-timers/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/jungle-timers/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/jungle-timers/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/jungle-timers/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/jungle-timers/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/jungle-timers/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/jungle-timers/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/jungle-timers/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/jungle-timers/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/jungle-timers/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/jungle-timers/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/jungle-timers/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/jungle-timers/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/jungle-timers/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/jungle-timers/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/jungle-timers/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/jungle-timers/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/jungle-timers/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/jungle-timers/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/jungle-timers/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/jungle-timers/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/jungle-timers/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/jungle-timers/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/brawl/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/brawl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/brawl/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/brawl/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/brawl/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/brawl/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/brawl/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/brawl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/brawl/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/brawl/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/brawl/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/brawl/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/brawl/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/brawl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/brawl/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/brawl/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/brawl/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/brawl/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/brawl/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/brawl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/brawl/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/brawl/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/brawl/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/brawl/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/ability-upgrades/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/ability-upgrades/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/ability-upgrades/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/ability-upgrades/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/ability-upgrades/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/ability-upgrades/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/ability-upgrades/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/ability-upgrades/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/ability-upgrades/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/ability-upgrades/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/ability-upgrades/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/ability-upgrades/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/ability-upgrades/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/ability-upgrades/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/ability-upgrades/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/ability-upgrades/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/ability-upgrades/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/ability-upgrades/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/ability-upgrades/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/ability-upgrades/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/ability-upgrades/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/ability-upgrades/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/ability-upgrades/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/ability-upgrades/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/infernus/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/infernus/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/infernus/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/infernus/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/infernus/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/infernus/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/infernus/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/infernus/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/infernus/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/infernus/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/infernus/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/infernus/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/infernus/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/infernus/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/infernus/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/infernus/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/infernus/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/infernus/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/infernus/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/infernus/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/infernus/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/infernus/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/infernus/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/infernus/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/seven/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/seven/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/seven/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/seven/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/seven/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/seven/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/seven/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/seven/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/seven/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/seven/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/seven/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/seven/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/seven/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/seven/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/seven/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/seven/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/seven/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/seven/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/seven/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/seven/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/seven/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/seven/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/seven/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/seven/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/vindicta/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/vindicta/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/vindicta/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/vindicta/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/vindicta/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/vindicta/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/vindicta/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/vindicta/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/vindicta/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/vindicta/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/vindicta/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/vindicta/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/vindicta/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/vindicta/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/vindicta/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/vindicta/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/vindicta/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/vindicta/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/vindicta/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/vindicta/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/vindicta/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/vindicta/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/vindicta/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/vindicta/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/lady-geist/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/lady-geist/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/lady-geist/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/lady-geist/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/lady-geist/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/lady-geist/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/lady-geist/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/lady-geist/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/lady-geist/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/lady-geist/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/lady-geist/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/lady-geist/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/lady-geist/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/lady-geist/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/lady-geist/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/lady-geist/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/lady-geist/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/lady-geist/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/lady-geist/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/lady-geist/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/lady-geist/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/lady-geist/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/lady-geist/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/lady-geist/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/abrams/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/abrams/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/abrams/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/abrams/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/abrams/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/abrams/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/abrams/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/abrams/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/abrams/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/abrams/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/abrams/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/abrams/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/abrams/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/abrams/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/abrams/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/abrams/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/abrams/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/abrams/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/abrams/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/abrams/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/abrams/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/abrams/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/abrams/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/abrams/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/wraith/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/wraith/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/wraith/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/wraith/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/wraith/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/wraith/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/wraith/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/wraith/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/wraith/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/wraith/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/wraith/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/wraith/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/wraith/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/wraith/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/wraith/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/wraith/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/wraith/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/wraith/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/wraith/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/wraith/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/wraith/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/wraith/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/wraith/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/wraith/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/mcginnis/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/mcginnis/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/mcginnis/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/mcginnis/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/mcginnis/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/mcginnis/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/mcginnis/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/mcginnis/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/mcginnis/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/mcginnis/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/mcginnis/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/mcginnis/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/mcginnis/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/mcginnis/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/mcginnis/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/mcginnis/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/mcginnis/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/mcginnis/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/mcginnis/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/mcginnis/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/mcginnis/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/mcginnis/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/mcginnis/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/mcginnis/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/paradox/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/paradox/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/paradox/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/paradox/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/paradox/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/paradox/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/paradox/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/paradox/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/paradox/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/paradox/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/paradox/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/paradox/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/paradox/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/paradox/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/paradox/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/paradox/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/paradox/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/paradox/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/paradox/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/paradox/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/paradox/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/paradox/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/paradox/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/paradox/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/dynamo/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/dynamo/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/dynamo/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/dynamo/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/dynamo/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/dynamo/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/dynamo/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/dynamo/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/dynamo/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/dynamo/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/dynamo/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/dynamo/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/dynamo/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/dynamo/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/dynamo/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/dynamo/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/dynamo/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/dynamo/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/dynamo/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/dynamo/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/dynamo/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/dynamo/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/dynamo/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/dynamo/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/kelvin/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/kelvin/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/kelvin/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/kelvin/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/kelvin/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/kelvin/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/kelvin/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/kelvin/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/kelvin/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/kelvin/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/kelvin/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/kelvin/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/kelvin/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/kelvin/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/kelvin/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/kelvin/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/kelvin/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/kelvin/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/kelvin/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/kelvin/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/kelvin/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/kelvin/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/kelvin/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/kelvin/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/haze/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/haze/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/haze/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/haze/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/haze/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/haze/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/haze/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/haze/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/haze/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/haze/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/haze/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/haze/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/haze/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/haze/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/haze/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/haze/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/haze/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/haze/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/haze/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/haze/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/haze/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/haze/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/haze/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/haze/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/holliday/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/holliday/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/holliday/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/holliday/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/holliday/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/holliday/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/holliday/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/holliday/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/holliday/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/holliday/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/holliday/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/holliday/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/holliday/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/holliday/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/holliday/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/holliday/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/holliday/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/holliday/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/holliday/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/holliday/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/holliday/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/holliday/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/holliday/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/holliday/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/bebop/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/bebop/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/bebop/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/bebop/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/bebop/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/bebop/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/bebop/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/bebop/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/bebop/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/bebop/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/bebop/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/bebop/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/bebop/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/bebop/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/bebop/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/bebop/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/bebop/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/bebop/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/bebop/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/bebop/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/bebop/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/bebop/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/bebop/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/bebop/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/calico/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/calico/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/calico/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/calico/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/calico/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/calico/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/calico/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/calico/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/calico/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/calico/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/calico/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/calico/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/calico/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/calico/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/calico/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/calico/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/calico/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/calico/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/calico/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/calico/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/calico/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/calico/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/calico/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/calico/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/grey-talon/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/grey-talon/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/grey-talon/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/grey-talon/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/grey-talon/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/grey-talon/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/grey-talon/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/grey-talon/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/grey-talon/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/grey-talon/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/grey-talon/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/grey-talon/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/grey-talon/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/grey-talon/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/grey-talon/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/grey-talon/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/grey-talon/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/grey-talon/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/grey-talon/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/grey-talon/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/grey-talon/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/grey-talon/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/grey-talon/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/grey-talon/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/mo-krill/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/mo-krill/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/mo-krill/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/mo-krill/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/mo-krill/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/mo-krill/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/mo-krill/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/mo-krill/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/mo-krill/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/mo-krill/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/mo-krill/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/mo-krill/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/mo-krill/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/mo-krill/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/mo-krill/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/mo-krill/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/mo-krill/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/mo-krill/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/mo-krill/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/mo-krill/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/mo-krill/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/mo-krill/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/mo-krill/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/mo-krill/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/shiv/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/shiv/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/shiv/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/shiv/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/shiv/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/shiv/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/shiv/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/shiv/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/shiv/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/shiv/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/shiv/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/shiv/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/shiv/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/shiv/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/shiv/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/shiv/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/shiv/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/shiv/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/shiv/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/shiv/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/shiv/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/shiv/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/shiv/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/shiv/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/ivy/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/ivy/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/ivy/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/ivy/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/ivy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/ivy/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/ivy/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/ivy/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/ivy/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/ivy/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/ivy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/ivy/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/ivy/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/ivy/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/ivy/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/ivy/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/ivy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/ivy/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/ivy/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/ivy/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/ivy/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/ivy/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/ivy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/ivy/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/warden/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/warden/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/warden/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/warden/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/warden/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/warden/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/warden/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/warden/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/warden/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/warden/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/warden/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/warden/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/warden/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/warden/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/warden/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/warden/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/warden/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/warden/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/warden/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/warden/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/warden/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/warden/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/warden/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/warden/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/yamato/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/yamato/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/yamato/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/yamato/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/yamato/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/yamato/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/yamato/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/yamato/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/yamato/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/yamato/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/yamato/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/yamato/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/yamato/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/yamato/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/yamato/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/yamato/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/yamato/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/yamato/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/yamato/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/yamato/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/yamato/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/yamato/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/yamato/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/yamato/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/lash/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/lash/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/lash/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/lash/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/lash/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/lash/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/lash/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/lash/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/lash/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/lash/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/lash/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/lash/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/lash/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/lash/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/lash/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/lash/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/lash/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/lash/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/lash/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/lash/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/lash/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/lash/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/lash/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/lash/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/viscous/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/viscous/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/viscous/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/viscous/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/viscous/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/viscous/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/viscous/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/viscous/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/viscous/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/viscous/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/viscous/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/viscous/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/viscous/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/viscous/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/viscous/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/viscous/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/viscous/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/viscous/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/viscous/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/viscous/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/viscous/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/viscous/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/viscous/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/viscous/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/pocket/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/pocket/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/pocket/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/pocket/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/pocket/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/pocket/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/pocket/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/pocket/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/pocket/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/pocket/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/pocket/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/pocket/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/pocket/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/pocket/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/pocket/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/pocket/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/pocket/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/pocket/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/pocket/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/pocket/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/pocket/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/pocket/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/pocket/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/pocket/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/mirage/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/mirage/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/mirage/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/mirage/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/mirage/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/mirage/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/mirage/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/mirage/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/mirage/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/mirage/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/mirage/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/mirage/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/mirage/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/mirage/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/mirage/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/mirage/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/mirage/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/mirage/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/mirage/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/mirage/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/mirage/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/mirage/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/mirage/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/mirage/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/vyper/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/vyper/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/vyper/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/vyper/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/vyper/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/vyper/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/vyper/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/vyper/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/vyper/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/vyper/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/vyper/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/vyper/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/vyper/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/vyper/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/vyper/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/vyper/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/vyper/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/vyper/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/vyper/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/vyper/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/vyper/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/vyper/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/vyper/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/vyper/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/sinclair/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/sinclair/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/sinclair/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/sinclair/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/sinclair/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/sinclair/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/sinclair/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/sinclair/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/sinclair/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/sinclair/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/sinclair/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/sinclair/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/sinclair/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/sinclair/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/sinclair/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/sinclair/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/sinclair/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/sinclair/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/sinclair/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/sinclair/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/sinclair/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/sinclair/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/sinclair/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/sinclair/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/mina/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/mina/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/mina/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/mina/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/mina/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/mina/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/mina/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/mina/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/mina/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/mina/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/mina/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/mina/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/mina/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/mina/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/mina/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/mina/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/mina/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/mina/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/mina/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/mina/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/mina/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/mina/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/mina/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/mina/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/drifter/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/drifter/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/drifter/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/drifter/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/drifter/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/drifter/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/drifter/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/drifter/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/drifter/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/drifter/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/drifter/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/drifter/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/drifter/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/drifter/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/drifter/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/drifter/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/drifter/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/drifter/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/drifter/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/drifter/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/drifter/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/drifter/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/drifter/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/drifter/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/venator/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/venator/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/venator/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/venator/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/venator/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/venator/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/venator/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/venator/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/venator/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/venator/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/venator/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/venator/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/venator/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/venator/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/venator/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/venator/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/venator/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/venator/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/venator/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/venator/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/venator/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/venator/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/venator/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/venator/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/victor/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/victor/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/victor/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/victor/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/victor/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/victor/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/victor/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/victor/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/victor/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/victor/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/victor/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/victor/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/victor/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/victor/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/victor/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/victor/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/victor/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/victor/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/victor/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/victor/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/victor/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/victor/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/victor/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/victor/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/paige/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/paige/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/paige/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/paige/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/paige/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/paige/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/paige/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/paige/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/paige/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/paige/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/paige/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/paige/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/paige/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/paige/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/paige/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/paige/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/paige/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/paige/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/paige/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/paige/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/paige/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/paige/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/paige/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/paige/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/the-doorman/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/the-doorman/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/the-doorman/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/the-doorman/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/the-doorman/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/the-doorman/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/the-doorman/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/the-doorman/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/the-doorman/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/the-doorman/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/the-doorman/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/the-doorman/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/the-doorman/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/the-doorman/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/the-doorman/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/the-doorman/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/the-doorman/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/the-doorman/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/the-doorman/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/the-doorman/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/the-doorman/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/the-doorman/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/the-doorman/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/the-doorman/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/billy/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/billy/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/billy/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/billy/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/billy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/billy/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/billy/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/billy/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/billy/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/billy/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/billy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/billy/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/billy/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/billy/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/billy/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/billy/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/billy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/billy/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/billy/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/billy/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/billy/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/billy/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/billy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/billy/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/graves/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/graves/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/graves/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/graves/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/graves/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/graves/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/graves/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/graves/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/graves/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/graves/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/graves/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/graves/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/graves/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/graves/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/graves/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/graves/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/graves/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/graves/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/graves/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/graves/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/graves/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/graves/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/graves/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/graves/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/apollo/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/apollo/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/apollo/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/apollo/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/apollo/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/apollo/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/apollo/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/apollo/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/apollo/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/apollo/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/apollo/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/apollo/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/apollo/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/apollo/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/apollo/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/apollo/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/apollo/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/apollo/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/apollo/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/apollo/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/apollo/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/apollo/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/apollo/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/apollo/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/deadman-danny/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/deadman-danny/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/deadman-danny/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/deadman-danny/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/deadman-danny/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/deadman-danny/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/deadman-danny/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/deadman-danny/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/deadman-danny/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/deadman-danny/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/deadman-danny/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/deadman-danny/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/deadman-danny/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/deadman-danny/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/deadman-danny/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/deadman-danny/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/deadman-danny/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/deadman-danny/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/deadman-danny/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/deadman-danny/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/deadman-danny/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/deadman-danny/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/deadman-danny/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/deadman-danny/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/rem/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/rem/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/rem/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/rem/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/rem/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/rem/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/rem/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/rem/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/rem/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/rem/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/rem/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/rem/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/rem/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/rem/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/rem/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/rem/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/rem/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/rem/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/rem/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/rem/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/rem/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/rem/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/rem/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/rem/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/silver/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/silver/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/silver/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/silver/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/silver/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/silver/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/silver/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/silver/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/silver/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/silver/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/silver/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/silver/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/silver/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/silver/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/silver/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/silver/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/silver/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/silver/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/silver/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/silver/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/silver/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/silver/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/silver/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/silver/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/celeste/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/celeste/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/celeste/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/celeste/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/celeste/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/celeste/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/celeste/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/celeste/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/celeste/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/celeste/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/celeste/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/celeste/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/celeste/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/celeste/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/celeste/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/celeste/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/celeste/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/celeste/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/celeste/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/celeste/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/celeste/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/celeste/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/celeste/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/celeste/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/rat-king/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/rat-king/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/rat-king/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/rat-king/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/rat-king/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/rat-king/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/rat-king/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/rat-king/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/rat-king/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/rat-king/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/rat-king/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/rat-king/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/rat-king/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/rat-king/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/rat-king/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/rat-king/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/rat-king/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/rat-king/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/rat-king/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/rat-king/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/rat-king/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/rat-king/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/rat-king/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/rat-king/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/solomon/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/solomon/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/solomon/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/solomon/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/solomon/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/solomon/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/solomon/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/solomon/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/solomon/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/solomon/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/solomon/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/solomon/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/solomon/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/solomon/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/solomon/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/solomon/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/solomon/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/solomon/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/solomon/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/solomon/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/solomon/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/solomon/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/solomon/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/solomon/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/violet/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/violet/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/violet/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/violet/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/violet/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/violet/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/violet/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/violet/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/violet/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/violet/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/violet/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/violet/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/violet/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/violet/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/violet/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/violet/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/violet/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/violet/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/violet/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/violet/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/violet/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/violet/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/violet/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/violet/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/nurse-harrow/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/nurse-harrow/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/nurse-harrow/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/nurse-harrow/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/nurse-harrow/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/nurse-harrow/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/nurse-harrow/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/nurse-harrow/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/nurse-harrow/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/nurse-harrow/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/nurse-harrow/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/nurse-harrow/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/nurse-harrow/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/nurse-harrow/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/nurse-harrow/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/nurse-harrow/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/nurse-harrow/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/nurse-harrow/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/nurse-harrow/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/nurse-harrow/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/nurse-harrow/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/nurse-harrow/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/nurse-harrow/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/nurse-harrow/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/guide/heroes/baba/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/baba/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/baba/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/baba/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/baba/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/baba/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/en/guide/heroes/baba/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/baba/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/baba/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/baba/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/baba/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/baba/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/zh/guide/heroes/baba/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/baba/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/baba/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/baba/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/baba/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/baba/" />
+  </url>
+  <url>
+    <loc>https://obeloworks.com/ru/guide/heroes/baba/</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://obeloworks.com/guide/heroes/baba/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://obeloworks.com/en/guide/heroes/baba/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://obeloworks.com/zh/guide/heroes/baba/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://obeloworks.com/ru/guide/heroes/baba/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://obeloworks.com/guide/heroes/baba/" />
+  </url>
   <url><loc>https://obeloworks.com/privacy.html</loc></url>
 </urlset>

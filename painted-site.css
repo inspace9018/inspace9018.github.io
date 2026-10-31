@@ -11,6 +11,9 @@ body {
   gap: 10px;
   padding: 0 8px 26px;
 }
+.side .brand img.brand-logo, [data-page="privacy"] .brand img.brand-logo {
+  display:block; width:170px; max-width:100%; height:auto; flex:none;
+}
 .side .brand b {
   font-size: 25px;
   font-synthesis: none;
@@ -367,7 +370,10 @@ body[data-page="privacy"] {
     padding: 0;
     flex-basis: 40%;
   }
-  .side .brand b {
+  .side .brand img.brand-logo, [data-page="privacy"] .brand img.brand-logo {
+  display:block; width:170px; max-width:100%; height:auto; flex:none;
+}
+.side .brand b {
     font-size: 22px;
   }
   .side-foot {

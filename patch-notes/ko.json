@@ -802,6 +802,48 @@
     "Violet: Abstract Landscape - Duration reduced from 6s to 5s": "바이올렛: 추상 풍경화 - 지속 시간이 6초에서 5초로 감소했습니다.",
     "Violet: Abstract Landscape - T3 reduced from +4s to +3s": "바이올렛: 추상 풍경화 - 티어 3 지속 시간 보너스가 +4초에서 +3초로 감소했습니다."
    }
+  },
+  "1848664643339845": {
+   "title": "소규모 업데이트 · 2026.11.04",
+   "en": "Minor Update - 11-04-2026",
+   "lines": {
+    "Healbane: Stacks now diminish 20% more aggressively (at 2 stacks 57.8%->54.7%, at 4 stacks 82.2% to 72%)": "치유 억제: 중첩 시 추가 효과의 감소 폭이 20% 커졌습니다. 2중첩 효과는 57.8%에서 54.7%로, 4중첩 효과는 82.2%에서 72%로 줄었습니다.",
+    "Apollo: Riposte - Pommel Hit now also disarms the enemy": "아폴로: 반격 - 자루 타격이 이제 적을 무장 해제합니다.",
+    "Apollo: Riposte - Pummel hit now ends any preexisting parry on the target": "아폴로: 반격 - 자루 타격이 적중하면 대상이 이미 사용 중인 방어가 즉시 끝납니다.",
+    "Apollo: Riposte - T2 increased from +0.6s duration to +0.7s": "아폴로: 반격 - 2단계 업그레이드의 추가 지속 시간이 +0.6초에서 +0.7초로 증가했습니다.",
+    "Apollo: Itani Lo Sahn - T3 bonus damage increased from +50% to +60%": "아폴로: 이타니 로 산 - 3단계 업그레이드의 추가 피해가 +50%에서 +60%로 증가했습니다.",
+    "Baba: Spirit Resistance scaling reduced from 0.7 to 0.5": "바바: 마법 저항 승수가 0.7에서 0.5로 감소했습니다.",
+    "Baba: Melee damage per boon reduced by 10%": "바바: 은총당 근거리 공격 피해가 10% 감소했습니다.",
+    "Baba: Baba's Brew - Cooldown increased from 27s to 28s": "바바: 바바의 차 - 쿨다운이 27초에서 28초로 증가했습니다.",
+    "Baba: Baba's Brew - Burn DPS spirit scaling reduced from 0.15 to 0.13": "바바: 바바의 차 - 초당 화상 피해의 마력 계수가 0.15에서 0.13으로 감소했습니다.",
+    "Baba: Baba's Brew - Cycle time increased from 1.5s to 1.6s": "바바: 바바의 차 - 효과 주기가 1.5초에서 1.6초로 늘었습니다.",
+    "Baba: Granny Long Legs - Melee Resist reduced from 30% to 25%": "바바: 키다리 할머니 - 근거리 공격 저항이 30%에서 25%로 감소했습니다.",
+    "Baba: Granny Long Legs - Debuff Resist reduced from 30% to 25%": "바바: 키다리 할머니 - 약화 저항이 30%에서 25%로 감소했습니다.",
+    "Celeste: Dazzling Trick - T3 silence duration reduced from +1.25s to +0.75s": "셀레스트: 눈부신 속임수 - 3단계 업그레이드의 추가 침묵 지속 시간이 +1.25초에서 +0.75초로 줄었습니다.",
+    "Celeste: Radiant Daggers - Cast range reduced from 30m to 25m (moved to T2)": "셀레스트: 광휘의 단검 - 시전 범위가 30m에서 25m로 줄었으며, 이 효과가 2단계 업그레이드로 이동했습니다.",
+    "Celeste: Radiant Daggers - Spirit Amp per Stack reduced from +7% to +6% (moved to T3)": "셀레스트: 광휘의 단검 - 중첩당 마법 증폭이 +7%에서 +6%로 줄었으며, 이 효과가 3단계 업그레이드로 이동했습니다.",
+    "Celeste: Shining Wonder - Slow reduced from -32% Movement to -28%": "셀레스트: 찬란한 경이 - 이동 속도 둔화가 32%에서 28%로 약해졌습니다.",
+    "Celeste: Shining Wonder - Cooldown increased from 160s to 170s": "셀레스트: 찬란한 경이 - 쿨다운이 160초에서 170초로 증가했습니다.",
+    "Celeste: Shining Wonder - Bounce range reduced from 15.5m to 15m": "셀레스트: 찬란한 경이 - 튕겨 나갈 때 다음 대상까지의 범위가 15.5m에서 15m로 줄었습니다.",
+    "Celeste: Shining Wonder - T1 move speed slow reduced from -16% to -14%": "셀레스트: 찬란한 경이 - 1단계 업그레이드의 이동 속도 둔화가 16%에서 14%로 약해졌습니다.",
+    "Celeste: Shining Wonder - T2 bonus damage reduced from +90 to +80": "셀레스트: 찬란한 경이 - 2단계 업그레이드의 추가 피해가 +90에서 +80으로 감소했습니다.",
+    "Deadman Danny: Close The Deal - Bonus damage to under half health targets reduced from +75% to +55%": "데드맨 대니: 계약 마무리 - 체력이 절반 미만인 대상에게 주는 추가 피해가 +75%에서 +55%로 감소했습니다.",
+    "Deadman Danny: Strix Salvo - Spirit scaling reduced by 8%": "데드맨 대니: 스트릭스 일제 사격 - 마력 계수가 8% 감소했습니다.",
+    "Deadman Danny: Chimera Mk1 - T2 reduced from 150 Heal On Hit to 125": "데드맨 대니: 키메라 Mk1 - 2단계 업그레이드의 적중 시 치유량이 150에서 125로 줄었습니다.",
+    "Deadman Danny: Chimera Mk1 - T2 heal spirit scaling reduced from 2.0 to 1.7": "데드맨 대니: 키메라 Mk1 - 2단계 업그레이드의 치유 마력 계수가 2.0에서 1.7로 감소했습니다.",
+    "Mo & Krill: Scorn - Heal from heroes increased from 1.2x to 1.3x": "모와 크릴: 도발 - 영웅에게 적중했을 때의 치유 배율이 1.2배에서 1.3배로 증가했습니다.",
+    "Mo & Krill: Burrow - Damage radius increased by +0.5m": "모와 크릴: 굴파기 - 피해 반경이 0.5m 늘었습니다.",
+    "Mo & Krill: Sand Blast - T2 slow from -24% Slow and -26% Dash distance to -28% for both": "모와 크릴: 모래 폭풍 - 2단계 업그레이드의 이동 속도 둔화와 대시 거리 감소가 각각 24%, 26%에서 둘 다 28%로 강화됐습니다.",
+    "Mo & Krill: Combo - Health per kill increased from 40 to 50": "모와 크릴: 콤보 - 처치당 최대 체력 보너스가 40에서 50으로 증가했습니다.",
+    "Nurse Harrow: Bullet damage increased by 8%": "너스 해로우: 총탄 피해가 8% 증가했습니다.",
+    "Nurse Harrow: Lurking Terrors - Vertical angle increased from 50% to 65%": "너스 해로우: 도사린 공포 - 수직 각도 설정값이 50%에서 65%로 증가했습니다.",
+    "Nurse Harrow: Lurking Terrors - Fear buildup time reduced from 2s to 1.75s": "너스 해로우: 도사린 공포 - 공포 축적 시간이 2초에서 1.75초로 줄었습니다.",
+    "Rat King: Bullet damage increased from 5.7 to 5.8": "랫 킹: 총탄 피해가 5.7에서 5.8로 증가했습니다.",
+    "Rat King: Ammo increased from 24 to 26": "랫 킹: 탄약이 24발에서 26발로 증가했습니다.",
+    "Rat King: Scrap Grenade - Meleeing the grenade fuse time extension reduced from 0.4s to 0.25s": "랫 킹: 고철 수류탄 - 수류탄을 근거리 공격으로 쳤을 때 폭발까지 늘어나는 시간이 0.4초에서 0.25초로 줄었습니다.",
+    "Rat King: Rule, Ratannia! - Move Speed increased from +3m to +4m": "랫 킹: 지배하라, 랫타니아여! - 이동 속도 보너스가 +3m에서 +4m로 증가했습니다.",
+    "Rat King: Rule, Ratannia! - T1 now also reduces cooldown by -25s": "랫 킹: 지배하라, 랫타니아여! - 1단계 업그레이드가 이제 쿨다운도 25초 줄입니다."
+   }
   }
  },
  "_comment": "패치노트 번역 피드. notes.<Steam gid>.lines에 \"영어 원문 줄\": \"한국어\"를 채우면 앱의 자동 번역 대신 씁니다. 빈 칸은 무시합니다. 용어는 Lookout patch-terms.json(한국어 클라이언트 표기)을 따르세요."

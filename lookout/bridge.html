@@ -1,65 +1,20 @@
 <!doctype html>
-<html>
+<html lang="ko">
   <head>
     <meta charset="utf-8" />
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'none'; script-src 'unsafe-inline'; connect-src ws://127.0.0.1:47615 http://127.0.0.1:47615"
-    />
-    <title>LOOKOUT_INIT</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; connect-src 'none'; base-uri 'none'; form-action 'none'" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Lookout · 이전 연결 종료</title>
   </head>
   <body>
+    <p>이전 버전의 연결 페이지입니다. 이 탭을 닫아도 룩아웃은 계속 작동합니다.</p>
     <script>
-      // Lookout HUD bridge. Deadlock's HUD (lookout_hud.js) loads this page in a hidden panel and
-      // puts each reading of the match in the URL fragment. A fragment change does not reload the
-      // page and is never sent to this server; the page passes it to the Lookout app on the same
-      // PC (127.0.0.1 only). Nothing is stored or sent anywhere else.
+      // Retired 2026-11-24. Legacy HUD URLs can be restored as visible Steam tabs.
+      // Never reconnect, poll localhost, forward fragments, or open another window.
       (function () {
         'use strict';
-        var WS = 'ws://127.0.0.1:47615/hud',
-          POST = 'http://127.0.0.1:47615/hud',
-          socket = null,
-          waiting = null;
-        function layout(reply) {
-          try { var p = typeof reply === "string" ? JSON.parse(reply) : reply; if (p && p.layout && p.layout.v === 1) document.title = "LOOKOUT_LAYOUT:" + JSON.stringify(p); } catch (e) {}
-        }
-        function refreshLayout() { fetch("http://127.0.0.1:47615/layout", {cache:"no-store"}).then(function(r){return r.json();}).then(layout).catch(function(){}); }
-        function connect() {
-          try {
-            socket = new WebSocket(WS);
-          } catch (e) {
-            socket = null;
-            return;
-          }
-          socket.onopen = function () {
-            if (waiting) socket.send(waiting);
-            waiting = null;
-          };
-          socket.onmessage = function (e) { layout(e.data); };
-          socket.onclose = function () {
-            socket = null;
-            setTimeout(connect, 3000);
-          };
-          socket.onerror = function () {};
-        }
-        function deliver(body) {
-          if (socket && socket.readyState === 1) return socket.send(body);
-          // The app is not listening yet: keep the newest reading for when it is, and try a plain POST.
-          waiting = body;
-          try {
-            fetch(POST, { method: 'POST', body: body, mode: 'no-cors', headers: { 'Content-Type': 'text/plain' } }).catch(function () {});
-          } catch (e) {}
-        }
-        window.addEventListener('hashchange', function () {
-          var raw = location.hash.slice(1);
-          if (!raw) return;
-          try {
-            deliver(decodeURIComponent(raw));
-          } catch (e) {}
-        });
-        connect();
-        document.title = 'LOOKOUT_READY:1';
-        refreshLayout(); setInterval(refreshLayout, 1000);
+        try { history.replaceState(null, '', location.pathname); } catch (_) {}
+        try { window.close(); } catch (_) {}
       })();
     </script>
   </body>
